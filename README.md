@@ -17,4 +17,7 @@ Seamos consistentes:
 Lista de cosas pendientes para hacer.
 
 [X] Crear repo
-[ ]
+
+[ ] Buscar una caratula mas completa (Faltaria cuadro de correcciones, y ya que estamos fancy, el logo del DC)
+
+[ ] Completar libretas y mails
