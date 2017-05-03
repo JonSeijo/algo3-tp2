@@ -39,3 +39,5 @@ Lista de cosas pendientes para hacer.
 [ ] Buscar una caratula mas completa (Faltaria cuadro de correcciones, y ya que estamos fancy, el logo del DC)
 
 [ ] Completar libretas y mails
+
+[ ] Reemplazar std::vector<std::vector<int> > por un typedef Matriz o algo similar
