@@ -14,7 +14,7 @@ Seamos consistentes:
 
 
 ## C++
-Se inclue un MakeFile (precario) para una rapida compilación. Ejecutar ```make``` en consola y magia.
+Se incluye un MakeFile (precario) para una rapida compilación. Ejecutar ```make``` en consola y magia.
 
 La idea es que cada problema esté en una clase aparte, y sean los SolucionX.cpp / TiempoX.cpp los que tengan el main, y llamen a los problemas.
 - SolucionX.cpp deberia poder tomar un .txt por entrada estandar y resolver todos las instancias que se le pasen, imprimiendo solo el output correspondiente.
