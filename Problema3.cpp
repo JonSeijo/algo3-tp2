@@ -30,6 +30,30 @@ bool Problema3::leerInput() {
     return true;
 }
 
-Problema3::resolver() {
+void Problema3::resolver(bool imprimirOutput) {
+    // Debo hacer std::cout con la respuesta en el formato correcto
+    // Terminar con un \n !!
 
+    debug();
+}
+
+void Problema3::debug() {
+    std::cout << "n: " << n << "\n\n";
+
+    std::cout << "existe: \n";
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++) {
+            std::cout << existe[i][j] << " ";
+        }
+        std::cout << "\n";
+    }
+
+
+    std::cout << "\n\ncosto: \n";
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++) {
+            std::cout << costo[i][j] << " ";
+        }
+        std::cout << "\n";
+    }
 }

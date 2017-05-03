@@ -10,14 +10,14 @@
 
 class Problema3 {
     public:
-        Problema3() : n(0);
+        Problema3() : n(0) {};
 
         // Lee el input de una unica instancia.
         // Devuelve false si ya no hay input para leer.
         bool leerInput();
 
         // Resuelvo con los valores que tengo guardados (Pre: leerInput)
-        void resolver();
+        void resolver(bool imprimirOutput);
 
 
     private:
@@ -25,6 +25,8 @@ class Problema3 {
         // Grafo guardado como matriz de adyacencia pues voy a guardar las ~n^2 aristas posibles
         std::vector<std::vector<int> > existe;
         std::vector<std::vector<int> > costo;
+
+        void debug();
 };
 
 #endif
