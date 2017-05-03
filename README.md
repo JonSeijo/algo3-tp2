@@ -13,6 +13,16 @@ Seamos consistentes:
 - En python, variables y funciones con_snake_case
 
 
+## C++
+Se inclue un MakeFile (precario) para una rapida compilación. Ejecutar ```make``` en consola y magia.
+
+La idea es que cada problema esté en una clase aparte, y sean los SolucionX.cpp / TiempoX.cpp los que tengan el main, y llamen a los problemas.
+- SolucionX.cpp deberia poder tomar un .txt por entrada estandar y resolver todos las instancias que se le pasen, imprimiendo solo el output correspondiente.
+- TiempoX.cpp deberia poder tomar instancias por entrada estandar e imprimir solo el tiempo que le toma resolver cada instancia. Mas adelante tenemos que ver bien cuales son los datos que vamos a querer obtener (ademas de los tiempos, ejemplo el n, o la cantidad de aristas, nose)
+
+Idealmente seguir el formato de Solucion3.cpp y Problema3 pero esto es perfectamente discutible en caso que haya formas mejores.
+
+
 ## INFORME
 
 En el directorio principal, para compilar y ver el pdf resultante ejecutar:
@@ -25,10 +35,6 @@ Por ejemplo:
 ```
 python makepdf.py --p=3
 ```
-
-
-
-
 
 
 ## TODO:
