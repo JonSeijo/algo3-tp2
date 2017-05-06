@@ -31,23 +31,20 @@ bool Problema3::leerInput() {
 
 // TODO: Extraer el codigo en funciones mas descriptivas
 void Problema3::resolver(bool imprimirOutput) {
-    // Debo hacer std::cout con la respuesta en el formato correcto
-    // Terminar con un \n !!
 
-
-    int costoDestruirExistentes = 0;
+    int costoTotal = 0;
 
     // Si la ruta existe, hago que su costo sea negativa
     for (int i = 1; i <= n; i++) {
         for (int j = 1; j <= n; j++) {
             if (existe[i][j]) {
-                costoDestruirExistentes += costo[i][j];
+                costoTotal += costo[i][j];
                 costo[i][j] *= -1;
             }
         }
     }
 
-    // Implementacion usando prim
+    // Implementacion usando Prim
     // ----------------------------------------------------
 
     std::vector<bool> visitado(n+1, false);
@@ -90,9 +87,30 @@ void Problema3::resolver(bool imprimirOutput) {
         }
     }
 
-    // Padre contiene la informacion del AGM
-    // --------------------------------------
     // De Padre tengo que reconstruir el arbol y los armar los costos
+
+    // costoTotal contiene inicialmente el costo de destruir todas las que ya existen
+    for (int i = 1; i <= n; i++) {
+        int j = padre[i];
+        // Arista (i, j) está en el AGM
+
+        // Si ya existia, como el costo de las que existen estaba sumado entonces lo restao
+        // Si no existia, no lo estaba contando asi que lo sumo (costo de construir es positivo)
+        costoTotal += costo[i][j];
+    }
+
+    if (imprimirOutput) {
+        std::cout << costoTotal << " ";
+
+        std::cout << n-1 << " ";   // Pues es un arbol
+
+        for (int i = 1; i <= n; i++) {
+            int j = padre[i];
+            std::cout << i << " " << j << " ";
+        }
+
+        std::cout << "\n";
+    }
 
     debug();
 }
