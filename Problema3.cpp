@@ -29,21 +29,74 @@ bool Problema3::leerInput() {
     return true;
 }
 
-// TODO: Extraer el codigo en funciones mas descriptivas
 void Problema3::resolver(bool imprimirOutput) {
 
-    int costoTotal = 0;
+    // Auxiliar para almacenar el arbol rta
+    std::vector<int> arbol;
+
+    // Convierto los costos de las ya existentes a negativos, para priorizar su eleccion
+    // Guardo cuanto costaria destruir las que ya existen
+    int costoInicialDestruirTodo = negativizarCostoConstruidas();
+
+    // De Padre tengo que reconstruir el arbol y los armar los costos
+    arbol = primNaive();
+
+    int costoTotal = obtenerCostoTotal(arbol, costoInicialDestruirTodo);
+
+    if (imprimirOutput) {
+        escribirRta(arbol, costoTotal);
+    }
+
+    debug();
+}
+
+void Problema3::escribirRta(std::vector<int> arbol, int costoTotal) {
+    std::cout << costoTotal << " ";
+
+    std::cout << n-1 << " ";   // Pues es un arbol
+
+    for (int i = 1; i <= n; i++) {
+        int j = arbol[i];
+        std::cout << i << " " << j << " ";
+    }
+
+    std::cout << "\n";
+}
+
+int Problema3::obtenerCostoTotal(std::vector<int> arbol, int costoInicialDestruirTodo) {
+    // costoTotal contiene inicialmente el costo de destruir todas las que ya existen
+    int costoTotal = costoInicialDestruirTodo;
+    for (int i = 1; i <= n; i++) {
+        int j = arbol[i];
+        // Arista (i, j) está en el AGM
+
+        // Si ya existia, como el costo de las que existen estaba sumado entonces lo restao
+        // Si no existia, no lo estaba contando asi que lo sumo (costo de construir es positivo)
+        costoTotal += costo[i][j];
+    }
+
+    return costoTotal;
+}
+
+
+int Problema3::negativizarCostoConstruidas() {
+    int costoInicialDestruirTodo = 0;
 
     // Si la ruta existe, hago que su costo sea negativa
     for (int i = 1; i <= n; i++) {
         for (int j = 1; j <= n; j++) {
             if (existe[i][j]) {
-                costoTotal += costo[i][j];
+                costoInicialDestruirTodo += costo[i][j];
                 costo[i][j] *= -1;
             }
         }
     }
 
+    return costoInicialDestruirTodo;
+}
+
+// Devuelvo un vector que representa el AGM de la instancia actual
+std::vector<int> Problema3::primNaive() {
     // Implementacion usando Prim
     // ----------------------------------------------------
 
@@ -87,33 +140,9 @@ void Problema3::resolver(bool imprimirOutput) {
         }
     }
 
-    // De Padre tengo que reconstruir el arbol y los armar los costos
-
-    // costoTotal contiene inicialmente el costo de destruir todas las que ya existen
-    for (int i = 1; i <= n; i++) {
-        int j = padre[i];
-        // Arista (i, j) está en el AGM
-
-        // Si ya existia, como el costo de las que existen estaba sumado entonces lo restao
-        // Si no existia, no lo estaba contando asi que lo sumo (costo de construir es positivo)
-        costoTotal += costo[i][j];
-    }
-
-    if (imprimirOutput) {
-        std::cout << costoTotal << " ";
-
-        std::cout << n-1 << " ";   // Pues es un arbol
-
-        for (int i = 1; i <= n; i++) {
-            int j = padre[i];
-            std::cout << i << " " << j << " ";
-        }
-
-        std::cout << "\n";
-    }
-
-    debug();
+    return padre;
 }
+
 
 void Problema3::debug() {
     std::cout << "n: " << n << "\n\n";

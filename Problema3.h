@@ -30,6 +30,11 @@ class Problema3 {
         std::vector<std::vector<int> > existe;
         std::vector<std::vector<int> > costo;
 
+        std::vector<int> primNaive();
+        int negativizarCostoConstruidas();
+        int obtenerCostoTotal(std::vector<int> arbol, int costoInicialDestruirTodo);
+        void escribirRta(std::vector<int> arbol, int costoTotal);
+
         void debug();
 };
 
