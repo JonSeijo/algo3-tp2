@@ -1,6 +1,35 @@
 \section{Problema 3}
+\subsection{Explicación}
 
-\subsection{Introducción}
+--> contar el enunciado del problema
+
+\subsection{Correctitud}
+
+Que haya una y solo una ruta para llegar de una ciudad a cualquier otra, significa que tenemos que lograr que las rutas formen un arbol. (minimizando costo total). Construir alguna ruta o destruir alguna ruta tiene un costo asociado. Quedarme con una ruta que ya existe me cuesta 0, porque no la construyo ni destruyo. Por lo tanto, lo mas eficiente es quedarme con rutas que ya existen. \\
+
+¿Da igual quedarme cualquier ruta ya existente? No, porque como quiero usar la minima cantidad de rutas, es posible que necesite destruir turas que estan de mas, en ese caso voy a elegir destruir las que son mas baratas de destruir. En otras palabras, priorizo quedarme con las que son mas caras de destruir. \\
+
+Entonces, a las rutas que ya existen les asigno el \textbf{negativo} costo de destruirlas, de esta forma la ruta con el nuevo costo minimo sera en realidad la ruta con mayor costo de destrucción. En caso de necesitar rutas extra, no queda otra alternativa que construir nuevas rutas con el costo de construccion dado. \\
+
+La solución del problema es la siguiente:
+Considero el grafo \textbf{completo}. Las rutas que ya existían las coloco con su peso de destrucción negativo, y las que no existían las coloco con su peso de construcción normal. \\
+
+Consiguiendo el arbol generador minimo, el costo total es el costo de destruccion de \textbf{todas las aristas que existían}, sumado a los costos (incluyendo negativos) de las aristas del arbol. Si la ruta del arbol era negativa, entonces se resta al costo total (esta bien pues ya existia), y si era positiva se suma al costo total (esta bien porque no existia) \\
+
+
 \subsection{Pseudocódigo}
+
+
 \subsection{Complejidad}
+
+$$O(n^2)$$ usando Prim naive
+
+
 \subsection{Experimentos}
+
+ideas:\\
+0 rutas existentes\\
+m rutas existentes\\
+random rutas existentes\\
+
+En general todo deberia dar los mismos tiempos, porque siempre construyo el arbol completo y aplico prim al completo
