@@ -7,6 +7,10 @@
 
 #include <iostream>
 #include <vector>
+#include <climits>
+
+// Lo defino asi para no tener overflows inesperados cuando tenga que sumar valores
+#define INFINITO (INT_MAX - 100000)
 
 class Problema3 {
     public:
