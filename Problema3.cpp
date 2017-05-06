@@ -13,9 +13,7 @@ bool Problema3::leerInput() {
 
     // n+1 pues las ciudades van de 1 a n
     existe.resize(n+1, std::vector<int>(n+1, 0));
-
-    // El costo es infinito cuando no hay arista
-    costo.resize(n+1, std::vector<int>(n+1, INFINITO));
+    costo.resize(n+1, std::vector<int>(n+1, 0));
 
     for (int i = 0; i < n*(n-1)/2; i++) {
         int c1, c2, e, p;
@@ -31,15 +29,26 @@ bool Problema3::leerInput() {
     return true;
 }
 
+// TODO: Extraer el codigo en funciones mas descriptivas
 void Problema3::resolver(bool imprimirOutput) {
     // Debo hacer std::cout con la respuesta en el formato correcto
     // Terminar con un \n !!
 
+
+    int costoDestruirExistentes = 0;
+
+    // Si la ruta existe, hago que su costo sea negativa
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++) {
+            if (existe[i][j]) {
+                costoDestruirExistentes += costo[i][j];
+                costo[i][j] *= -1;
+            }
+        }
+    }
+
     // Implementacion usando prim
-
-
-    // PRE: Armar el grafo completo con costos negativos donde ya existen,
-    // y costo de construccion donde no
+    // ----------------------------------------------------
 
     std::vector<bool> visitado(n+1, false);
     std::vector<int> dist(n+1, INFINITO);
@@ -70,6 +79,8 @@ void Problema3::resolver(bool imprimirOutput) {
             }
         }
 
+        visitado[v] = true;
+
         // Para cada vecino de v (todos excepto v porque es completo)
         for (int w = 1; w <= n; w++) {
             if ((v != w) && (costo[v][w] < dist[w])) {
@@ -79,7 +90,9 @@ void Problema3::resolver(bool imprimirOutput) {
         }
     }
 
-    // De Padre tengo que reconstruir el arbol
+    // Padre contiene la informacion del AGM
+    // --------------------------------------
+    // De Padre tengo que reconstruir el arbol y los armar los costos
 
     debug();
 }
