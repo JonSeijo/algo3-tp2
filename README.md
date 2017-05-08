@@ -47,3 +47,19 @@ Lista de cosas pendientes para hacer.
 [ ] Completar libretas y mails
 
 [ ] Reemplazar std::vector<std::vector<int> > por un typedef Matriz o algo similar
+
+[ ] Testear problema3.cpp con casos de prueba
+
+[ ] Crear tiempos3.cpp para el problema 3
+
+[ ] Pensar la mejor forma de organizar los .csv para el output del problema3, pensar que queremos medir
+
+[ ] Crear un script de python que ejecute tiempos para una instancia dada
+
+[ ] Hacer introduccion/explicacion del problema3
+
+[ ] DESPUES DE TESTEAR Y ESTAR CONFORMES! -> agregar pseudocodigo de problema3
+
+[ ] Realizar analisis de complejidad de problema3
+
+[ ] Relizar justificacion/demostracion de correctitud para el problema3
