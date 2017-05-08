@@ -42,9 +42,9 @@ Lista de cosas pendientes para hacer.
 
 [X] Crear repo
 
-[ ] Buscar una caratula mas completa (Faltaria cuadro de correcciones, y ya que estamos fancy, el logo del DC)
+[X] Completar libretas y mails
 
-[ ] Completar libretas y mails
+[ ] Buscar una caratula mas completa (Faltaria cuadro de correcciones, y ya que estamos fancy, el logo del DC)
 
 [ ] Reemplazar std::vector<std::vector<int> > por un typedef Matriz o algo similar
 
