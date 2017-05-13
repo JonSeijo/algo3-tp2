@@ -3,14 +3,14 @@ Tp2 de algo3
 
 ## GITIGNORE
 Modifiquenlo a gusto para no subir mugre, sobre todo si usan un IDE.
-Esta el de TeX que viene por defecto.
+Está el de TeX que viene por defecto.
 
 
 ## CODESTYLE
 Seamos consistentes:
-- Indentacion de 4 espacios
+- Indentación de 4 espacios
 - En c++, variables y funciones con camelCase
-- En python, variables y funciones con_snake_case
+- En python, variables y funciones con snake_case
 
 
 ## C++
@@ -44,9 +44,11 @@ Lista de cosas pendientes para hacer.
 
 [X] Completar libretas y mails
 
-[ ] Buscar una caratula mas completa (Faltaria cuadro de correcciones, y ya que estamos fancy, el logo del DC)
+[ ] Buscar una carátula mas completa (Faltaria cuadro de correcciones, y ya que estamos fancy, el logo del DC)
 
 [ ] Reemplazar std::vector<std::vector<int> > por un typedef Matriz o algo similar
+
+[ ] En el problema 3 revisar que el primer eje de 'arbol' luego de hacer Prim es probable que sea inválido
 
 [ ] Testear problema3.cpp con casos de prueba
 
