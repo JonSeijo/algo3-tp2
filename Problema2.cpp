@@ -91,23 +91,23 @@ bool Problema2::hayAbuso(int resta) {
 
 
 void Problema2::debug() {
-    std::cout << "n: " << n << "   m: " << m << "   c: " << c << "\n\n";
+    std::cerr << "n: " << n << "   m: " << m << "   c: " << c << "\n\n";
 
-    std::cout << "grafo: \n";
+    std::cerr << "grafo: \n";
     for (int i = 0; i <= n; i++) {
-        std::cout << i << ": ";
+        std::cerr << i << ": ";
         for (auto it = grafo[i].begin(); it != grafo[i].end(); it++) {
-            std::cout << *it << " ";
+            std::cerr << *it << " ";
         }
-        std::cout << "\n";
+        std::cerr << "\n";
     }
 
 
-    std::cout << "\n\ncosto: \n";
+    std::cerr << "\n\ncosto: \n";
     for (int i = 0; i <= n; i++) {
         for (int j = 0; j <= n; j++) {
-            std::cout << costo[i][j] << " ";
+            std::cerr << costo[i][j] << " ";
         }
-        std::cout << "\n";
+        std::cerr << "\n";
     }
 }

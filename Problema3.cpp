@@ -145,22 +145,22 @@ std::vector<int> Problema3::primNaive() {
 
 
 void Problema3::debug() {
-    std::cout << "n: " << n << "\n\n";
+    std::cerr << "n: " << n << "\n\n";
 
-    std::cout << "existe: \n";
+    std::cerr << "existe: \n";
     for (int i = 1; i <= n; i++) {
         for (int j = 1; j <= n; j++) {
-            std::cout << existe[i][j] << " ";
+            std::cerr << existe[i][j] << " ";
         }
-        std::cout << "\n";
+        std::cerr << "\n";
     }
 
 
-    std::cout << "\n\ncosto: \n";
+    std::cerr << "\n\ncosto: \n";
     for (int i = 1; i <= n; i++) {
         for (int j = 1; j <= n; j++) {
-            std::cout << costo[i][j] << " ";
+            std::cerr << costo[i][j] << " ";
         }
-        std::cout << "\n";
+        std::cerr << "\n";
     }
 }
