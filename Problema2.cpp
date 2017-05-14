@@ -1,3 +1,7 @@
+#include <iostream>
+#include <vector>
+#include <assert.h>
+
 #include "Problema2.h"
 
 void Problema2::resolver(bool imprimirOutput) {
@@ -17,7 +21,6 @@ void Problema2::resolver(bool imprimirOutput) {
     if (imprimirOutput) {
         std::cout << d << "\n";
     }
-
     debug();
 }
 
