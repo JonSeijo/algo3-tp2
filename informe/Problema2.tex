@@ -1,6 +1,27 @@
+% !TEX root = ./informe.tex
+
 \section{Problema 2}
 
-\subsection{Introducción}
+\subsection{Explicación}
+
+El contexto del problema es el siguiente: tenemos un conjunto de ciudades conectadas por rutas con peajes. El costo de un peaje es cuanto se debe pagar por transitar la ruta, y el mismo puede ser negativo (uno en vez de pagar por pasar, cobra). Decimos que hay un `abuso' si podemos partir de una ciudad $c$ arbitraria y volver, teniendo un saldo positivo de dinero. El problema es encontrar el máximo $c$ que le puedo restar a todos los peajes sin que haya ningún abuso. \\
+
+Notemos que podemos considerar a las ciudades como nodos, a las rutas como aristas, y a los peajes como el peso de las mismas; modelando el contexto como un grafo \todo{rotulado?}. Visto esto, el problema se termina reduciendo a encontrar el máximo $c$ tal que en el grafo en el que todos los pesos decrementan en $c$, no hay circuito simples negativos. \\
+
+\subsection{Correctitud}
+
+Supongamos que queremos saber el camino mínimo de un nodo $a$ a $b$, en un grafo $G$ arbitrario. El algoritmo de caminos mínimos de Bellman Ford es capaz de detectar si hay un circuito simple negativo sobre el que puedo ciclar para conseguir infinitamente pesos más pequeños. La sutileza consiste en notar que el hecho de que el algoritmo no detecte un ciclo negativo de $a$ a $b$, no implica que no exista alguno en $G$. Esto puede ocurrir en grafos orientados no fuertemente conexos, en los que podría tener un ciclo negativo cuyos nodos no sean alcanzables por $a$. En el problema, no se nos garantiza que el grafo de entrada sea conexo por lo que no podemos aplicar Bellman Ford de forma naive para resolverlo. \\
+
+Supongamos que tuviesemos un nodo $a$ con un camino hacia todos los nodos de nuestro grafo. Entonces, de existir un ciclo negativo, todos sus nodos serían alcanzables por $a$. Por ende, aplicar Bellman Ford sobre $a$ detectaría el circuito negativo, pues desde $a$ sería posible viajar a algún nodo del mismo, y ciclar indefinidamente. Asimismo, de no existir ningún ciclo negativo, Bellman Ford devolvería el mínimo recorrido hacia todos los nodos, negando que hubiese ciclo negativo alguno. \\
+
+Con esta idea, dado un grafo \todo{rotulado?} $G$ válido de nuestro problema, podemos extender $G$ a $G'$ con un nuevo nodo $u$ que tenga un arco de ida a todos los demás ejes. Como acabamos de ver, aplicar Bellman Ford sobre $u$ en $G'$ me permite determinar univocamente si hay algún circuito negativo o no. Lo que faltaría ver es que no agregamos circuitos negativos al realizar la extensión. Esto no ocurre, porque si tengo circuitos nuevos, deberán pasar por los ejes que acabamos de agregar. Esto es absurdo, pues por construcción no hay ningún camino orientado a $u$. Entonces, los circuitos $G$ y $G'$ siguen siendo los mismos. Entonces, si aplicamos Bellman Ford desde $u$ en $G'$, podemos saber si hay ciclos negativos en $G$. \\
+
+\todo[inline]{Falta la parte de por qué hacemos búsqueda binaria}
+
+\todo[inline]{Falta conectar con el algoritmo, pero para la idea de que la extensión y usar Ford tiene sentido está}
+
 \subsection{Pseudocódigo}
+
 \subsection{Complejidad}
+
 \subsection{Experimentos}
