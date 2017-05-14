@@ -28,6 +28,10 @@ bool Problema2::leerInput() {
     std::cin >> n; // Cantidad de ciudades
     std::cin >> m; // Cantidad de rutas
 
+    if (n == -1) {
+        return false;
+    }
+
     grafo.clear();
     costo.clear();
 
@@ -37,7 +41,7 @@ bool Problema2::leerInput() {
     costo.resize(n+1, std::vector<int>(n+1, 0));
 
     // Información de entrada
-    int c = 0; // c es el máximo costo de peaje
+    c = 0; // c es el máximo costo de peaje
     for (int i = 0; i < m; i++) {
         int c1, c2, p;
         std::cin >> c1 >> c2 >> p;
