@@ -7,14 +7,14 @@ print("")
 
 for nro in (1, 2, 3): 
 
-    # PREPARACIÓN ---
+    # PREPARACION ---
     directory = "./tests/problema" + str(nro)
     executable = "./solucion" + str(nro)
 
     # Intro
     print("PROBLEMA " + str(nro))
 
-    # Verificación de la existencia del ejecutable
+    # Verificacion de la existencia del ejecutable
     if not os.path.isfile(executable):
         print(" Warning: no existe ejecutable en la ruta {}".format(executable))
         print(" Continuando...\n")
@@ -26,21 +26,21 @@ for nro in (1, 2, 3):
         os.remove(os.path.join(directory, filename))
 
 
-    # GENERACIÓN DE SALIDAS ---
+    # GENERACION DE SALIDAS ---
     inputs = sorted([f for f in os.listdir(directory) if f.endswith(".in")])
     for filename in inputs:
-        # Inicialización de rutas
+        # Inicializacion de rutas
         base_path = os.path.join(directory, os.path.splitext(filename)[0])
         in_path = base_path + ".in"
         out_path = base_path + ".out"
         expected_path = base_path + ".expected"
 
-        # Verificación de que el '.expected' correspondiente existe
+        # Verificacion de que el '.expected' correspondiente existe
         if not os.path.isfile(expected_path):
             print("Warning: el archivo {} no tiene un '.expected' correspondiente".format(filename))
             continue
 
-        # Ejecución del programa
+        # Ejecucion del programa
         in_file = open(in_path, 'r')
         out_file = open(out_path, 'w')
         err_file = open(os.devnull, 'w')
@@ -56,16 +56,16 @@ for nro in (1, 2, 3):
         print(" --")
 
 
-    # COMPARACIÓN DE RESULTADOS ---
+    # COMPARACION DE RESULTADOS ---
     outputs = sorted([f for f in os.listdir(directory) if f.endswith(".out")])
     for filename in outputs:
-        # Inicialización de rutas
+        # Inicializacion de rutas
         plain_name = os.path.splitext(filename)[0]
         base_path = os.path.join(directory, plain_name)
         out_path = base_path + ".out"
         expected_path = base_path + ".expected"
 
-        # Comparación
+        # Comparacion
         iguales = True
 
         out_file = open(out_path, 'r')
