@@ -22,6 +22,49 @@ Con esta idea, dado un grafo \todo{rotulado?} $G$ válido de nuestro problema, p
 
 \subsection{Pseudocódigo}
 
+\begin{algorithm}
+\label{resolver}         % and a label for \ref{} commands later in the document
+\begin{algorithmic}
+\Function{resolver}{}
+    \State $d \gets 0$
+	\State $h \gets c + 2$
+	\While{$h - d > 1$}
+		\State $m \gets (h + d)/2$
+		\If{$\neg$\Call{hayAbuso}{m}}
+			\State $d \gets m$
+		\Else
+			\State $h \gets m$
+		\EndIf
+	\EndWhile
+	\Return $d$
+\EndFunction
+\Function{$hayAbuso$}{$resta: Int$}
+	\State $dist \gets$ \Call{$initMatrizInfinito$}{$n + 1$}
+	\State $dist[0] \gets 0$
+	\For{$i en 1 \rightarrow n + 1$}
+		\For{$nodo en 0 \rightarrow n$}
+			\For{$vecino en grafo[nodo]$}
+				\State $peso \gets grafo[nodo][vecino] - resta$
+				\State $dist[vecino] \gets$ \Call{$min$}{$dist[vecion], dist[nodo] + peso$}
+			\EndFor
+		\EndFor
+	\EndFor
+	\Return \Call{$hayCicloNegativo$}{$dist, resta$}
+\EndFunction
+\Function{$hayCicloNegativo$}{$dist: Int[], resta: Int$}
+	\For{$nodo en 0 \rightarrow n$}
+		\For{$vecino en grafo[nodo]$}
+			\State $peso \gets grafo[nodo][vecino] - resta$
+			\If{$dist[vecino] > dist[nodo] + peso$}
+				\Return $true$
+			\EndIf
+		\EndFor
+	\EndFor
+	\Return $false$
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
 \subsection{Complejidad}
 
 \subsection{Experimentos}
