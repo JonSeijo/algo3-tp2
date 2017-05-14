@@ -5,12 +5,12 @@
 #include "Problema2.h"
 
 void Problema2::resolver(bool imprimirOutput) {
-    // Búsqueda del máximo
-    int d = 0;
-    int h = c+2; // h no inclusive, miro el rango [0..c+1]
+    // Búsqueda del máximo en [0..c+2)
+    int d = 0; // d inclusive
+    int h = c+2; // h no inclusive
     while (h - d > 1) {
-        int m = (h - d)/2;
-        if (hayAbuso(m)) {
+        int m = (h + d)/2;
+        if (!hayAbuso(m)) {
             d = m;
         } else {
             h = m;
@@ -71,11 +71,11 @@ bool Problema2::hayAbuso(int resta) {
     dist[0] = 0;
 
     // Cálculo de caminos mínimos
-    for (int i = 0; i < n; i++) { // iteraciones
+    for (int i = 1; i <= n+1; i++) { // iteraciones
         for (int nodo = 0; nodo <= n; nodo++) {
             for (auto it = grafo[nodo].begin(); it != grafo[nodo].end(); it++) {
                 int vecino = *it;
-                int peso = costo[nodo][vecino];
+                int peso = costo[nodo][vecino] - resta;
                 if (dist[vecino] > dist[nodo] + peso) {
                     dist[vecino] = dist[nodo] + peso;
                 }
@@ -87,7 +87,7 @@ bool Problema2::hayAbuso(int resta) {
     for (int nodo = 0; nodo <= n; nodo++) {
         for (auto it = grafo[nodo].begin(); it != grafo[nodo].end(); it++) {
             int vecino = *it;
-            int peso = costo[nodo][vecino];
+            int peso = costo[nodo][vecino] - resta;
             if (dist[vecino] > dist[nodo] + peso) {
                 return true;
             }
