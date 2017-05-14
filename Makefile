@@ -1,5 +1,5 @@
 CPP=g++
-FLAGS= -std=c++11
+FLAGS= -std=c++11 -g
 
 all: solucion2 solucion3
 
