@@ -10,25 +10,39 @@ def print_mensaje(plain_name, is_ok):
     else:
         print(" Test {0}: FAILED".format(plain_name))
 
+
+# Grafo como LISTA DE ADYACENCIA
+def dfs(grafo, actual, visitados):
+    visitados[actual] = True
+    for hijo in grafo[actual]:
+        if not visitados[hijo]:
+            dfs(grafo, hijo, visitados)
+
+
 # Pre: desde i=0, rutas[i] y rutas[i+1] son los dos extremos de una ruta
+# Como m = n-1 (porque r_out = r_exp para esta etapa)
+# Basta ver que "rutas" sea conexo. Lo veo con un dfs.
+# Antes armo una lista de adyacencia para recorrer el grafo facilmente
 def es_arbol(rutas):
-
-    print("rutas: \n")
-    print(rutas)
-
     n = (len(rutas)/2)
-
-    lista_adyacencia = [[] for i in range(n+1)]
+    # No hay ningun vertice 0, comienza de 1
+    lista_adyacencia = [[] for i in range(n+2)]
 
     # muevo i de 2 en 2
     for i in range(0, len(rutas), 2):
-        print(i)
         r1 = int(rutas[i])
         r2 = int(rutas[i+1])
         lista_adyacencia[r1].append(r2)
 
-    print(lista_adyacencia)
+    visitados = [False for i in range(n+2)]
+    dfs(lista_adyacencia, 1, visitados)
 
+    todos_visitados = True
+    for i in range(1, len(visitados)):
+        if not visitados:
+            todos_visitados = False
+
+    return todos_visitados
 
 """
 En el problema 3 no hay una unica solucion posible para un valor minimo,
@@ -49,9 +63,6 @@ def testear_problema_3(out_file, expected_file):
     # Spliteo por espacios
     out_line = out_line.split()
     exp_line = exp_line.split()
-
-    print("len: " + str(len(out_line)))
-    print(exp_line)
 
     if (out_line[0] != exp_line[0]):
         print("\n p_out: " + str(out_line[0]) + " !=  p_exp: " + str(exp_line[0]))
