@@ -7,6 +7,9 @@
 
 #include <iostream>
 #include <vector>
+#include <set>
+#include <algorithm>
+#include <utility>
 #include <climits>
 
 // Lo defino asi para no tener overflows inesperados cuando tenga que sumar valores

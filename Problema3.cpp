@@ -55,7 +55,7 @@ void Problema3::escribirRta(std::vector<int> arbol, int costoTotal) {
 
     std::cout << n-1 << " ";   // Pues es un arbol
 
-    // TODO:
+
     // Solo quiero aristas validas, no repetirlas, ni tampoco las que tienen padre -1
     // Las siguientes secuencias son todas validas y representan al mismo arbol
     // [(1, 2), (2, 1)]
@@ -63,14 +63,27 @@ void Problema3::escribirRta(std::vector<int> arbol, int costoTotal) {
     // [(2, -1), (1, 2)]
     // De esto, solo quiero quedarme con "(1,2)" o con "(2,1)"
 
+    std::set<std::pair<int, int> > rutas;
+
     for (int i = 1; i <= n; i++) {
         int j = arbol[i];
-        // Son rutas bidireccionales, por lo que esto muestra todas las rutas una unica vez
-        // if (i < j){
-        // if (j != -1) {
-            std::cout << i << " " << j << " ";
-        // }
-        // }
+        if (j == -1) {
+            continue;
+        }
+        auto eje_1 = std::make_pair(i, j);
+        auto eje_2 = std::make_pair(j, i);
+        // Si el eje no esta en las rutas, lo agrego
+        if (std::find(rutas.begin(), rutas.end(), eje_1) == rutas.end()) {
+            if (std::find(rutas.begin(), rutas.end(), eje_2) == rutas.end()) {
+                rutas.insert(eje_1);
+            }
+        }
+    }
+
+    for (auto iter = rutas.begin(); iter != rutas.end(); iter++) {
+        int i = (*iter).first;
+        int j = (*iter).second;
+        std::cout << i << " " << j << " ";
     }
 
     std::cout << "\n";

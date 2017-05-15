@@ -69,6 +69,7 @@ def testear_problema_3(out_file, expected_file):
     out_line = out_line.split()
     exp_line = exp_line.split()
 
+    #print(out_line)
 
     if (out_line[0] != exp_line[0]):
         print("\n p_out: " + str(out_line[0]) + " !=  p_exp: " + str(exp_line[0]))
