@@ -22,8 +22,17 @@ Considero que la solucion es correcta si:
     : forman arbol si m = n-1  y si es conexo (dfs en O(n))
 """
 def testear_problema_3(out_file, expected_file):
-    print("testing test3")
+    # El output es una unica linea larga
+    out_line = out_file.readline().rstrip()
+    exp_line = expected_file.readline().rstrip()
 
+    # Spliteo por espacios
+    out_line.split()
+    exp_line.split()
+
+    print("testing test3")
+    print(out_line)
+    print(exp_line)
 
 print("")
 
