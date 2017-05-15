@@ -55,12 +55,22 @@ void Problema3::escribirRta(std::vector<int> arbol, int costoTotal) {
 
     std::cout << n-1 << " ";   // Pues es un arbol
 
+    // TODO:
+    // Solo quiero aristas validas, no repetirlas, ni tampoco las que tienen padre -1
+    // Las siguientes secuencias son todas validas y representan al mismo arbol
+    // [(1, 2), (2, 1)]
+    // [(1, -1), (2, 1)]
+    // [(2, -1), (1, 2)]
+    // De esto, solo quiero quedarme con "(1,2)" o con "(2,1)"
+
     for (int i = 1; i <= n; i++) {
         int j = arbol[i];
         // Son rutas bidireccionales, por lo que esto muestra todas las rutas una unica vez
-        if (i < j){
+        // if (i < j){
+        // if (j != -1) {
             std::cout << i << " " << j << " ";
-        }
+        // }
+        // }
     }
 
     std::cout << "\n";
@@ -87,10 +97,12 @@ int Problema3::negativizarCostoConstruidas() {
 
     // Si la ruta existe, hago que su costo sea negativa
     for (int i = 1; i <= n; i++) {
+        // for (int j = i+1; j <= n; j++) {
         for (int j = 1; j <= n; j++) {
             if (existe[i][j]) {
                 costoInicialDestruirTodo += costo[i][j];
                 costo[i][j] *= -1;
+                // costo[j][i] *= -1;
             }
         }
     }
