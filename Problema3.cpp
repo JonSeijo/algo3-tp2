@@ -133,6 +133,9 @@ std::vector<int> Problema3::primNaive() {
 
         // Para cada vecino de v (todos excepto v porque es completo)
         for (int w = 1; w <= n; w++) {
+            if (dist[w] == -1) {
+                continue;
+            }
             if ((v != w) && (costo[v][w] < dist[w])) {
                 dist[w] = costo[v][w];
                 padre[w] = v;

@@ -1,5 +1,5 @@
 CPP=g++
-FLAGS= -std=c++11 -g
+FLAGS= -std=c++11 -g -Wall
 
 all: solucion2 solucion3
 
@@ -17,6 +17,6 @@ solucion3: Solucion3.cpp Problema3.cpp
 
 clean:
 	rm -f *.o
-	rm tiempos
-	rm solucion2
-	rm solucion3
+	rm -f tiempos
+	rm -f solucion2
+	rm -f solucion3
