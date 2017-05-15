@@ -3,9 +3,19 @@ import subprocess # Popen, communicate
 import sys # exit
 import filecmp # cmp
 
+
+def print_mensaje(plain_name, is_ok):
+    if (is_ok):
+        print(" Test {0}: OK".format(plain_name))
+    else:
+        print(" Test {0}: FAILED".format(plain_name))
+
+def testear_problema_3(out_file, expected_file):
+    print("testing test3")
+
 print("")
 
-for nro in (1, 2, 3): 
+for nro in (1, 2, 3):
 
     # PREPARACION ---
     directory = "./tests/problema" + str(nro)
@@ -71,19 +81,23 @@ for nro in (1, 2, 3):
         out_file = open(out_path, 'r')
         expected_file = open(expected_path, 'r')
 
-        out_line = out_file.readline().rstrip()
-        exp_line = expected_file.readline().rstrip()
-        while out_line != '' and exp_line != '':
-            if out_line != exp_line:
-                iguales = False
+        if (nro == 3):
+            testear_problema_3(out_file, expected_file)
+        else:
             out_line = out_file.readline().rstrip()
             exp_line = expected_file.readline().rstrip()
+
+            while out_line != '' and exp_line != '':
+                if out_line != exp_line:
+                    iguales = False
+                out_line = out_file.readline().rstrip()
+                exp_line = expected_file.readline().rstrip()
+
+        # Cierro archivos en todos los casos
         out_file.close()
         expected_file.close()
 
         # Mensaje
-        if (iguales):
-            print(" Test {0}: OK".format(plain_name))
-        else:
-            print(" Test {0}: FAILED".format(plain_name))
+        print_mensaje(plain_name, iguales)
+
     print("")
