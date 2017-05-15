@@ -23,10 +23,15 @@ def dfs(grafo, actual, visitados):
 # Como m = n-1 (porque r_out = r_exp para esta etapa)
 # Basta ver que "rutas" sea conexo. Lo veo con un dfs.
 # Antes armo una lista de adyacencia para recorrer el grafo facilmente
-def es_arbol(rutas):
-    n = (len(rutas)/2)
+def es_arbol(rutas, cant_nodos):
+    m = int((len(rutas)/2))
+
+    if (m != int(cant_nodos) - 1):
+        print("\n\n m != n-1", end='')
+        return False
+
     # No hay ningun vertice 0, comienza de 1
-    lista_adyacencia = [[] for i in range(n+2)]
+    lista_adyacencia = [[] for i in range(m+2)]
 
     # muevo i de 2 en 2
     for i in range(0, len(rutas), 2):
@@ -34,7 +39,7 @@ def es_arbol(rutas):
         r2 = int(rutas[i+1])
         lista_adyacencia[r1].append(r2)
 
-    visitados = [False for i in range(n+2)]
+    visitados = [False for i in range(m+2)]
     dfs(lista_adyacencia, 1, visitados)
 
     todos_visitados = True
@@ -64,16 +69,20 @@ def testear_problema_3(out_file, expected_file):
     out_line = out_line.split()
     exp_line = exp_line.split()
 
+
     if (out_line[0] != exp_line[0]):
         print("\n p_out: " + str(out_line[0]) + " !=  p_exp: " + str(exp_line[0]))
+        print(out_line)
         return False
 
     if (out_line[1] != exp_line[1]):
         print("\n r_out: " + str(out_line[1]) + " !=  r_exp: " + str(exp_line[1]))
+        print(out_line)
         return False
 
-    if (not es_arbol(out_line[2:])):
+    if (not es_arbol(out_line[2:], int(exp_line[1]) + 1)):
         print("\n solucion NO es un arbol")
+        print(out_line)
         return False
 
     return True
