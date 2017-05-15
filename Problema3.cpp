@@ -98,6 +98,8 @@ int Problema3::obtenerCostoTotal(std::set<eje> rutas, int costoInicialDestruirTo
     for (auto iter = rutas.begin(); iter != rutas.end(); iter++) {
         int i = (*iter).first;
         int j = (*iter).second;
+        // Si era negativo se resta (implicito en la suma),
+        // Si era positivo, se suma
         costoTotal += costo[i][j];
     }
 
@@ -132,7 +134,7 @@ std::vector<int> Problema3::primNaive() {
     std::vector<int> padre(n+1, -1);
 
     int s = 1; // Tomo cualquiera, en particular el 1
-
+    padre[s] = -1;
     for (int w = 1; w <= n; w++) {
         if (s != w) {  // Los vecinos de s son todos excepto s
             dist[w] = costo[s][w];
@@ -160,10 +162,7 @@ std::vector<int> Problema3::primNaive() {
 
         // Para cada vecino de v (todos excepto v porque es completo)
         for (int w = 1; w <= n; w++) {
-            if (dist[w] == -1) {
-                continue;
-            }
-            if ((v != w) && (costo[v][w] < dist[w])) {
+            if ((!visitado[w]) && (costo[v][w] < dist[w])) {
                 dist[w] = costo[v][w];
                 padre[w] = v;
             }
