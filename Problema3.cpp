@@ -40,22 +40,18 @@ void Problema3::resolver(bool imprimirOutput) {
 
     // De Padre tengo que reconstruir el arbol y los armar los costos
     arbol = primNaive();
+    auto rutas = recrearRutasDesdeArbol(arbol);
 
-    int costoTotal = obtenerCostoTotal(arbol, costoInicialDestruirTodo);
+    int costoTotal = obtenerCostoTotal(rutas, costoInicialDestruirTodo);
 
     if (imprimirOutput) {
-        escribirRta(arbol, costoTotal);
+        escribirRta(rutas, costoTotal);
     }
 
     debug();
 }
 
-void Problema3::escribirRta(std::vector<int> arbol, int costoTotal) {
-    std::cout << costoTotal << " ";
-
-    std::cout << n-1 << " ";   // Pues es un arbol
-
-
+std::set<eje> Problema3::recrearRutasDesdeArbol(std::vector<int> &arbol) {
     // Solo quiero aristas validas, no repetirlas, ni tampoco las que tienen padre -1
     // Las siguientes secuencias son todas validas y representan al mismo arbol
     // [(1, 2), (2, 1)]
@@ -63,7 +59,7 @@ void Problema3::escribirRta(std::vector<int> arbol, int costoTotal) {
     // [(2, -1), (1, 2)]
     // De esto, solo quiero quedarme con "(1,2)" o con "(2,1)"
 
-    std::set<std::pair<int, int> > rutas;
+    std::set<eje> rutas;
 
     for (int i = 1; i <= n; i++) {
         int j = arbol[i];
@@ -79,6 +75,12 @@ void Problema3::escribirRta(std::vector<int> arbol, int costoTotal) {
             }
         }
     }
+    return rutas;
+}
+
+void Problema3::escribirRta(std::set<eje> rutas, int costoTotal) {
+    std::cout << costoTotal << " ";
+    std::cout << n-1 << " ";   // Pues es un arbol
 
     for (auto iter = rutas.begin(); iter != rutas.end(); iter++) {
         int i = (*iter).first;
@@ -89,15 +91,13 @@ void Problema3::escribirRta(std::vector<int> arbol, int costoTotal) {
     std::cout << "\n";
 }
 
-int Problema3::obtenerCostoTotal(std::vector<int> arbol, int costoInicialDestruirTodo) {
+int Problema3::obtenerCostoTotal(std::set<eje> rutas, int costoInicialDestruirTodo) {
     // costoTotal contiene inicialmente el costo de destruir todas las que ya existen
     int costoTotal = costoInicialDestruirTodo;
-    for (int i = 1; i <= n; i++) {
-        int j = arbol[i];
-        // Arista (i, j) está en el AGM
 
-        // Si ya existia, como el costo de las que existen estaba sumado entonces lo restao
-        // Si no existia, no lo estaba contando asi que lo sumo (costo de construir es positivo)
+    for (auto iter = rutas.begin(); iter != rutas.end(); iter++) {
+        int i = (*iter).first;
+        int j = (*iter).second;
         costoTotal += costo[i][j];
     }
 
@@ -110,12 +110,11 @@ int Problema3::negativizarCostoConstruidas() {
 
     // Si la ruta existe, hago que su costo sea negativa
     for (int i = 1; i <= n; i++) {
-        // for (int j = i+1; j <= n; j++) {
-        for (int j = 1; j <= n; j++) {
+        for (int j = i+1; j <= n; j++) {
             if (existe[i][j]) {
                 costoInicialDestruirTodo += costo[i][j];
                 costo[i][j] *= -1;
-                // costo[j][i] *= -1;
+                costo[j][i] *= -1;
             }
         }
     }

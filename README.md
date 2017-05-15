@@ -48,7 +48,7 @@ Lista de cosas pendientes para hacer.
 
 [ ] Reemplazar std::vector<std::vector<int> > por un typedef Matriz o algo similar
 
-[ ] En el problema 3 revisar que el primer eje de 'arbol' luego de hacer Prim es probable que sea inválido
+[X] En el problema 3 revisar que el primer eje de 'arbol' luego de hacer Prim es probable que sea inválido
 
 [ ] Testear problema3.cpp con casos de prueba
 

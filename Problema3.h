@@ -15,6 +15,8 @@
 // Lo defino asi para no tener overflows inesperados cuando tenga que sumar valores
 #define INFINITO (INT_MAX - 100000)
 
+typedef std::pair<int, int> eje;
+
 class Problema3 {
     public:
         Problema3() : n(0) {};
@@ -35,8 +37,9 @@ class Problema3 {
 
         std::vector<int> primNaive();
         int negativizarCostoConstruidas();
-        int obtenerCostoTotal(std::vector<int> arbol, int costoInicialDestruirTodo);
-        void escribirRta(std::vector<int> arbol, int costoTotal);
+        std::set<eje> recrearRutasDesdeArbol(std::vector<int> &arbol);
+        int obtenerCostoTotal(std::set<eje>, int costoInicialDestruirTodo);
+        void escribirRta(std::set<eje>, int costoTotal);
 
         void debug();
 };

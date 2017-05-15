@@ -6,10 +6,10 @@ all: solucion2 solucion3
 tiempos: tiempos.cpp
 	$(CPP) $(FLAGS) -o $@ $<
 
-solucion2: Solucion2.cpp Problema2.cpp
+solucion2: Solucion2.cpp Problema2.cpp Problema2.h
 	$(CPP) $(FLAGS) -o  $@ Problema2.cpp $<
 
-solucion3: Solucion3.cpp Problema3.cpp
+solucion3: Solucion3.cpp Problema3.cpp Problema3.h
 	$(CPP) $(FLAGS) -o  $@ Problema3.cpp $<
 
 %.o: %.cpp
