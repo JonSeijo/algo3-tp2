@@ -38,12 +38,15 @@ def testear_problema_3(out_file, expected_file):
     print(exp_line)
 
     if (out_line[0] != exp_line[0]):
+        print("\n p_out: " + str(out_line[0]) + " !=  p_exp: " + str(exp_line[0]))
         return False
 
     if (out_line[1] != exp_line[1]):
+        print("\n r_out: " + str(out_line[1]) + " !=  r_exp: " + str(exp_line[1]))
         return False
 
     if (not es_arbol(out_line[2:])):
+        print("\n solucion NO es un arbol")
         return False
 
     return True
