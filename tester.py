@@ -10,6 +10,10 @@ def print_mensaje(plain_name, is_ok):
     else:
         print(" Test {0}: FAILED".format(plain_name))
 
+# Pre: desde i=0, rutas[i] y rutas[i+1] son los dos extremos de una ruta
+def es_arbol(rutas):
+    return False
+
 """
 En el problema 3 no hay una unica solucion posible para un valor minimo,
 pueden haber diferentes combinaciones de rutas a contruir/destruir que den el mismo valor
@@ -30,9 +34,20 @@ def testear_problema_3(out_file, expected_file):
     out_line.split()
     exp_line.split()
 
-    print("testing test3")
     print(out_line)
     print(exp_line)
+
+    if (out_line[0] != exp_line[0]):
+        return False
+
+    if (out_line[1] != exp_line[1]):
+        return False
+
+    if (not es_arbol(out_line[2:])):
+        return False
+
+    return True
+
 
 print("")
 
@@ -97,7 +112,7 @@ for nro in (1, 2, 3):
         expected_path = base_path + ".expected"
 
         # Comparacion
-        iguales = True
+        test_ok = True
 
         out_file = open(out_path, 'r')
         expected_file = open(expected_path, 'r')
@@ -105,14 +120,14 @@ for nro in (1, 2, 3):
         # En el problema3, hay varias combinaciones de rutas posibles, no esta bien chequear igualdad de rutas
         # Ver comentarios al respecto en definicion de funcion
         if (nro == 3):
-            testear_problema_3(out_file, expected_file)
+            test_ok = testear_problema_3(out_file, expected_file)
         else:
             out_line = out_file.readline().rstrip()
             exp_line = expected_file.readline().rstrip()
 
             while out_line != '' and exp_line != '':
                 if out_line != exp_line:
-                    iguales = False
+                    test_ok = False
                 out_line = out_file.readline().rstrip()
                 exp_line = expected_file.readline().rstrip()
 
@@ -121,6 +136,6 @@ for nro in (1, 2, 3):
         expected_file.close()
 
         # Mensaje
-        print_mensaje(plain_name, iguales)
+        print_mensaje(plain_name, test_ok)
 
     print("")
