@@ -57,7 +57,10 @@ void Problema3::escribirRta(std::vector<int> arbol, int costoTotal) {
 
     for (int i = 1; i <= n; i++) {
         int j = arbol[i];
-        std::cout << i << " " << j << " ";
+        // Son rutas bidireccionales, por lo que esto muestra todas las rutas una unica vez
+        if (i < j){
+            std::cout << i << " " << j << " ";
+        }
     }
 
     std::cout << "\n";
