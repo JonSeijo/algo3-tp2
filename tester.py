@@ -12,7 +12,23 @@ def print_mensaje(plain_name, is_ok):
 
 # Pre: desde i=0, rutas[i] y rutas[i+1] son los dos extremos de una ruta
 def es_arbol(rutas):
-    return False
+
+    print("rutas: \n")
+    print(rutas)
+
+    n = (len(rutas)/2)
+
+    lista_adyacencia = [[] for i in range(n+1)]
+
+    # muevo i de 2 en 2
+    for i in range(0, len(rutas), 2):
+        print(i)
+        r1 = int(rutas[i])
+        r2 = int(rutas[i+1])
+        lista_adyacencia[r1].append(r2)
+
+    print(lista_adyacencia)
+
 
 """
 En el problema 3 no hay una unica solucion posible para un valor minimo,
@@ -27,14 +43,14 @@ Considero que la solucion es correcta si:
 """
 def testear_problema_3(out_file, expected_file):
     # El output es una unica linea larga
-    out_line = out_file.readline().rstrip()
-    exp_line = expected_file.readline().rstrip()
+    out_line = out_file.readline()
+    exp_line = expected_file.readline()
 
     # Spliteo por espacios
-    out_line.split()
-    exp_line.split()
+    out_line = out_line.split()
+    exp_line = exp_line.split()
 
-    print(out_line)
+    print("len: " + str(len(out_line)))
     print(exp_line)
 
     if (out_line[0] != exp_line[0]):
