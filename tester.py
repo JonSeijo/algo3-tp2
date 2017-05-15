@@ -10,8 +10,20 @@ def print_mensaje(plain_name, is_ok):
     else:
         print(" Test {0}: FAILED".format(plain_name))
 
+"""
+En el problema 3 no hay una unica solucion posible para un valor minimo,
+pueden haber diferentes combinaciones de rutas a contruir/destruir que den el mismo valor
+asi como tambien hay que tener en cuenta que son rutas bidireccionales.
+
+Considero que la solucion es correcta si:
+- p_out = p_expected
+- r_out = r_expected
+- Las rutas de out forman un arbol
+    : forman arbol si m = n-1  y si es conexo (dfs en O(n))
+"""
 def testear_problema_3(out_file, expected_file):
     print("testing test3")
+
 
 print("")
 
@@ -81,6 +93,8 @@ for nro in (1, 2, 3):
         out_file = open(out_path, 'r')
         expected_file = open(expected_path, 'r')
 
+        # En el problema3, hay varias combinaciones de rutas posibles, no esta bien chequear igualdad de rutas
+        # Ver comentarios al respecto en definicion de funcion
         if (nro == 3):
             testear_problema_3(out_file, expected_file)
         else:
