@@ -3,20 +3,29 @@
 \section{Problema 3}
 \subsection{Explicación}
 
---> contar el enunciado del problema
+En una provincia, hay ciudades conectadas por rutas bidireccionales. No todas estan conectadas. Se quiere que exista una única forma de llegar de una ciudad a cualquier otra. Para logar esto, se pueden \textbf{destruir} rutas existentes o \textbf{construir} nuevas rutas. La construcción y destrucción de cada ruta tiene un costo asociado, por lo que se quiere además minimizar el costo. \\
+
+Para resolver el problema podemos pensarlo como un problema de grafos. La provincia es un \textit{grafo}, donde cada ciudad es un \textit{nodo} y las rutas son \textit{aristas}.  \\
+
+Si consideramos al grafo como el completo de \textit{n} nodos (donde \textit{n} es la cantidad de ciudades). Que exista una y solo una ruta para llegar de una ciudad a cualquier otra, significa que tenemos que lograr que las rutas existentes formen un árbol (que incluya a todos los nodos).  \\
+
+Como podemos construir rutas nuevas y destruit las existentes, podríamos en principio quedarnos con cualquier árbol generador del grafo completo de \textit{n} nodos. Esto hace que las rutas elegidas cumplan la condición de conexiones. Restaría considerar que las rutas elegidas tienen además que tener el mínimo costo posible. \\
+
+Las observaciones claves son las siguientes: \\
+- Si se tiene que elegir entre construir dos rutas que no existen, lo mejor es construir la mas barata. \\
+- Si se tiene que elegir entre destruir dos ya existentes, es mejor quedarse con la mas cara de destruir. \\
+- Si se tiene que elegir entre mantener una ruta existente o destruirla y construir otra, es mas barato manterla. Mantener una ruta cuesta 0, mientras que destruirla y construir otra tiene costo. \\
+
+Teniendo esto en cuenta, podemos armar nuestro grafo de la siguiente manera: \\
+
+Tomamos un grafo completo de \textit{n} nodos. Las rutas que \textbf{no} existian las colocamos con su costo de construcción. Las rutas que \textbf{sí} existían las colocammos con el peso \textbf{negativo} de su destrucción. ¿Por qué el negativo? Al tratar de elegir los menores costos, se prioriza elegir una ya construida a una que no lo está, y entre dos construidas prioriza aquella que cuesta mas destruir. \\
+
+La solución final es el Arbol Generador Mínimo de este grafo. \\
+
+
 
 \subsection{Correctitud}
 
-Que haya una y solo una ruta para llegar de una ciudad a cualquier otra, significa que tenemos que lograr que las rutas formen un arbol. (minimizando costo total). Construir alguna ruta o destruir alguna ruta tiene un costo asociado. Quedarme con una ruta que ya existe me cuesta 0, porque no la construyo ni destruyo. Por lo tanto, lo mas eficiente es quedarme con rutas que ya existen. \\
-
-¿Da igual quedarme cualquier ruta ya existente? No, porque como quiero usar la minima cantidad de rutas, es posible que necesite destruir turas que estan de mas, en ese caso voy a elegir destruir las que son mas baratas de destruir. En otras palabras, priorizo quedarme con las que son mas caras de destruir. \\
-
-Entonces, a las rutas que ya existen les asigno el \textbf{negativo} costo de destruirlas, de esta forma la ruta con el nuevo costo minimo sera en realidad la ruta con mayor costo de destrucción. En caso de necesitar rutas extra, no queda otra alternativa que construir nuevas rutas con el costo de construccion dado. \\
-
-La solución del problema es la siguiente:
-Considero el grafo \textbf{completo}. Las rutas que ya existían las coloco con su peso de destrucción negativo, y las que no existían las coloco con su peso de construcción normal. \\
-
-Consiguiendo el arbol generador minimo, el costo total es el costo de destruccion de \textbf{todas las aristas que existían}, sumado a los costos (incluyendo negativos) de las aristas del arbol. Si la ruta del arbol era negativa, entonces se resta al costo total (esta bien pues ya existia), y si era positiva se suma al costo total (esta bien porque no existia) \\
 
 
 \subsection{Pseudocódigo}
