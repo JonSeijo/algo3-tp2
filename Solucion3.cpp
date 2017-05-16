@@ -2,7 +2,8 @@
 
 int main() {
     Problema3 problema;
-    while (problema.leerInput()) {
+    bool leyoInputCorrectamente = problema.leerInput();
+    if (leyoInputCorrectamente) {
         problema.resolver(true);
     }
 }
