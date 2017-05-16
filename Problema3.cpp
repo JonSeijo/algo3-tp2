@@ -40,66 +40,37 @@ void Problema3::resolver(bool imprimirOutput) {
 
     // De Padre tengo que reconstruir el arbol y los armar los costos
     arbol = primNaive();
-    auto rutas = recrearRutasDesdeArbol(arbol);
 
-    int costoTotal = obtenerCostoTotal(rutas, costoInicialDestruirTodo);
+    int costoTotal = obtenerCostoTotal(arbol, costoInicialDestruirTodo);
 
     if (imprimirOutput) {
-        escribirRta(rutas, costoTotal);
+        escribirRta(arbol, costoTotal);
     }
 
     debug();
 }
 
-std::set<eje> Problema3::recrearRutasDesdeArbol(std::vector<int> &arbol) {
-    // Solo quiero aristas validas, no repetirlas, ni tampoco las que tienen padre -1
-    // Las siguientes secuencias son todas validas y representan al mismo arbol
-    // [(1, 2), (2, 1)]
-    // [(1, -1), (2, 1)]
-    // [(2, -1), (1, 2)]
-    // De esto, solo quiero quedarme con "(1,2)" o con "(2,1)"
-
-    std::set<eje> rutas;
-
-    for (int i = 1; i <= n; i++) {
-        int j = arbol[i];
-        if (j == -1) {
-            continue;
-        }
-        auto eje_1 = std::make_pair(i, j);
-        auto eje_2 = std::make_pair(j, i);
-        // Si el eje no esta en las rutas, lo agrego
-        if (std::find(rutas.begin(), rutas.end(), eje_1) == rutas.end()) {
-            if (std::find(rutas.begin(), rutas.end(), eje_2) == rutas.end()) {
-                rutas.insert(eje_1);
-            }
-        }
-    }
-    return rutas;
-}
-
-void Problema3::escribirRta(std::set<eje> rutas, int costoTotal) {
+void Problema3::escribirRta(std::vector<int> arbol, int costoTotal) {
     std::cout << costoTotal << " ";
     std::cout << n-1 << " ";   // Pues es un arbol
 
-    for (auto iter = rutas.begin(); iter != rutas.end(); iter++) {
-        int i = (*iter).first;
-        int j = (*iter).second;
+    for (int i = 2; i <= n; i++) { // Ignoro el 'eje' (1,-1)
+        int j = arbol[i];
         std::cout << i << " " << j << " ";
     }
 
     std::cout << "\n";
 }
 
-int Problema3::obtenerCostoTotal(std::set<eje> rutas, int costoInicialDestruirTodo) {
+int Problema3::obtenerCostoTotal(std::vector<int> arbol, int costoInicialDestruirTodo) {
     // costoTotal contiene inicialmente el costo de destruir todas las que ya existen
     int costoTotal = costoInicialDestruirTodo;
 
-    for (auto iter = rutas.begin(); iter != rutas.end(); iter++) {
-        int i = (*iter).first;
-        int j = (*iter).second;
-        // Si era negativo se resta (implicito en la suma),
-        // Si era positivo, se suma
+    for (int i = 2; i <= n; i++) { // Ignoro el 'eje' (1, -1)
+        int j = arbol[i];
+        // Arista (i, j) está en el AGM
+        // Si ya existia, como el costo de las que existen estaba sumado entonces lo restao
+        // Si no existia, no lo estaba contando asi que lo sumo (costo de construir es positivo)
         costoTotal += costo[i][j];
     }
 

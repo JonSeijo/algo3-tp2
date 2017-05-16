@@ -7,15 +7,10 @@
 
 #include <iostream>
 #include <vector>
-#include <set>
-#include <algorithm>
-#include <utility>
 #include <climits>
 
 // Lo defino asi para no tener overflows inesperados cuando tenga que sumar valores
 #define INFINITO (INT_MAX - 100000)
-
-typedef std::pair<int, int> eje;
 
 class Problema3 {
     public:
@@ -37,9 +32,8 @@ class Problema3 {
 
         std::vector<int> primNaive();
         int negativizarCostoConstruidas();
-        std::set<eje> recrearRutasDesdeArbol(std::vector<int> &arbol);
-        int obtenerCostoTotal(std::set<eje>, int costoInicialDestruirTodo);
-        void escribirRta(std::set<eje>, int costoTotal);
+        int obtenerCostoTotal(std::vector<int> arbol, int costoInicialDestruirTodo);
+        void escribirRta(std::vector<int> arbol, int costoTotal);
 
         void debug();
 };
