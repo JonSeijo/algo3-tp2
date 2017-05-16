@@ -39,15 +39,15 @@ Vamos a utilizar como entrada en nuestro algoritmo a las siguientes variables:
 \end{itemize}
 
 \begin{algorithm}
-\label{resolver}         % and a label for \ref{} commands later in the document
+\label{ej2}         % and a label for \ref{} commands later in the document
 \begin{algorithmic}
-\Function{resolver}{}
-	\State \Call{extenderGrafo}{()}
+\Function{$resolver$}{}
+	\State $extenderGrafo()$
     \State $d \gets 0$
 	\State $h \gets c + 2$
 	\While{$h - d > 1$}
 		\State $m \gets (h + d)/2$
-		\If{$\neg$\Call{hayAbuso}{$m$}}
+		\If{$\neg$\Call{$hayAbuso$}{$m$}}
 			\State $d \gets m$
 		\Else
 			\State $h \gets m$
@@ -60,9 +60,9 @@ Vamos a utilizar como entrada en nuestro algoritmo a las siguientes variables:
 
 \begin{algorithm}
 \begin{algorithmic}
-\Function{extenderGrafo}{}
+\Function{$extenderGrafo$}{}
 	\For{$i \in [1..n)$}
-		\State \Call{agregarAdelante}{$grafo[0], i$}
+		\State \Call{$agregarAdelante$}{$grafo[0], i$}
 		\State $costo[0][i] \gets 0$
 	\EndFor
 \EndFunction
@@ -71,8 +71,8 @@ Vamos a utilizar como entrada en nuestro algoritmo a las siguientes variables:
 
 \begin{algorithm}
 \begin{algorithmic}
-\Function{hayAbuso}{$resta: Int$}
-	\State $dist \gets$ \Call{initMatrizInfinito}{$n + 1$}
+\Function{$hayAbuso$}{$resta: Int$}
+	\State $dist \gets$ \Call{$initMatrizInfinito$}{$n + 1$}
 	\State $dist[0] \gets 0$
 	\For{$i \in [1..n)$}
 		\For{$nodo \in [0..n]$}
@@ -82,14 +82,14 @@ Vamos a utilizar como entrada en nuestro algoritmo a las siguientes variables:
 			\EndFor
 		\EndFor
 	\EndFor
-	\Return \Call{hayCicloNegativo}{$dist, resta$}
+	\Return \Call{$hayCicloNegativo$}{$dist, resta$}
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
 
 \begin{algorithm}
 \begin{algorithmic}
-\Function{hayCicloNegativo}{$dist: Int[], resta: Int$}
+\Function{$hayCicloNegativo$}{$dist: Int[], resta: Int$}
 	\For{$nodo \in [0..n]$}
 		\For{$vecino \in grafo[nodo]$}
 			\State $peso \gets grafo[nodo][vecino] - resta$
