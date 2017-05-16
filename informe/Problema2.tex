@@ -40,22 +40,30 @@ Con esta idea, dado un grafo \todo{rotulado?} $G$ válido de nuestro problema, p
 	\EndWhile
 	\Return $d$
 \EndFunction
-\Function{$hayAbuso$}{$resta: Int$}
-	\State $dist \gets$ \Call{$initMatrizInfinito$}{$n + 1$}
+\end{algorithmic}
+\end{algorithm}
+\begin{algorithm}
+\begin{algorithmic}
+\Function{hayAbuso}{$resta: Int$}
+	\State $dist \gets$ \Call{initMatrizInfinito}{$n + 1$}
 	\State $dist[0] \gets 0$
-	\For{$i en 1 \rightarrow n + 1$}
-		\For{$nodo en 0 \rightarrow n$}
-			\For{$vecino en grafo[nodo]$}
+	\For{$i \in [1..n)$}
+		\For{$nodo \in [0..n]$}
+			\For{$vecino \in grafo[nodo]$}
 				\State $peso \gets grafo[nodo][vecino] - resta$
-				\State $dist[vecino] \gets$ \Call{$min$}{$dist[vecion], dist[nodo] + peso$}
+				\State $dist[vecino] \gets$ \Call{$min$}{$dist[vecino], dist[nodo] + peso$}
 			\EndFor
 		\EndFor
 	\EndFor
-	\Return \Call{$hayCicloNegativo$}{$dist, resta$}
+	\Return \Call{hayCicloNegativo}{$dist, resta$}
 \EndFunction
-\Function{$hayCicloNegativo$}{$dist: Int[], resta: Int$}
-	\For{$nodo en 0 \rightarrow n$}
-		\For{$vecino en grafo[nodo]$}
+\end{algorithmic}
+\end{algorithm}
+\begin{algorithm}
+\begin{algorithmic}
+\Function{hayCicloNegativo}{$dist: Int[], resta: Int$}
+	\For{$nodo \in [0..n]$}
+		\For{$vecino \in grafo[nodo]$}
 			\State $peso \gets grafo[nodo][vecino] - resta$
 			\If{$dist[vecino] > dist[nodo] + peso$}
 				\Return $true$
