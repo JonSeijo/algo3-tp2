@@ -6,33 +6,48 @@
 
 El contexto del problema es el siguiente: tenemos un conjunto de ciudades conectadas por rutas con peajes. El costo de un peaje es cuanto se debe pagar por transitar la ruta, y el mismo puede ser negativo (uno en vez de pagar por pasar, cobra). Decimos que hay un `abuso' si podemos partir de una ciudad $c$ arbitraria y volver, teniendo un saldo positivo de dinero. El problema es encontrar el máximo $c$ que le puedo restar a todos los peajes sin que haya ningún abuso. \\
 
-Notemos que podemos considerar a las ciudades como nodos, a las rutas como aristas, y a los peajes como el peso de las mismas; modelando el contexto como un grafo \todo{rotulado?}. Visto esto, el problema se termina reduciendo a encontrar el máximo $c$ tal que en el grafo en el que todos los pesos decrementan en $c$, no hay circuito simples negativos. \\
+Notemos que podemos considerar a las ciudades como nodos, a las rutas como aristas, y a los peajes como el peso de las mismas; modelando el contexto como un grafo \todo{rotulado?}. Visto esto, el problema se reduce a encontrar el máximo $k$ tal que en el grafo en el que todos los pesos decrementan en $k$, no hay circuito simples negativos. \\
 
 \subsection{Correctitud}
 
-Supongamos que queremos saber el camino mínimo de un nodo $a$ a $b$, en un grafo $G$ arbitrario. El algoritmo de caminos mínimos de Bellman Ford es capaz de detectar si hay un circuito simple negativo sobre el que puedo ciclar para conseguir infinitamente pesos más pequeños. La sutileza consiste en notar que el hecho de que el algoritmo no detecte un ciclo negativo de $a$ a $b$, no implica que no exista alguno en $G$. Esto puede ocurrir en grafos orientados no fuertemente conexos, en los que podría tener un ciclo negativo cuyos nodos no sean alcanzables por $a$. En el problema, no se nos garantiza que el grafo de entrada sea conexo por lo que no podemos aplicar Bellman Ford de forma naive para resolverlo. \\
+Supongamos que queremos calcular el camino mínimo de un nodo $a$ a $b$, en un grafo $G$ arbitrario. De haber un ciclo negativo entre ambos nodos, el algoritmo de Bellman Ford es capaz de detectarlo. Parece una buena herramienta para darnos cuenta si estamos frente a un abuso o no, pero no es tan sencillo. La sutileza consiste en notar que la ausencia de ciclos negativos entre $a$ y $b$ no implica que no exista ninguno en todo $G$. Esto puede ocurrir porque no se nos garantiza que la entrada forme un grafo orientado fuertemente conexo. Como consecuencia, podríamos llegar a tener un ciclo negativo cuyos nodos no sean alcanzables por $a$, con lo cual Bellman Ford no nos alcanzaría para detectar infaliblemente cuando no hay abuso.\\
 
-Supongamos que tuviesemos un nodo $a$ con un camino hacia todos los nodos de nuestro grafo. Entonces, de existir un ciclo negativo, todos sus nodos serían alcanzables por $a$. Por ende, aplicar Bellman Ford sobre $a$ detectaría el circuito negativo, pues desde $a$ sería posible viajar a algún nodo del mismo, y ciclar indefinidamente. Asimismo, de no existir ningún ciclo negativo, Bellman Ford devolvería el mínimo recorrido hacia todos los nodos, negando que hubiese ciclo negativo alguno. \\
+Puede solventarse esta situación con la siguiente idea. Supongamos que tuviesemos un nodo $a$ con un camino hacia todos los nodos de nuestro grafo. De existir un ciclo negativo, todos sus nodos serían alcanzables por $a$, por lo que el mismo sería detectable aplicando Bellman Ford. Asimismo, de no existir ningún ciclo negativo, el algoritmo devolvería el mínimo recorrido hacia todos los nodos partiendo de $a$, lo cual nos informaría que no hay ciclos negativos. \\
 
-Con esta idea, dado un grafo \todo{rotulado?} $G$ válido de nuestro problema, podemos extender $G$ a $G'$ con un nuevo nodo $u$ que tenga un arco de ida a todos los demás ejes. Como acabamos de ver, aplicar Bellman Ford sobre $u$ en $G'$ me permite determinar univocamente si hay algún circuito negativo o no. Lo que faltaría ver es que no agregamos circuitos negativos al realizar la extensión. Esto no ocurre, porque si tengo circuitos nuevos, deberán pasar por los ejes que acabamos de agregar. Esto es absurdo, pues por construcción no hay ningún camino orientado a $u$. Entonces, los circuitos $G$ y $G'$ siguen siendo los mismos. Entonces, si aplicamos Bellman Ford desde $u$ en $G'$, podemos saber si hay ciclos negativos en $G$. \\
+Para aprovechar esto, dado un grafo \todo{rotulado?} $G$ válido en nuestro problema, podemos extender $G$ agregándole un nuevo nodo $u$ que tenga un arco de ida hacia todos los demás ejes. Llamemoslé a este nuevo grafo $G'$. Como acabamos de ver, aplicar Bellman Ford sobre $u$ en $G'$ nos permite determinar univocamente si hay algún circuito negativo o no. Lo que faltaría ver es que no agregamos circuitos negativos al realizar la extensión. Esto no ocurre, porque si tengo circuitos nuevos, deberán pasar por los ejes que acabamos de agregar, lo cual es absurdo, pues por construcción no hay ningún camino orientado a $u$. Entonces, los circuitos $G$ y $G'$ siguen siendo los mismos. Entonces, si aplicamos Bellman Ford desde $u$ en $G'$, podemos saber si hay ciclos negativos en $G$, o en otras palabras, si hay abuso. \\
 
-\todo[inline]{Falta la parte de por qué hacemos búsqueda binaria}
+En \texttt{EXTENDERGRAFO} lo que hacemos es conseguir la extensión. Como al crear el grafo dejamos el primer nodo `libre', lo que hacemos es usarlo como nuestro $u$. Agregamos a la lista de adyacencia de $u$ a todos los nodos que representan ciudades, y les ponemos un costo arbitrario a los nuevos ejes (en particular $0$). Al aplicarse esta función, el algoritmo de Bellman Ford va a aplicarse sobre este nuevo grafo, que como ya vimos, nos da la información que queremos sobre la entrada original. \\
 
-\todo[inline]{Falta conectar con el algoritmo, pero para la idea de que la extensión y usar Ford tiene sentido está}
+La función que se encarga de implementar el algoritmo es \texttt{HAYABUSO}. Lo que hacemos en le mismo es aplicar el algoritmo de Ford $n+1$ veces, donde la última iteración se encuentra dentro de \texttt{HAYCICLONEGATIVO}, que se encarga de preguntar si las distancias mínimas de los nodos siguen cambiando. Notar que el peso que consideramos para cada eje es el peso original menos $resta$. De esta forma, estamos trabajando sobre el grafo con los pesos decrementados en $resta$, a pesar de que no lo tengamos almacenado explicitamente. Entonces, \texttt{HAYABUSO} nos devuelve si hay un ciclo negativo en el grafo restado, desde el nodo $0$ hacia todos los demás nodos. Por todo lo que vimos anteriormente, esto es lo mismo que devolver si en nuestro grafo con los pesos restados hay abuso. \\
+
+Visto esto, analicemos el pseudocódigo de \texttt{RESOLVER} para garantizar que devuelve la respuesta correcta. En principio, observemos que consta de una búsqueda binaria sobre el rango $[0..c+2)$, donde $c$ es el máximo costo de peaje. Supongamos por un segundo que sabemos que el $k$ que buscamos está en ese rango. En cada partición de nuestro espacio de búsqueda, tomamos la mitad superior incluyendo al pivote $m$ si no hay abuso, y la mitad inferior si lo hay. Si restando $m$ tenemos un abuso, entonces sé que nuestro $k$ no es $m$ (pues estamos buscando un $k$ en el que no se produzca abuso); y que si ya con $m$ tenemos un abuso, con valores mayores lo seguiremos teniendo, por lo que puedo descartar a $m$ y la mitad superior de nuestro espacio de búsqueda. Si por el contrario, restando $m$ no nos da un abuso, entonces $m$ es un posible candidato a $k$. Los valores menores a $m$ tampoco nos darán abuso, pero son todos valores menores a $k$, y lo que estoy buscando es el máximo. Por ende, puedo descartar la mitad inferior de nuestro espacio de búsqueda. Entonces, lo que estamos buscando efectivamente es el máximo $k$ tal que no hay abuso en el grafo producto de haber decrementado todos los pesos de los ejes en $k$. \\
+
+Ahora, ¿cómo sabemos que se encuentra el $k$ en el rango $[0..c+2)$? Bueno, no puede ser negativo, porque sabemos que sin ninguna modificación no tenemos ningún abuso. Restarle a los costos un número negativo implicaría hacer los peajes más caros, lo que haría menos posible un abuso. Tampoco puede ser mayor a $c+1$, porque como $c$ es máximo, y quedarían todos los costos de los peajes negativos. Por el enunciado, sabemos que todas las ciudades tienen una ruta de salida, con lo cual siempre podemos asegurar que tenemos un ciclo. Si todos los peajes son negativos, esto implica que tendríamos tener algún ciclo negativo. Entonces, el $k$ que buscamos está entre $0$ y $c+1$ inclusive.
+
+\todo[inline]{En muchos lados se menciona la obviedad de que con $k$ más grande hay 'más' abuso, pero nunca se da una pseudo-demostración de por qué. Quizás no hace falta, tho.}
 
 \newpage
 \subsection{Pseudocódigo}
 \todo[inline]{Falta agregar comentarios sobre las complejidades}
 
+Vamos a utilizar como entrada en nuestro algoritmo a las siguientes variables:
+\begin{itemize}
+	\item $n$: La cantidad de ciudades
+	\item $grafo$: El grafo de entrada representado con listas de adyacencia. Las posiciones del $1$ a $n$ representan nuestras ciudades, mientras que la posición $0$ se deja libre para la extensión
+	\item $costo$: La matriz con los costos de peaje, en donde en la posición $(i,j)$ está el costo de la ruta que va desde $i$ hasta $j$
+	\item $c$: El máximo costo de peaje
+\end{itemize}
+
 \begin{algorithm}
 \label{resolver}         % and a label for \ref{} commands later in the document
 \begin{algorithmic}
 \Function{resolver}{}
+	\State \Call{extenderGrafo}{()}
     \State $d \gets 0$
 	\State $h \gets c + 2$
 	\While{$h - d > 1$}
 		\State $m \gets (h + d)/2$
-		\If{$\neg$\Call{hayAbuso}{m}}
+		\If{$\neg$\Call{hayAbuso}{$m$}}
 			\State $d \gets m$
 		\Else
 			\State $h \gets m$
@@ -42,6 +57,18 @@ Con esta idea, dado un grafo \todo{rotulado?} $G$ válido de nuestro problema, p
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
+
+\begin{algorithm}
+\begin{algorithmic}
+\Function{extenderGrafo}{}
+	\For{$i \in [1..n)$}
+		\State \Call{agregarAdelante}{$grafo[0], i$}
+		\State $costo[0][i] \gets 0$
+	\EndFor
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
 \begin{algorithm}
 \begin{algorithmic}
 \Function{hayAbuso}{$resta: Int$}
@@ -59,6 +86,7 @@ Con esta idea, dado un grafo \todo{rotulado?} $G$ válido de nuestro problema, p
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
+
 \begin{algorithm}
 \begin{algorithmic}
 \Function{hayCicloNegativo}{$dist: Int[], resta: Int$}
@@ -74,7 +102,9 @@ Con esta idea, dado un grafo \todo{rotulado?} $G$ válido de nuestro problema, p
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
+
 \newpage
+
 \subsection{Complejidad}
 
 \subsection{Experimentos}
