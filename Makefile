@@ -1,7 +1,7 @@
 CPP=g++
 FLAGS= -std=c++11 -g -Wall
 
-all: solucion2 solucion3 tiempos3
+all: solucion2 solucion3 tiempo3
 
 tiempos: tiempos.cpp
 	$(CPP) $(FLAGS) -o $@ $<
@@ -12,7 +12,7 @@ solucion2: Solucion2.cpp Problema2.cpp Problema2.h
 solucion3: Solucion3.cpp Problema3.cpp Problema3.h
 	$(CPP) $(FLAGS) -o  $@ Problema3.cpp $<
 
-tiempos3: Tiempos3.cpp Problema3.cpp Problema3.h
+tiempo3: Tiempo3.cpp Problema3.cpp Problema3.h
 	$(CPP) $(FLAGS) -o  $@ Problema3.cpp $<
 
 %.o: %.cpp
