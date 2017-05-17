@@ -30,7 +30,6 @@ tipo_random = "RANDOM"
 def generate_input(tipo, n):
     if tipo == tipo_random:
         # aca guardo un input random en input_tmp de tamaño n
-        print("Deberia generar input tam " + str(n))
         with open(input_path_tmp, 'w') as f:
             f.write(str(n) + '\n')
             for i in range(1, n+1):
@@ -56,6 +55,7 @@ def experimentar(csv_filename, repes, n_max, tipo):
 
     # Para cada tamaño
     for n in range(2, n_max):
+        print(tipo + " - n actual: " + str(n))
         # Para cada repes_random de cada tamaño
         for repe in range(repes):
             # Generar el input falopa en un input_tmp
@@ -64,17 +64,14 @@ def experimentar(csv_filename, repes, n_max, tipo):
             with open(input_path_tmp) as input_file:
                 # Correr ejecutable con el input falopa
                 # Guarda tiempo en output, ignora stderr (Python3!)
-                output = subprocess.check_output(
+                tiempo = subprocess.check_output(
                             [ejecutable_tiempos], stdin=input_file, stderr=subprocess.DEVNULL
                         ).decode(sys.stdout.encoding)
 
-                print(output)
-
-                # Guardar en un csv por linea
-                #     n; tiempo;
-
-    print ("Experimento random")
-
+            # Guardar en un csv
+            # Cada linea: n; tiempo;
+            with open(csv_filename, 'a') as csv :
+                csv.write(str(n) + ";" + tiempo + ";" + '\n')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
