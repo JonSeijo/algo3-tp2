@@ -14,7 +14,7 @@ import random
 
 # Cada problema en un experimentos.py separado
 
-ejecutable = "./tiempos3"
+ejecutable_tiempos = "./tiempo3"
 
 # InputFile donde se van a guardar cada instancia que se ejecute
 input_path_tmp = "./experimentos/input.tmp"
@@ -60,9 +60,18 @@ def experimentar(csv_filename, repes, n_max, tipo):
         for repe in range(repes):
             # Generar el input falopa en un input_tmp
             generate_input(tipo, n)
-            # Correr ejecutable con el input falopa
-            # Guardar en un csv por linea
-            #     n; tiempo;
+
+            with open(input_path_tmp) as input_file:
+                # Correr ejecutable con el input falopa
+                # Guarda tiempo en output, ignora stderr (Python3!)
+                output = subprocess.check_output(
+                            [ejecutable_tiempos], stdin=input_file, stderr=subprocess.DEVNULL
+                        ).decode(sys.stdout.encoding)
+
+                print(output)
+
+                # Guardar en un csv por linea
+                #     n; tiempo;
 
     print ("Experimento random")
 
