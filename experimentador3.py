@@ -21,8 +21,8 @@ input_path_tmp = "./experimentos/input.tmp"
 
 # Variables para experimentar con instancias random
 csv_random = "./experimentos/problema3/random.csv"
-repes_random = 15
-n_max_random = 20 # Solo hasta 20 para testear rapido, aumentarlo!
+repes_random = 10
+n_max_random = 150 # Solo hasta 20 para testear rapido, aumentarlo!
 cota_peso_random = 2000
 tipo_random = "RANDOM"
 
@@ -51,7 +51,7 @@ def generate_input(tipo, n):
 def experimentar(csv_filename, repes, n_max, tipo):
     # Guardar encabezado de csv
     with open(csv_filename, 'w') as csv :
-        csv.write("n;tiempo;" + '\n')
+        csv.write("n,tiempo" + '\n')
 
     # Para cada tamaño
     for n in range(2, n_max):
@@ -71,7 +71,7 @@ def experimentar(csv_filename, repes, n_max, tipo):
             # Guardar en un csv
             # Cada linea: n; tiempo;
             with open(csv_filename, 'a') as csv :
-                csv.write(str(n) + ";" + tiempo + ";" + '\n')
+                csv.write(str(n) + "," + tiempo + '\n')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
