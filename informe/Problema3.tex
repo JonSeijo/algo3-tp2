@@ -76,7 +76,7 @@ Vamos a utilizar como entrada en nuestro algoritmo a las siguientes variables:
 	\State $visitado \gets Bool[n+1]$
 	\State $\forall i visitado[i] \gets false$
 	\State $dist \gets Int[n+1]$
-	\State $\forall i dist[i] \gets INFINITO$	
+	\State $\forall i dist[i] \gets INFINITO$
 	\State $padre \gets Int[n+1]$
 	\State $\forall i padre[i] \gets -1$
 	\State $s \gets 1$
@@ -98,10 +98,10 @@ Vamos a utilizar como entrada en nuestro algoritmo a las siguientes variables:
 			\EndIf
 		\EndFor
 		\State $visistado[u] \gets true$
-		
+
 		\For{$w \in [1..n]$}
 			\If{$(\neg visitado[w]) \land (costo[v][w] < dist[w])$}
-				\State $dist[w] \gets costo[v][w]$			
+				\State $dist[w] \gets costo[v][w]$
 				\State $padre[w] \gets v$
 			\EndIf
 		\EndFor
@@ -123,8 +123,15 @@ Vamos a utilizar como entrada en nuestro algoritmo a las siguientes variables:
 \newpage
 \subsection{Complejidad}
 
-$$O(n^2)$$ usando Prim naive
+- Leer el input es O($n^2$): Hay que leer $\frac{n*(n-1)}{2}$ aristas, y construimos dos matrices de O($n^2$) elementos \\
 
+- Negativizar las construidas es O($n^2$): Recorremos los O($n^2$) elementos de la matriz de existencia. \\
+
+- Prim es O($n^2$): Estamos usando una matriz de adyacencia, ver detalle de complejidad en pseudocodigo\\
+
+- Obtener el costo total es O($n$): Recorremos el AGM dado por prim, que tiene $n-1$ aristas \\
+
+$$Total:  O(n^2) + O(n^2) + O(n^2) + O(n) = O(n^2) $$
 
 \subsection{Experimentos}
 
