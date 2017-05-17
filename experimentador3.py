@@ -21,25 +21,26 @@ input_path_tmp = "./experimentos/input.tmp"
 
 repeticiones = 10
 cota_valor_random = 2000
+n_max = 100 # Aumentar
 
 # Costo Random Existe Random (cr_er)
 csv_cr_er = "./experimentos/problema3/costo_random_existe_random.csv"
-n_max_cr_er = 50  #Aumentar
+n_max_cr_er = n_max
 tipo_cr_er = "COSTO_RANDOM_EXISTE_RANDOM"
 
 # Costo Igual Existe Random (ci_er)
 csv_ci_er = "./experimentos/problema3/costo_igual_existe_random.csv"
-n_max_ci_er = 50  #Aumentar
+n_max_ci_er = n_max
 tipo_ci_er = "COSTO_IGUAL_EXISTE_RANDOM"
 
 # Costo Igual Existe No (ci_en)
 csv_ci_en = "./experimentos/problema3/costo_igual_existe_no.csv"
-n_max_ci_en = 50  #Aumentar
+n_max_ci_en = n_max
 tipo_ci_en = "COSTO_IGUAL_EXISTE_NO"
 
 # Costo Igual Existe Si (ci_es)
 csv_ci_es = "./experimentos/problema3/costo_igual_existe_si.csv"
-n_max_ci_es = 50  #Aumentar
+n_max_ci_es = n_max
 tipo_ci_es = "COSTO_IGUAL_EXISTE_SI"
 
 
