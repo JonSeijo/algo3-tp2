@@ -7,6 +7,7 @@ experimentos/input.tmp
 # Agrego tambien los csv porque voy a estar modificando mucho, y estan sucios, mal hechos
 # cuando esten los experimentos definitivos subo los datos finales en limpio
 experimentos/problema3/random.csv
+*.csv
 
 ## Informe
 informe/informe.pdf
