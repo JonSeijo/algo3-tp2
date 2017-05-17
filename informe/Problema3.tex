@@ -49,14 +49,20 @@ Vamos a utilizar como entrada en nuestro algoritmo a las siguientes variables:
 	\item $costo$: La matriz con los costos de construcci\'on o destrucci\'on.
 \end{itemize}
 
-\begin{algorithm}
-\label{ej3}         % and a label for \ref{} commands later in the document
+\begin{algorithm}[H]
+% \label{ej3}         % and a label for \ref{} commands later in the document
 \begin{algorithmic}
 \Function{$resolver$}{}
 	\State $costoInicialDestruirTodo \gets negativizarCostoConstruidas()$
 	\State $arbol \gets primNaive()$
 	\State \Return \Call{$obtenerCostoTotal$}{$arbol, costoInicialDestruirTodo$}
 \EndFunction
+
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+\begin{algorithmic}
 
 \Function{$negativizarCostoConstruidas$}{}
 	\State $costoInicialDestruirTodo \gets 0$
@@ -72,6 +78,27 @@ Vamos a utilizar como entrada en nuestro algoritmo a las siguientes variables:
 	\State \Return $costoInicialDestruirTodo$
 \EndFunction
 
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}[H]
+\begin{algorithmic}
+
+\Function{$obtenerCostoTotal$}{$arbol: Int[], costoInicialDestruirTodo: Int$}
+	\State $costoTotal \gets costoInicialDestruirTodo$
+	\For{$i \in [2..n]$}
+		\State $j \gets arbol[i]$
+		\State $costoTotal \gets costoTotal + costo[i][j]$
+	\EndFor
+	\State \Return $costoTotal$
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}[H]
+\begin{algorithmic}
 \Function{$primNaive$}{}
 	\State $visitado \gets Bool[n+1]$
 	\State $\forall i visitado[i] \gets false$
@@ -108,19 +135,10 @@ Vamos a utilizar como entrada en nuestro algoritmo a las siguientes variables:
 	\EndFor
 	\State \Return $padre$
 \EndFunction
-
-\Function{$obtenerCostoTotal$}{$arbol: Int[], costoInicialDestruirTodo: Int$}
-	\State $costoTotal \gets costoInicialDestruirTodo$
-	\For{$i \in [2..n]$}
-		\State $j \gets arbol[i]$
-		\State $costoTotal \gets costoTotal + costo[i][j]$
-	\EndFor
-	\State \Return $costoTotal$
-\EndFunction
 \end{algorithmic}
 \end{algorithm}
 
-\newpage
+% \newpage
 \subsection{Complejidad}
 
 - Leer el input es O($n^2$): Hay que leer $\frac{n*(n-1)}{2}$ aristas, y construimos dos matrices de O($n^2$) elementos \\
