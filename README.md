@@ -36,6 +36,25 @@ Por ejemplo:
 python makepdf.py --p=3
 ```
 
+## EXPERIMENTOS + GRAFICOS
+
+(necesario python3)
+
+El experimentador es el encargado de ejecutar programa e ir guardando los tiempos .csv
+El graficador es quien carga los .csv y grafica los promedios
+
+Dividi los experimentadores y graficadores por problemas, porque no se que tan diferentes van a ser.
+Si van a ser masomenos iguales, puedo tratar de unirlos
+
+(Usar flag -h en experimentador para ver una lista de opciones)
+
+```
+python3 experimentador3.py -todos
+```
+```
+python3 graficador3.py
+```
+
 
 ## TODO:
 Lista de cosas pendientes para hacer.
@@ -44,23 +63,23 @@ Lista de cosas pendientes para hacer.
 
 [X] Completar libretas y mails
 
+[x] Crear tiempos3.cpp para el problema 3
+
+[x] Pensar la mejor forma de organizar los .csv para el output del problema3, pensar que queremos medir
+
+[x] Crear un script de python que ejecute tiempos para una instancia dada
+
+[x] Hacer introduccion/explicacion del problema3
+
+[x] Agregar pseudocodigo de problema3
+
+[X] En el problema 3 revisar que el primer eje de 'arbol' luego de hacer Prim es probable que sea inválido
+
 [ ] Buscar una carátula mas completa (Faltaria cuadro de correcciones, y ya que estamos fancy, el logo del DC)
 
 [ ] Reemplazar std::vector<std::vector<int> > por un typedef Matriz o algo similar
 
-[X] En el problema 3 revisar que el primer eje de 'arbol' luego de hacer Prim es probable que sea inválido
-
 [ ] Testear problema3.cpp con casos de prueba
-
-[ ] Crear tiempos3.cpp para el problema 3
-
-[ ] Pensar la mejor forma de organizar los .csv para el output del problema3, pensar que queremos medir
-
-[ ] Crear un script de python que ejecute tiempos para una instancia dada
-
-[ ] Hacer introduccion/explicacion del problema3
-
-[ ] DESPUES DE TESTEAR Y ESTAR CONFORMES! -> agregar pseudocodigo de problema3
 
 [ ] Realizar analisis de complejidad de problema3
 
