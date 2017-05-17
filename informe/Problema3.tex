@@ -25,8 +25,19 @@ La solución final es el Arbol Generador Mínimo de este grafo. \\
 
 
 \subsection{Correctitud}
+\todo[inline]{Lo escribí para darme una idea esto, así en términos de redacción es cualca, pero lo cuelgo igual para que quede}
 
+Hay una relación uno a uno entre la configuración de rutas de salida y grafos de n nodos y m aristas. Las rutas finales serían aristas, las ciudades nodos. \\
 
+Cada configuración tiene un costo asociado en las rutas que tuve que construir y destruir. Hay que ver como mapeamos esto a nuestros grafos modelo... Suena razonable usar grafos con pesos en los ejes. El problema es que la interpretación de las rutas y sus costos varia según la entrada. Una ruta existente tiene costo solo si no existía antes, y viceversa. El desafio es conseguir una función de peso que se corresponda bien con nuestra problema. \\
+
+Fijémonos que construir rutas no construidas cuesta el costo de las mismas, y no construirlas no cuesta nada. Si nuestra función de peso le asigna a estos ejes su costo de construcción, se lo aportan a un grafo que los tenga su peso, tal y como debería, y a una que no los tiene no le aporta nada. \\
+
+Para las rutas construidas, agregarlas no cuesta nada, y destruirlas cuesta su costo de destrucción. Esto ya no cuadra bien, porque una ruta destruida se representa con un arista que no existe en nuestra grafo de salida, y una función de peso solo les asigna valores a aristas que sí están en nuestro grafo. \\
+
+La forma que tenemos de arreglar esto es la siguiente: asignamos el opuesto al costo de destrucción a los ejes de las rutas ya construidas. Con esto tenemos completamente definida nuestra función de peso, asi que para cada grafo de salida tenemos definido su peso. Lo que hacemos es aplicar una nueva función, que es la que nos va a dar la solución al problema, que es tomar el peso del grafo, y sumarle el peso de destrucción a todas las aristas. El resultado de esto es lo siguiente: para todo grafo construido previamente que no fue destruido, resta su costo de destrucción al costo total del grafo (por como definimos la función para las rutas construidas), pero también lo suma en la función que se le aplica al costo del grafo, por lo que el eje aporta 0, que es lo que buscábamos. Si la ruta se destruye, entonces en la nueva función se le suma el costo de su destrucción, que era lo que dijimos que debía pasar. Entonces, esta nueva función que definimos, dado un grafo que modela una configuración de rutas final, y una entrada con las rutas construidas, devuelve el costo de esa configuración de rutas.  \\
+
+Como dijimos que todos los grafos de n nodos y m aristas representan cada uno una configuración de rutas de salida, entonces lo que estoy buscando es el grafo de n nodos y m aristas que minimice la función del punto 5. Pero no sólo le pido eso, queremos que sea un arbol (no me acuerdo cuál era la sarasa del ejercicio, pero pedía un arbol). Entonces, quiero el arbol que minimice la función del punto 5. Notar que dado una entrada determinada, la nueva función es restarle una constante al peso de un arbol. Entonces, en definitiva buscamos aplicar una función a un arbol que minimice su costo, en otras palabras al AGM. \\
 
 \subsection{Pseudocódigo}
 \todo[inline]{Falta agregar comentarios sobre las complejidades}
