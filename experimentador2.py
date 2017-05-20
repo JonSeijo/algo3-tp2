@@ -19,8 +19,9 @@ ejecutable_tiempos = "./tiempo2"
 input_path_tmp = "./experimentos/input.tmp"
 
 repeticiones = 10
-cota_valor_random = 100000
-n_max = 100 # Aumentar
+cota_inf_valor_random = 1
+cota_sup_valor_random = 100000
+n_max = 50 # Aumentar
 
 # Todo random
 csv_random_todo = "./experimentos/problema2/random_todo.csv"
@@ -28,9 +29,14 @@ n_max_random_todo = n_max
 tipo_random_todo = "RANDOM_TODO"
 
 
-
 def save_input_random_todo(f, n, outdegree):
-    print ("Saving input")
+    for i in range(1, n+1):
+        precio = random.randint(cota_inf_valor_random, cota_sup_valor_random)
+        pool = [j for j in range(1, n+1) if j != i]
+        vecinos = random.sample(pool, outdegree[i])
+
+        for v in vecinos:
+            f.write(str(i) + ' ' + str(v) +  ' ' + str(precio) + '\n')
 
 
 # Genera un input del tipo en input_tmp de tamaño n
@@ -47,7 +53,6 @@ def generate_input(tipo, n, m, outdegree):
         f.write("-1 -1")
 
 
-
 # Experimentacion generica, el input es lo que varia dependiendo de los parametros que se le pasen
 def experimentar(csv_filename, n_max, tipo):
     # Guardar encabezado de csv
@@ -61,8 +66,8 @@ def experimentar(csv_filename, n_max, tipo):
         for repe in range(repeticiones):
 
             if tipo_random_todo:
-                outdegree = [random.randint(1, n+1) for _ in range(n)]
-                m = sum(outdegree)
+                outdegree = [random.randint(1, n-1) for _ in range(n+1)]
+                m = sum(outdegree[1:])
             else:
                 sys.exit("Tipo invalido en generacion de outdegree")
 
