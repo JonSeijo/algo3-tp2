@@ -17,31 +17,7 @@ Siendo $K$ la máxima cantidad de caminos premium a recorrer, cada vértice pued
 	\item Si $(v_i,v_j) \in E_{G_0} \land (v_i,v_j) \in premium \land k < K \Rightarrow (v_i^k,v_j^{k+1}) \in E_{G_1}$
 \end{itemize}
 En este modelo no es posible recorrer más de $K$ aristas premium, dado que cada vez que se recorre cualquier premium se pasa de un vértice $k$ a uno $k+1$ (exceptuando $k=K$ en el cual no existe vértice premium para ningún $v^k$) y sólo existen $K$ estados disponibles.\\\\
-Además, al tratarse de un simple digrafo con aristas positivas, se puede calcular el camino mínimo entre el origen y todos los demás vértices utilizando el algoritmo de Dijkstra, para luego obtener $min(v_{destino}^k \forall k)$, la distancia mínima entre origen y destino pasando por a lo sumo $k$ aristas premium. Siendo el origen en $v_i^0$ para algún $i$ especificado en la entrada, esto es así porque el vértice de origen no recorrió ninguna arista, en particular ninguna arista premium, por lo que pertenece al estado $k=0$, además los vértices $\{v_j^0,v_j^1,...,v_j^k\}$ representan al vértice destino para un $j$ especificado en la entrada, siendo $k$ la cantidad de aristas premium recorridas, por lo que al aplicar dijkstra sobre $G_1$ empezando por el origen, tendremos todas las distancias de este hacia los vértices destino (de distintos $k$), entre los cuales hay que elegir el que tenga una distancia mínima. \\\\\\\\\\\\
-
-
-
-La idea de la correctitud va a ser, primero plantear que aplicar Dijkstra sobre el grafo mágico de Alex resuelve el problema, y segundo ver que el algoritmo está implicitamente trabajando sobre dicho grafo.
-
-La primera parte seguiría estos pasos:
-\begin{itemize}
-	\item Introducimos el \textbf{digrafo} (hacer énfasis en que el grafo de entrada en realidad es un grafo nomás, y que lo encajamos como digrafo para facilitar la demostración) que representa la entrada, $G = (\{v_1, ..., v_n\}, \{e_1, ..., e_n\})$ (con rutas premium incluidas).
-	
-	\item Definimos el super grafo. Arrancaríamos por definir una familia de grafos ${C_i = (\{v^i_1, ..., v^i_n\}, \{e^i_1, ..., e^i_n\})}$, con $i \in [1..k+1]$, tal que cada uno modele la ciudad de la entrada \textbf{sin} las rutas premium. Sin pérdida de generalidad, elegimos los ejes para que valga $e_i \in G \leftrightarrow e^j_i \in C_j$ (1) . Con esos $k$ grafos formamos un grafo $C$. Faltan las premium. Para cada ruta premium ($e_i, e_j$), agregamos a $C$ los ejes $(e^w_i,e^{w+1}_j)$ con $w \in [1..k]$, y con eso formamos $S$ (2).
-	
-	\item (opcional) Planteamos una intuición de qué significa cada nodo en este grafo (los nodos de $S_i$ serían las ciudades después de haber pasado por $i-1$ rutas). Un dibujo estaría piola.
-	
-	\item Sea $v \in C_0 \subset G$ que representa una ciudad $c \in G$, y $u \in S$ que representa una ciudad $d \in G$. Mostremos que existe un camino de $v$ a $u$ si y solo si hay un camino entre la ciudad $c$ y $d$ pasando por a lo sumo $k$ rutas premium.
-	
-	\item Ida: Un camino en $G$ nos da una sucesión de ejes en $G$. Podemos construir un camino de $c$ a $d$ reemplazando cada $(e^w_i,e^w_j)$ por $(e_i,e_j)$ (que por (1) es una ruta normal/eje posta), y cada $(e^w_i,e^{w+1}_j)$ por $(e_i,e_j)$ (que por (2) es una ruta premium/eje posta). Entonces, el camino que obtuve como resultado es un camino válido (me haría el sota con probar que los ejes son adyacentes). Además, como no hay ejes $(e^w_i, e^{w-1}_i)$ (AKA, que vuelvan a un mini-grafo anterior), hay a lo sumo $k$ ejes del tipo $(e^w_i, e^{w-1}_i)$ en el nuevo camino que armamos en $G$, y dijimos que esos ejes eran los premium (y los demás no). Entonces, el camino nuevo tiene a lo sumo $k$ rutas premium.
-	
-	\item Vuelta: Considero que tengo un camino en $G$ de $c$ a $u$ que pasa por a lo sumo $k$ rutas premium. La idea es construirme una ruta en $G$ intercambiando todos sus ejes por su respectiva representación en $S$. Capaz hay una forma reutilizando la ida, pero no se me ocurre. Yo definiría el reemplazo para $(e_i, e_j)$: si es premium, lo reemplazo por $(e^w_i, e^{w+1}_j)$, y si es normal, lo reemplazo por $e^w_i, e^w_j$; donde en ambos casos $w$ es la cantidad de rutas premium ya cruzadas menos uno. Habría que probar inductivamente que está bien definida. En el paso inductivo, la hipótesis inductiva sería toda la sucesión previa existe y está bien definida. Habría que mostrar que el eje que quiero reemplazar existe (por definición de S y del camino, usando que en el camino hay a lo sumo $k$ rutas premium, y lo de que todos los reemplazos dependen de la cantidad de rutas premium previas) y que es adyacente al anterior (planteo por casos y uso HI sobre el anterior eje). Lo que queda es un camino de un $v \in S_0$ (de nuevo por la definición del camino) a algún $v$ en G. 
-	
-	\item Rewind, con esto lo que se demostró es que \textit{existe un camino entre un nodo de $S_0$ a otro si y solo si hay un camino entre las ciudades a las que estos representan, pasando por a lo sumo $k$ rutas premium}. Además, puedo definir los pesos en los ejes de $G$ tal que los pesos de estos dos caminos sean los mismos (lel, me olvidé de los pesos, faltaría encajarlo en algún lado antes). Y ENTONCES APLICAS DIJKSTRA.
-	
-	\item 
-	 
-\end{itemize}
+Además, al tratarse de un simple digrafo con aristas positivas, se puede calcular el camino mínimo entre el origen y todos los demás vértices utilizando el algoritmo de Dijkstra, para luego obtener $min(v_{destino}^k \forall k)$, la distancia mínima entre origen y destino pasando por a lo sumo $k$ aristas premium. Siendo el origen en $v_i^0$ para algún $i$ especificado en la entrada, esto es así porque el vértice de origen no recorrió ninguna arista, en particular ninguna arista premium, por lo que pertenece al estado $k=0$, además los vértices $\{v_j^0,v_j^1,...,v_j^k\}$ representan al vértice destino para un $j$ especificado en la entrada, siendo $k$ la cantidad de aristas premium recorridas, por lo que al aplicar dijkstra sobre $G_1$ empezando por el origen, tendremos todas las distancias de este hacia los vértices destino (de distintos $k$), entre los cuales hay que elegir el que tenga una distancia mínima. \\
 \subsection{Pseudocodigo}
 \subsection{Complejidad}
 \subsection{Experimentos}
