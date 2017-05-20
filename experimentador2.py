@@ -21,7 +21,7 @@ input_path_tmp = "./experimentos/input.tmp"
 repeticiones = 10
 cota_inf_valor_random = 1
 cota_sup_valor_random = 100000
-n_max = 50 # Aumentar
+n_max = 100 # Aumentar
 
 # Todo random
 csv_random_todo = "./experimentos/problema2/random_todo.csv"
