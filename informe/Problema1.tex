@@ -17,7 +17,7 @@ Siendo $K$ la máxima cantidad de caminos premium a recorrer, cada vértice pued
 	\item Si $(v_i,v_j) \in E_{G_0} \land (v_i,v_j) \in premium \land k < K \Rightarrow (v_i^k,v_j^{k+1}) \in E_{G_1}$
 \end{itemize}
 En este modelo no es posible recorrer más de $K$ aristas premium, dado que cada vez que se recorre cualquier premium se pasa de un vértice $k$ a uno $k+1$ (exceptuando $k=K$ en el cual no existe vértice premium para ningún $v^k$) y sólo existen $K$ estados disponibles.\\\\
-Además, al tratarse de un simple digrafo con aristas positivas, se puede calcular el camino mínimo entre el origen y todos los demás vértices utilizando el algoritmo de Dijkstra, para luego obtener $min(v_{destino}^k \forall k)$, la distancia mínima entre origen y destino pasando por a lo sumo $k$ aristas premium.\\\\\\\\\\
+Además, al tratarse de un simple digrafo con aristas positivas, se puede calcular el camino mínimo entre el origen y todos los demás vértices utilizando el algoritmo de Dijkstra, para luego obtener $min(v_{destino}^k \forall k)$, la distancia mínima entre origen y destino pasando por a lo sumo $k$ aristas premium. Siendo el origen en $v_i^0$ para algún $i$ especificado en la entrada, esto es así porque el vértice de origen no recorrió ninguna arista, en particular ninguna arista premium, por lo que pertenece al estado $k=0$, además los vértices $\{v_j^0,v_j^1,...,v_j^k\}$ representan al vértice destino para un $j$ especificado en la entrada, siendo $k$ la cantidad de aristas premium recorridas, por lo que al aplicar dijkstra sobre $G_1$ empezando por el origen, tendremos todas las distancias de este hacia los vértices destino (de distintos $k$), entre los cuales hay que elegir el que tenga una distancia mínima. \\\\\\\\\\\\
 
 
 
