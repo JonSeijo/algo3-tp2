@@ -60,10 +60,14 @@ def experimentar(csv_filename, n_max, tipo):
         # Para cada repes_random de cada tamaño
         for repe in range(repeticiones):
 
-            # TODO: GENERAR EL OUTDEGREE Y EL M DEPENDIENDO EL TIPO
+            if tipo_random_todo:
+                outdegree = [random.randint(1, n+1) for _ in range(n)]
+                m = sum(outdegree)
+            else:
+                sys.exit("Tipo invalido en generacion de outdegree")
 
             # Generar el input falopa en un input_tmp
-            generate_input(tipo, n)
+            generate_input(tipo, n, m, outdegree)
 
             with open(input_path_tmp) as input_file:
                 # Correr ejecutable con el input falopa
