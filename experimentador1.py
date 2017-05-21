@@ -18,17 +18,43 @@ ejecutable_tiempos = "./tiempo1"
 # InputFile donde se van a guardar cada instancia que se ejecute
 input_path_tmp = "./experimentos/input.tmp"
 
-repeticiones = 10
+repeticiones = 25
 cota_sup_valor_random = 10000
-n_max = 15 # Aumentar
+n_max = 75 # Aumentar
 
-# Todo random
-csv_random_todo = "./experimentos/problema1/random_todo.csv"
-n_max_random_todo = n_max
-tipo_random_todo = "RANDOM_TODO"
+# Arista_random_premium_random
+csv_arista_random_premium_random = "./experimentos/problema1/arista_random_premium_random.csv"
+n_max_arista_random_premium_random = 25
+tipo_arista_random_premium_random = "arista_random_premium_random"
+
+# Arista_random_premium_maximas
+csv_arista_random_premium_maximas = "./experimentos/problema1/arista_random_premium_maximas.csv"
+n_max_arista_random_premium_maximas = 25
+tipo_arista_random_premium_maximas = "arista_random_premium_maximas"
+
+# Arista_random_premium_minimas
+csv_arista_random_premium_minimas = "./experimentos/problema1/arista_random_premium_minimas.csv"
+n_max_arista_random_premium_minimas = 85
+tipo_arista_random_premium_minimas = "arista_random_premium_minimas"
 
 
-def save_input_random_todo(f, aristas):
+# Ninguna es premium
+def save_input_arista_random_premium_minimas(f, aristas):
+    for eje in aristas:
+        premium = 0
+        costo = random.randint(1, cota_sup_valor_random)
+        f.write(str(eje[0]) + ' ' + str(eje[1]) +  ' ' + str(premium) + ' ' + str(costo) + '\n')
+
+# Todas son premiums
+def save_input_arista_random_premium_maximas(f, aristas):
+    for eje in aristas:
+        premium = 1
+        costo = random.randint(1, cota_sup_valor_random)
+        f.write(str(eje[0]) + ' ' + str(eje[1]) +  ' ' + str(premium) + ' ' + str(costo) + '\n')
+
+
+# Random si es premium o no
+def save_input_arista_random_premium_random(f, aristas):
     for eje in aristas:
         premium = random.randint(0, 1)
         costo = random.randint(1, cota_sup_valor_random)
@@ -41,8 +67,12 @@ def generate_input(tipo, n, aristas, k):
         f.write(str(n) + ' ' + str(len(aristas)) + '\n')
         f.write(str(1) + ' ' + str(n) + ' ' + str(k) + '\n')
 
-        if tipo == tipo_random_todo:
-            save_input_random_todo(f, aristas)
+        if tipo == tipo_arista_random_premium_random:
+            save_input_arista_random_premium_random(f, aristas)
+        elif tipo == tipo_arista_random_premium_minimas:
+            save_input_arista_random_premium_minimas(f, aristas)
+        elif tipo == tipo_arista_random_premium_maximas:
+            save_input_arista_random_premium_maximas(f, aristas)
         else:
             sys.exit("Tipo invalido en generacion de input")
 
@@ -50,20 +80,22 @@ def generate_input(tipo, n, aristas, k):
 
 
 def generar_aristas(tipo, n):
-    if tipo == tipo_random_todo:
-
+    if (tipo == tipo_arista_random_premium_random
+        or tipo == tipo_arista_random_premium_minimas
+        or tipo == tipo_arista_random_premium_maximas):
         # Generar un m random
         m = random.randint(n-1, n*(n-1)/2)
-
         # De todas las aristas posibles tomar m
         return random.sample([(i, j) for i in range(1, n+1) for j in range(i+1, n+1)], m)
-
     else:
         sys.exit("Tipo invalido en generacion de input")
 
 
 def generar_k(tipo, n):
-    if tipo == tipo_random_todo:
+    if (tipo == tipo_arista_random_premium_random
+        or tipo == tipo_arista_random_premium_minimas
+        or tipo == tipo_arista_random_premium_maximas):
+
         return random.randint(1, n*(n-1)/2)
     else:
         sys.exit("Tipo invalido en generacion de input")
@@ -105,15 +137,23 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
     parser.add_argument("-todos", help="TODOS LOS EXPERIMENTOS", action='store_true')
-    parser.add_argument("-random_todo", help="Experimento: Random todo", action='store_true')
+    parser.add_argument("-arista_random_premium_minimas", help="Experimento: Random todo", action='store_true')
+    parser.add_argument("-arista_random_premium_random", help="Experimento: Random todo", action='store_true')
+    parser.add_argument("-arista_random_premium_maximas", help="Experimento: Random todo", action='store_true')
     args = parser.parse_args()
 
     if not len(sys.argv) > 1:
         sys.exit("No arguments passed! Use -h flag for help")
 
     if args.todos:
-        experimentar(csv_random_todo, n_max_random_todo, tipo_random_todo)
+        experimentar(csv_arista_random_premium_minimas, n_max_arista_random_premium_minimas, tipo_arista_random_premium_minimas)
+        experimentar(csv_arista_random_premium_random, n_max_arista_random_premium_random, tipo_arista_random_premium_random)
+        experimentar(csv_arista_random_premium_maximas, n_max_arista_random_premium_maximas, tipo_arista_random_premium_maximas)
 
     else:
-        if args.random_todo:
-            experimentar(csv_random_todo, n_max_random_todo, tipo_random_todo)
+        if args.arista_random_premium_random:
+            experimentar(csv_arista_random_premium_random, n_max_arista_random_premium_random, tipo_arista_random_premium_random)
+        if args.arista_random_premium_minimas:
+            experimentar(csv_arista_random_premium_minimas, n_max_arista_random_premium_minimas, tipo_arista_random_premium_minimas)
+        if args.arista_random_premium_maximas:
+            experimentar(csv_arista_random_premium_maximas, n_max_arista_random_premium_maximas, tipo_arista_random_premium_maximas)
