@@ -15,6 +15,9 @@ tiempos_premium_maximas = data_premium_maximas.groupby('n')['tiempo'].mean() / 1
 data_premium_25 = pd.read_csv('experimentos/problema1/arista_random_premium_25.csv')
 tiempos_premium_25 = data_premium_25.groupby('n')['tiempo'].mean() / 1000000000
 
+data_premium_10 = pd.read_csv('experimentos/problema1/arista_random_premium_10.csv')
+tiempos_premium_10 = data_premium_10.groupby('n')['tiempo'].mean() / 1000000000
+
 
 # Premium maximas, premium random y premium minimas en el mismo grafico
 # --------------------------------------------------------------------------------------------------------------------
@@ -26,9 +29,11 @@ plot_premium_maximas.set_ylabel("Segundos", size = 14)
 
 tiempos_random_todo.plot(ax=plot_premium_maximas, color='#4C72B0') # Color azul
 tiempos_premium_minimas.plot(ax=plot_premium_maximas, color='#55A868') # Color verde
-tiempos_premium_25[:30].plot(ax=plot_premium_maximas, color='#C422C4')
+tiempos_premium_25[:30].plot(ax=plot_premium_maximas, color='#C422C4') # Color violeta
+tiempos_premium_10.plot(ax=plot_premium_maximas, color='#C4C422') # Color amarillo
 
-plot_premium_maximas.legend(['Premium maximas', 'Premium random', 'Premium minimas', 'Premium 25%'], fontsize = 14)
+
+plot_premium_maximas.legend(['Premium maximas', 'Premium random', 'Premium minimas', 'Premium 25%', 'Premium 10%'], fontsize = 14)
 
 plt.show()
 # --------------------------------------------------------------------------------------------------------------------
