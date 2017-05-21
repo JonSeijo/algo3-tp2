@@ -37,6 +37,11 @@ csv_arista_random_premium_minimas = "./experimentos/problema1/arista_random_prem
 n_max_arista_random_premium_minimas = 85
 tipo_arista_random_premium_minimas = "arista_random_premium_minimas"
 
+# Arista_random_premium_25
+csv_arista_random_premium_25 = "./experimentos/problema1/arista_random_premium_25.csv"
+n_max_arista_random_premium_25 = 30
+tipo_arista_random_premium_25 = "arista_random_premium_25"
+
 
 # Ninguna es premium
 def save_input_arista_random_premium_minimas(f, aristas):
@@ -60,6 +65,18 @@ def save_input_arista_random_premium_random(f, aristas):
         costo = random.randint(1, cota_sup_valor_random)
         f.write(str(eje[0]) + ' ' + str(eje[1]) +  ' ' + str(premium) + ' ' + str(costo) + '\n')
 
+# El 25% son premiums
+def save_input_arista_random_premium_25(f, aristas):
+    for eje in aristas:
+        if random.random() < 0.25:
+            premium = 1
+        else:
+            premium = 0
+        costo = random.randint(1, cota_sup_valor_random)
+        f.write(str(eje[0]) + ' ' + str(eje[1]) +  ' ' + str(premium) + ' ' + str(costo) + '\n')
+
+
+
 # Genera un input del tipo en input_tmp de tamaño n
 def generate_input(tipo, n, aristas, k):
     # aca guardo un input random en input_tmp de tamaño n
@@ -73,6 +90,8 @@ def generate_input(tipo, n, aristas, k):
             save_input_arista_random_premium_minimas(f, aristas)
         elif tipo == tipo_arista_random_premium_maximas:
             save_input_arista_random_premium_maximas(f, aristas)
+        elif tipo == tipo_arista_random_premium_25:
+            save_input_arista_random_premium_25(f, aristas)
         else:
             sys.exit("Tipo invalido en generacion de input")
 
@@ -82,7 +101,8 @@ def generate_input(tipo, n, aristas, k):
 def generar_aristas(tipo, n):
     if (tipo == tipo_arista_random_premium_random
         or tipo == tipo_arista_random_premium_minimas
-        or tipo == tipo_arista_random_premium_maximas):
+        or tipo == tipo_arista_random_premium_maximas
+        or tipo == tipo_arista_random_premium_25):
         # Generar un m random
         m = random.randint(n-1, n*(n-1)/2)
         # De todas las aristas posibles tomar m
@@ -94,7 +114,8 @@ def generar_aristas(tipo, n):
 def generar_k(tipo, n):
     if (tipo == tipo_arista_random_premium_random
         or tipo == tipo_arista_random_premium_minimas
-        or tipo == tipo_arista_random_premium_maximas):
+        or tipo == tipo_arista_random_premium_maximas
+        or tipo == tipo_arista_random_premium_25):
 
         return random.randint(1, n*(n-1)/2)
     else:
@@ -137,9 +158,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
     parser.add_argument("-todos", help="TODOS LOS EXPERIMENTOS", action='store_true')
-    parser.add_argument("-arista_random_premium_minimas", help="Experimento: Random todo", action='store_true')
-    parser.add_argument("-arista_random_premium_random", help="Experimento: Random todo", action='store_true')
-    parser.add_argument("-arista_random_premium_maximas", help="Experimento: Random todo", action='store_true')
+    parser.add_argument("-arista_random_premium_minimas", help="Aristas random. K Random. Premium 0", action='store_true')
+    parser.add_argument("-arista_random_premium_random", help="Aristas random. K Random. Premium random", action='store_true')
+    parser.add_argument("-arista_random_premium_maximas", help="Aristas random. K Random. Premium todas", action='store_true')
+    parser.add_argument("-arista_random_premium_25", help="Aristas random. K Random. Premium 25%", action='store_true')
     args = parser.parse_args()
 
     if not len(sys.argv) > 1:
@@ -149,6 +171,7 @@ if __name__ == '__main__':
         experimentar(csv_arista_random_premium_minimas, n_max_arista_random_premium_minimas, tipo_arista_random_premium_minimas)
         experimentar(csv_arista_random_premium_random, n_max_arista_random_premium_random, tipo_arista_random_premium_random)
         experimentar(csv_arista_random_premium_maximas, n_max_arista_random_premium_maximas, tipo_arista_random_premium_maximas)
+        experimentar(csv_arista_random_premium_25, n_max_arista_random_premium_25, tipo_arista_random_premium_25)
 
     else:
         if args.arista_random_premium_random:
@@ -157,3 +180,5 @@ if __name__ == '__main__':
             experimentar(csv_arista_random_premium_minimas, n_max_arista_random_premium_minimas, tipo_arista_random_premium_minimas)
         if args.arista_random_premium_maximas:
             experimentar(csv_arista_random_premium_maximas, n_max_arista_random_premium_maximas, tipo_arista_random_premium_maximas)
+        if args.arista_random_premium_25:
+            experimentar(csv_arista_random_premium_25, n_max_arista_random_premium_25, tipo_arista_random_premium_25)
