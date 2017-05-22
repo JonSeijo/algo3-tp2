@@ -2,7 +2,13 @@
 
 \section{Problema 1}
 
-\subsection{Introduccion}
+\subsection{Explicación}
+
+Tenemos ciudades conectadas por rutas bidireccionales, donde algunas rutas tienen la particularidad de ser $premium$. El problema es calcular el camino minimo desde ciudad $origen$ hacia una $destino$, pasando por a lo sumo $k$ rutas premium (devolviendo -1 de no existir solución). \\
+
+La particularidad de este problema es que un algoritmo greedy como el de Dijkstra no parecería funcionar. El motivo es que, dado un camino premium, no puedo saber si el hecho de tomarlo resulta en un callejón sin salida. Esto implica que la distancia de un nodo puede quedar actualizada con el valor de un camino que no puede llegar al destino. Esto nos imposibilita considerar caminos hacie ese nodo pesos mayores, pero que por tener menos caminos premium terminan siendo mejor opción. \\
+
+La estrategia general va a ser plantearse $k$ versiones para cada nodo, donde cada uno representa un \textit{estado} distinto. Habiendo hecho esta separación, simplificamos los roles de los ejes premium, y nos permite aplicar el algoritmo de Dijkstra, con algunas leves variaciones.
 
 \subsection{Correctitud}
 Queremos representar cada ciudad como un vértice y cada ruta como una arista con el objetivo de calcular el camino mínimo entre el origen y el destino mediante algún algoritmo conocido y probado para este propósito. Llamaremos a este grafo $G_0$\\
