@@ -25,7 +25,7 @@ Veamos primero que el $k$ que buscamos se encuentra en ese rango. No puede ser n
 \newpage
 \subsection{Pseudocódigo}
 
-Vamos a utilizar como entrada en nuestro algoritmo a las siguientes variables:
+Vamos a utilizar como entrada en nuestro algoritmo las siguientes variables:
 \begin{itemize}
 	\item $n$: La cantidad de ciudades
 	\item $grafo$: El grafo de entrada representado con listas de adyacencia. Las posiciones del $1$ a $n$ representan nuestras ciudades, mientras que la posición $0$ se deja libre para la extensión
@@ -67,7 +67,7 @@ Vamos a utilizar como entrada en nuestro algoritmo a las siguientes variables:
 \begin{algorithm}[H]
 \begin{algorithmic}
 \Function{HayAbuso}{$resta: Int$}    \Comment{$\mathbf{\mathcal{O}(n*\sum_{v \in G} d(v))}$}
-	\State $dist \gets$ InitMatrizEnInfinito($n + 1$)    \Comment{$\mathcal{O}(n)$}
+	\State $dist \gets$ InitMatrizEnInfinito($n + 1$)    \Comment{$\mathcal{O}(n^2)$}
 	\State $dist[0] \gets 0$    \Comment{$\mathcal{O}(1)$}
 	\For{$i \in [1..n)$}    \Comment{$\mathcal{O}(n)$}
 		\For{$nodo \in [0..n]$}    \Comment{$\mathcal{O}(n)$}
