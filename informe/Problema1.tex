@@ -36,8 +36,8 @@ Vamos a utilizar como entrada en nuestro algoritmo las siguientes variables:
 % \label{ej3}         % and a label for \ref{} commands later in the document
 \begin{algorithmic}
 \Function{Resolver}{}    \Comment{$\mathbf{\mathcal{O}(n^2*k^2)}$}
-	\State $visitado \gets$ InitMatrizEnFalso($n*(k+1)+1$)    \Comment{$\mathcal{O}(n^2*k^2)$}
-	\State $dist \gets$ InitMatrizEnInfinito($n*(k+1)+1$)    \Comment{$\mathcal{O}(n^2*k^2)$} \\
+	\State $visitado \gets$ InitSecuenciaEnFalso($n*(k+1)+1$)    \Comment{$\mathcal{O}(n*k)$}
+	\State $dist \gets$ InitSecuenciaEnInfinito($n*(k+1)+1$)    \Comment{$\mathcal{O}(n*k)$} \\
 	
 	\State $s = origen$    \Comment{$\mathcal{O}(1)$}
 	\For{$w \in [1..n]$}    \Comment{$\mathcal{O}(n)$}
@@ -57,7 +57,7 @@ Vamos a utilizar como entrada en nuestro algoritmo las siguientes variables:
 	
 	\State $finalizado \gets False$    \Comment{$\mathcal{O}(1)$}
 	
-	\While{$\neg finalizado$}    \Comment{$\mathcal{O}(n*k)$\hyperref[whilejust]{$^1$}}
+	\While{$\neg finalizado$}    \Comment{$\mathcal{O}(n*k)$\hyperref[whilejust]{$^1$}\label{whileback}}
 		\State $v \gets -1$    \Comment{$\mathcal{O}(1)$}
 		\State $minDist = \infty$    \Comment{$\mathcal{O}(1)$}
 		\For{$u \in [1..n*(k+1)]$}    \Comment{$\mathcal{O}(n*k)$}
@@ -121,6 +121,14 @@ Vamos a utilizar como entrada en nuestro algoritmo las siguientes variables:
 
 \subsection{Complejidad}
 
-\label{whilejust} $^1$ Pinpunpan 
+\begin{itemize}
+	\item Leer el input es O($n^2$): Construimos dos matrices de O($n^2$) elementos parseando la entrada.
+	\item Inicializar estructuras del algoritmo es O($n*k$): Recorremos las O($n*k$) ciudades actualizando las distancias de los vecinos de $origen$
+	\item Visitar todos los nodos llevando a cabo el algoritmo de Dijkstra es O($n*k$): En cada iteración marco el nodo actual como $visitado$, y tengo como máximo $n*k$ nodos (por esta razón vale  \label{whilejust}\hyperref[whileback]{$1$})
+	\item Buscar el nodo de menor distancia es O($n*k$):  Buscamos linealmente la mínima distancia entre O($n*k$) nodos
+	\item Actualizar la distancia de los vecinos de una ciudad es O($n$): Podemos reducir los potenciales vecinos a O($n$) porque sabemos que un nodo sólo puede tener un camino hacia nodos de su mismo $nivel$ o de un $nivel$ superior
+\end{itemize}
+
+$$Total:  O(n^2) + O(n*k) + O(n*k) * (O(n*k) + O(n)) = O(n^2*k^2) $$
 
 \subsection{Experimentos}
