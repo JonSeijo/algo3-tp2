@@ -30,7 +30,6 @@ tiempos_premium_0_5 = data_premium_0_5.groupby('n')['tiempo'].mean() / 100000000
 plt.clf()
 plot_premium_maximas = tiempos_premium_maximas.plot(fontsize = 13, color='#C44E52') # Color rojo
 plot_premium_maximas.set_title('\n Problema 1 \n Aristas random, K = n/2 \n Tiempo medio para diferentes tamaños de grafos', fontsize = 15)
-plot_premium_maximas.set_xlabel("Cantidad de elementos", size = 14)
 plot_premium_maximas.set_ylabel("Segundos", size = 14)
 
 tiempos_random_todo.plot(ax=plot_premium_maximas, color='#4C72B0') # Color azul
@@ -40,8 +39,8 @@ tiempos_premium_3.plot(ax=plot_premium_maximas, color='#22C4C4') # Color celeste
 tiempos_premium_0_5.plot(ax=plot_premium_maximas, color='#000000') # Color negro
 tiempos_premium_minimas.plot(ax=plot_premium_maximas, color='#55A868') # Color verde
 
-
 plot_premium_maximas.legend(['Premium 100%', 'Premium random', 'Premium 25%', 'Premium 10%', 'Premium 3%', 'Premium 0.5%', 'Premium 0%'], fontsize = 14)
+plot_premium_maximas.set_xlabel("Cantidad de elementos", size = 14)
 
 plt.show()
 # --------------------------------------------------------------------------------------------------------------------
