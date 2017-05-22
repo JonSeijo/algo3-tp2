@@ -33,7 +33,6 @@ Definir la función de peso no es trivial: ejes destruidos aportan al costo de g
 Resta ver cómo minimizar el costo que definimos. Observemos que para una entrada fija, la suma de los costos de destrucción es constante, con lo cual el costo total de un grafo es su peso más una constante, con lo cual nos basta con minimizar la función de peso. Además, estos grafos son árboles subgrafos de nuestro grafo completo de entrada. Por todo esto, el problema termina reduciéndose a encontrar el arbol generador mínimo de dicho grafo completo con nuestra función de peso.
 
 \subsection{Pseudocódigo}
-\todo[inline]{Falta agregar comentarios sobre las complejidades}
 
 Vamos a utilizar como entrada en nuestro algoritmo a las siguientes variables:
 \begin{itemize}
@@ -45,10 +44,10 @@ Vamos a utilizar como entrada en nuestro algoritmo a las siguientes variables:
 \begin{algorithm}[H]
 % \label{ej3}         % and a label for \ref{} commands later in the document
 \begin{algorithmic}
-\Function{Resolver}{}
-	\State $costoInicialDestruirTodo \gets$ NegativizarCostoConstruidas()
-	\State $arbol \gets$ PrimNaive()
-	\State \Return ObtenerCostoTotal($arbol, costoInicialDestruirTodo$)
+\Function{Resolver}{}    \Comment{$\mathbf{\mathcal{O}(n^2)}$}
+	\State $costoInicialDestruirTodo \gets$ NegativizarCostoConstruidas()    \Comment{$\mathcal{O}(n^2)$}
+	\State $arbol \gets$ PrimNaive()    \Comment{$\mathcal{O}(n^2)$}
+	\State \Return ObtenerCostoTotal($arbol, costoInicialDestruirTodo$)    \Comment{$\mathcal{O}(n)$}
 \EndFunction
 
 \end{algorithmic}
@@ -57,18 +56,18 @@ Vamos a utilizar como entrada en nuestro algoritmo a las siguientes variables:
 \begin{algorithm}[H]
 \begin{algorithmic}
 
-\Function{NegativizarCostoConstruidas}{}
-	\State $costoInicialDestruirTodo \gets 0$
-	\For{$i \in [0..n)$}
-		\For{$j \in [1..n]$}
-			\If{$existe[i][j]$}
-				\State $costoInicialDestruirTodo \gets costoInicialDestruirTodo + costo[i][j]$
-				\State $costo[i][j] \gets -costo[i][j]$
-				\State $costo[j][i] \gets -costo[j][i]$
+\Function{NegativizarCostoConstruidas}{}    \Comment{$\mathbf{\mathcal{O}(n^2)}$}
+	\State $costoInicialDestruirTodo \gets 0$    \Comment{$\mathcal{O}(1)$}
+	\For{$i \in [0..n)$}    \Comment{$\mathcal{O}(n)$}
+		\For{$j \in [1..n]$}    \Comment{$\mathcal{O}(n)$}
+			\If{$existe[i][j]$}    \Comment{$\mathcal{O}(1)$}
+				\State $costoInicialDestruirTodo \gets costoInicialDestruirTodo + costo[i][j]$    \Comment{$\mathcal{O}(1)$}
+				\State $costo[i][j] \gets -costo[i][j]$    \Comment{$\mathcal{O}(1)$}
+				\State $costo[j][i] \gets -costo[j][i]$    \Comment{$\mathcal{O}(1)$}
 			\EndIf
 		\EndFor
 	\EndFor
-	\State \Return $costoInicialDestruirTodo$
+	\State \Return $costoInicialDestruirTodo$    \Comment{$\mathcal{O}(1)$}
 \EndFunction
 
 \end{algorithmic}
@@ -78,13 +77,13 @@ Vamos a utilizar como entrada en nuestro algoritmo a las siguientes variables:
 \begin{algorithm}[H]
 \begin{algorithmic}
 
-\Function{ObtenerCostoTotal}{$arbol: Int[], costoInicialDestruirTodo: Int$}
-	\State $costoTotal \gets costoInicialDestruirTodo$
-	\For{$i \in [2..n]$}
-		\State $j \gets arbol[i]$
-		\State $costoTotal \gets costoTotal + costo[i][j]$
+\Function{ObtenerCostoTotal}{$arbol: Int[], costoInicialDestruirTodo: Int$}    \Comment{$\mathbf{\mathcal{O}(n)}$}
+	\State $costoTotal \gets costoInicialDestruirTodo$    \Comment{$\mathcal{O}(1)$}
+	\For{$i \in [2..n]$}    \Comment{$\mathcal{O}(n)$}
+		\State $j \gets arbol[i]$    \Comment{$\mathcal{O}(1)$}
+		\State $costoTotal \gets costoTotal + costo[i][j]$    \Comment{$\mathcal{O}(1)$}
 	\EndFor
-	\State \Return $costoTotal$
+	\State \Return $costoTotal$    \Comment{$\mathcal{O}(1)$}
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
@@ -92,45 +91,45 @@ Vamos a utilizar como entrada en nuestro algoritmo a las siguientes variables:
 
 \begin{algorithm}[H]
 \begin{algorithmic}
-\Function{PrimNaive}{}
-	\State $visitado \gets Bool[n+1]$
-	\State $dist \gets Int[n+1]$
-	\State $padre \gets Int[n+1]$ \\
+\Function{PrimNaive}{}    \Comment{$\mathbf{\mathcal{O}(n^2)}$}
+	\State $visitado \gets Bool[n+1]$    \Comment{$\mathcal{O}(1)$}
+	\State $dist \gets Int[n+1]$    \Comment{$\mathcal{O}(1)$}
+	\State $padre \gets Int[n+1]$    \Comment{$\mathcal{O}(1)$} \\
 
-	\State ($\forall$ i $\in$ [1..n]) $visitado[i] \gets$ False
-	\State ($\forall$ i $\in$ [1..n]) $dist[i] \gets$ $\infty$
-	\State ($\forall$ i $\in$ [1..n]) $padre[i] \gets$ $-1$ \\
+	\State ($\forall$ i $\in$ [1..n]) $visitado[i] \gets$ False    \Comment{$\mathcal{O}(n)$}
+	\State ($\forall$ i $\in$ [1..n]) $dist[i] \gets$ $\infty$    \Comment{$\mathcal{O}(n)$}
+	\State ($\forall$ i $\in$ [1..n]) $padre[i] \gets$ $-1$    \Comment{$\mathcal{O}(n)$} \\
 
-	\State $s \gets 1$
+	\State $s \gets 1$    \Comment{$\mathcal{O}(1)$}
 
-	\For{$w \in [1..n]$}
-		\If{$s \neq w$}
-			\State $dist[w] \gets costo[s][w]$
-			\State $padre[w] \gets s$ \\
+	\For{$w \in [1..n]$}    \Comment{$\mathcal{O}(n)$}
+		\If{$s \neq w$}    \Comment{$\mathcal{O}(1)$}
+			\State $dist[w] \gets costo[s][w]$    \Comment{$\mathcal{O}(1)$}
+			\State $padre[w] \gets s$    \Comment{$\mathcal{O}(1)$} \\
 		\EndIf
 	\EndFor
 
-	\State $dist[s] \gets 0$
-	\State $visitados[s] \gets$ True
-	\For{$repes \in [1..n-1]$}
-		\State $v \gets -1$
-		\State $minDist \gets \infty$
-		\For{$u \in [1..n]$}
-			\If{($\neg visitados[u]$) $\land$ ($dist[u] < minDist$)}
-				\State $v \gets u$
-				\State $minDist \gets dist[u]$
+	\State $dist[s] \gets 0$    \Comment{$\mathcal{O}(1)$}
+	\State $visitados[s] \gets$ True    \Comment{$\mathcal{O}(1)$}
+	\For{$repes \in [1..n-1]$}    \Comment{$\mathcal{O}(n)$}
+		\State $v \gets -1$    \Comment{$\mathcal{O}(1)$}
+		\State $minDist \gets \infty$    \Comment{$\mathcal{O}(1)$}
+		\For{$u \in [1..n]$}    \Comment{$\mathcal{O}(n)$}
+			\If{($\neg visitados[u]$) $\land$ ($dist[u] < minDist$)}    \Comment{$\mathcal{O}(1)$}
+				\State $v \gets u$    \Comment{$\mathcal{O}(1)$}
+				\State $minDist \gets dist[u]$    \Comment{$\mathcal{O}(1)$}
 			\EndIf
 		\EndFor
-		\State $visistado[u] \gets$ True \\
+		\State $visistado[u] \gets$ True    \Comment{$\mathcal{O}(1)$} \\
 
-		\For{$w \in [1..n]$}
-			\If{$(\neg visitado[w]) \land (costo[v][w] < dist[w])$}
-				\State $dist[w] \gets costo[v][w]$
-				\State $padre[w] \gets v$ \\
+		\For{$w \in [1..n]$}    \Comment{$\mathcal{O}(n)$}
+			\If{$(\neg visitado[w]) \land (costo[v][w] < dist[w])$}    \Comment{$\mathcal{O}(1)$}
+				\State $dist[w] \gets costo[v][w]$    \Comment{$\mathcal{O}(1)$}
+				\State $padre[w] \gets v$    \Comment{$\mathcal{O}(1)$} \\
 			\EndIf
 		\EndFor
 	\EndFor
-	\State \Return $padre$
+	\State \Return $padre$    \Comment{$\mathcal{O}(1)$}
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
@@ -138,13 +137,12 @@ Vamos a utilizar como entrada en nuestro algoritmo a las siguientes variables:
 % \newpage
 \subsection{Complejidad}
 
-- Leer el input es O($n^2$): Hay que leer $\frac{n*(n-1)}{2}$ aristas, y construimos dos matrices de O($n^2$) elementos \\
-
-- Negativizar las construidas es O($n^2$): Recorremos los O($n^2$) elementos de la matriz de existencia. \\
-
-- Prim es O($n^2$): Estamos usando una matriz de adyacencia, ver detalle de complejidad en pseudocodigo\\
-
-- Obtener el costo total es O($n$): Recorremos el AGM dado por prim, que tiene $n-1$ aristas \\
+\begin{itemize}
+	\item Leer el input es O($n^2$): Hay que leer $\frac{n*(n-1)}{2}$ aristas, y construimos dos matrices de O($n^2$) elementos.
+	\item Negativizar las construidas es O($n^2$): Recorremos los O($n^2$) elementos de la matriz de existencia.
+	\item Prim es O($n^2$): Estamos usando una matriz de adyacencia, ver detalle de complejidad en pseudocodigo.
+	\item Obtener el costo total es O($n$): Recorremos el AGM dado por prim, que tiene $n-1$ aristas.
+\end{itemize}
 
 $$Total:  O(n^2) + O(n^2) + O(n^2) + O(n) = O(n^2) $$
 

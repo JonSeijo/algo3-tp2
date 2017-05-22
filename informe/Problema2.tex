@@ -1,5 +1,5 @@
 % !TEX root = ./informe.tex
-
+	
 \section{Problema 2}
 
 \subsection{Explicación}
@@ -24,7 +24,6 @@ Veamos primero que el $k$ que buscamos se encuentra en ese rango. No puede ser n
 
 \newpage
 \subsection{Pseudocódigo}
-\todo[inline]{Falta agregar comentarios sobre las complejidades}
 
 Vamos a utilizar como entrada en nuestro algoritmo a las siguientes variables:
 \begin{itemize}
@@ -37,7 +36,7 @@ Vamos a utilizar como entrada en nuestro algoritmo a las siguientes variables:
 \begin{algorithm}[H]
 % \label{ej2}         % and a label for \ref{} commands later in the document
 \begin{algorithmic}
-\Function{Resolver}{}    \Comment{$\mathcal{O}(log \, c*n*\sum_{v \in G} d(v))$}
+\Function{Resolver}{}    \Comment{$\mathbf{\mathcal{O}(log \, c*n*\sum_{v \in G} d(v))}$}
 	\State ExtenderGrafo()    \Comment{$\mathcal{O}(n)$}
     \State $d \gets 0$    \Comment{$\mathcal{O}(1)$}
 	\State $h \gets c + 2$    \Comment{$\mathcal{O}(1)$}
@@ -56,7 +55,7 @@ Vamos a utilizar como entrada en nuestro algoritmo a las siguientes variables:
 
 \begin{algorithm}[H]
 \begin{algorithmic}
-\Function{ExtenderGrafo}{}    \Comment{$\mathcal{O}(n)$}
+\Function{ExtenderGrafo}{}    \Comment{$\mathbf{\mathcal{O}(n)}$}
 	\For{$i \in [1..n)$}    \Comment{$\mathcal{O}(n)$}
 		\State AgregarAdelante($grafo[0], i$)    \Comment{$\mathcal{O}(1)$}
 		\State $costo[0][i] \gets 0$    \Comment{$\mathcal{O}(1)$}
@@ -67,7 +66,7 @@ Vamos a utilizar como entrada en nuestro algoritmo a las siguientes variables:
 
 \begin{algorithm}[H]
 \begin{algorithmic}
-\Function{HayAbuso}{$resta: Int$}    \Comment{$\mathcal{O}(n*\sum_{v \in G} d(v))$}
+\Function{HayAbuso}{$resta: Int$}    \Comment{$\mathbf{\mathcal{O}(n*\sum_{v \in G} d(v))}$}
 	\State $dist \gets$ InitMatrizEnInfinito($n + 1$)    \Comment{$\mathcal{O}(n)$}
 	\State $dist[0] \gets 0$    \Comment{$\mathcal{O}(1)$}
 	\For{$i \in [1..n)$}    \Comment{$\mathcal{O}(n)$}
@@ -85,7 +84,7 @@ Vamos a utilizar como entrada en nuestro algoritmo a las siguientes variables:
 
 \begin{algorithm}[H]
 \begin{algorithmic}
-\Function{HayCicloNegativo}{$dist: Int[], resta: Int$}    \Comment{$\mathcal{O}(\sum_{v \in G} d(v))$}
+\Function{HayCicloNegativo}{$dist: Int[], resta: Int$}    \Comment{$\mathbf{\mathcal{O}(\sum_{v \in G} d(v))}$}
 	\For{$nodo \in [0..n]$}    \Comment{$\mathcal{O}(n)$}
 		\For{$vecino \in grafo[nodo]$}    \Comment{$\mathcal{O}(d(nodo))$}
 			\State $peso \gets grafo[nodo][vecino] - resta$    \Comment{$\mathcal{O}(1)$}
@@ -103,13 +102,12 @@ Vamos a utilizar como entrada en nuestro algoritmo a las siguientes variables:
 
 \subsection{Complejidad}
 
-- Leer el input es O($m$): Representamos el grafo de la entrada con listas de adyacencia, con lo cual vamos a agregar $2m$ nodos a la estructura (también inicializamos la estructura en O($n$), pero en este problema, $m \geq n$) \\
-
-- Realizar una búsqueda binaria es O($log \, c$): Buscamos el máximo $k$ entre $1$ y $c+1$ que cumple el criterio que buscamos \\
-
-- El algoritmo Bellman Ford es O($n*m$): Lo usamos para detectar ciclos negativos en un grafo, que no cambia la complejidad, pero representa el peor caso (notar que como siempre vale que $\sum_{v \in G} d(v) = 2m$, entonces efectivamente $\mathcal{O}(n*\sum_{v \in G} d(v)) = \mathcal{O}(n*m)$) \\
-
-- Obtener el costo total es O($log \, c *n*m$): En cada iteración de la búsqueda binaria aplicamos Ford \\
+\begin{itemize}
+	\item Leer el input es O($m$): Representamos el grafo de la entrada con listas de adyacencia, con lo cual vamos a agregar $2m$ nodos a la estructura (también inicializamos la estructura en O($n$), pero en este problema, $m \geq n$)
+	\item Realizar una búsqueda binaria es O($log \, c$): Buscamos el máximo $k$ entre $1$ y $c+1$ que cumple el criterio que buscamos
+	\item El algoritmo Bellman Ford es O($n*m$): Lo usamos para detectar ciclos negativos en un grafo, que no cambia la complejidad, pero representa el peor caso (notar que como siempre vale que $\sum_{v \in G} d(v) = 2m$, entonces efectivamente $\mathcal{O}(n*\sum_{v \in G} d(v)) = \mathcal{O}(n*m)$)
+	\item Obtener el costo total es O($log \, c *n*m$): En cada iteración de la búsqueda binaria aplicamos Ford
+\end{itemize}
 
 $$Total:  O(m) + O(log \, c) * O(n*m) = O(log \, c *n*m) $$
 
