@@ -228,13 +228,13 @@ if __name__ == '__main__':
         sys.exit("No arguments passed! Use -h flag for help")
 
     if args.todos:
-        # experimentar(csv_arista_random_premium_minimas, n_max_arista_random_premium_minimas, tipo_arista_random_premium_minimas)
+        experimentar(csv_arista_random_premium_minimas, n_max_arista_random_premium_minimas, tipo_arista_random_premium_minimas)
         experimentar(csv_arista_random_premium_random, n_max_arista_random_premium_random, tipo_arista_random_premium_random)
         experimentar(csv_arista_random_premium_maximas, n_max_arista_random_premium_maximas, tipo_arista_random_premium_maximas)
         experimentar(csv_arista_random_premium_25, n_max_arista_random_premium_25, tipo_arista_random_premium_25)
         experimentar(csv_arista_random_premium_10, n_max_arista_random_premium_10, tipo_arista_random_premium_10)
         experimentar(csv_arista_random_premium_3, n_max_arista_random_premium_3, tipo_arista_random_premium_3)
-        # experimentar(csv_arista_random_premium_0_5, n_max_arista_random_premium_0_5, tipo_arista_random_premium_0_5)
+        experimentar(csv_arista_random_premium_0_5, n_max_arista_random_premium_0_5, tipo_arista_random_premium_0_5)
 
     else:
         if args.arista_random_premium_random:
