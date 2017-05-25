@@ -18,7 +18,7 @@ ejecutable_tiempos = "./tiempo1"
 # InputFile donde se van a guardar cada instancia que se ejecute
 input_path_tmp = "./experimentos/input.tmp"
 
-repeticiones = 25
+repeticiones = 50
 cota_sup_valor_random = 10000
 n_max = 75 # Aumentar
 
@@ -34,7 +34,7 @@ tipo_arista_random_premium_maximas = "arista_random_premium_maximas"
 
 # Arista_random_premium_minimas
 csv_arista_random_premium_minimas = "./experimentos/problema1/nfijo/arista_random_premium_minimas.csv"
-k_max_arista_random_premium_minimas = 42
+k_max_arista_random_premium_minimas = 80
 tipo_arista_random_premium_minimas = "arista_random_premium_minimas"
 
 # Arista_random_premium_25

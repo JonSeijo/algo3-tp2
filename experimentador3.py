@@ -19,9 +19,9 @@ ejecutable_tiempos = "./tiempo3"
 # InputFile donde se van a guardar cada instancia que se ejecute
 input_path_tmp = "./experimentos/input.tmp"
 
-repeticiones = 10
+repeticiones = 30
 cota_valor_random = 2000
-n_max = 100 # Aumentar
+n_max = 130 # Aumentar
 
 # Costo Random Existe Random (cr_er)
 csv_cr_er = "./experimentos/problema3/costo_random_existe_random.csv"

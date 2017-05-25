@@ -18,7 +18,7 @@ ejecutable_tiempos = "./tiempo2"
 # InputFile donde se van a guardar cada instancia que se ejecute
 input_path_tmp = "./experimentos/input.tmp"
 
-repeticiones = 10
+repeticiones = 40
 cota_inf_valor_random = 1
 cota_sup_valor_random = 100000
 n_max = 100 # Aumentar
