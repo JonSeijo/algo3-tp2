@@ -107,11 +107,20 @@ Vamos a utilizar como entrada en nuestro algoritmo las siguientes variables:
 	\EndWhile \\
 
 	\State $distanciaMinima \gets \infty$    \Comment{$\mathcal{O}(1)$}
-	\For{$i \in [destino, destino + n, destino + 2n \, .. \, n*(k+1)]$}    \Comment{$\mathcal{O}(k)$}
+
+	% @jonno: que tal asi?
+	\For{$index \in [0 .. (k+1)]$}    \Comment{$\mathcal{O}(k)$}
+		\State $i \gets$ $destino + index * n$ \Comment{$\mathcal{O}(1)$}
 		\If{$dist[i] < distanciaMinima$}    \Comment{$\mathcal{O}(1)$}
 			\State $distanciaMinima \gets dist[i]$    \Comment{$\mathcal{O}(1)$}
 		\EndIf
 	\EndFor \\
+
+	% \For{$i \in [destino, destino + n, destino + 2n \, .. \, n*(k+1)]$}    \Comment{$\mathcal{O}(k)$}
+	% 	\If{$dist[i] < distanciaMinima$}    \Comment{$\mathcal{O}(1)$}
+	% 		\State $distanciaMinima \gets dist[i]$    \Comment{$\mathcal{O}(1)$}
+	% 	\EndIf
+	% \EndFor \\
 
 	\If{$distanciaMinima = \infty$}    \Comment{$\mathcal{O}(1)$}
 		\State \Return $-1$    \Comment{$\mathcal{O}(1)$}
@@ -123,7 +132,7 @@ Vamos a utilizar como entrada en nuestro algoritmo las siguientes variables:
 \end{algorithmic}
 \end{algorithm}
 
-\todo[inline]{En el último for hago el 'step = n' de una forma rara, ideas bienvenidas}
+% \todo[inline]{En el último for hago el 'step = n' de una forma rara, ideas bienvenidas}
 
 \subsection{Complejidad}
 
