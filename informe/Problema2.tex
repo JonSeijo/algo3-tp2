@@ -113,19 +113,24 @@ $$Total:  O(m) + O(log \, c) * O(n*m) = O(log \, c *n*m) $$
 
 \subsection{Experimentos}
 
-En principio, podríamos ir fijando algunas de las variables y variando una para ver cómo afecta cada variable a los tiempos de cómputo. Sin embargo, esto no es particularmente interesante, lo único que tendriamos es un gráfico creciente. \\
+En principio, podríamos ir fijando algunas de las variables y variando otras para ver cómo afecta cada variable a los tiempos de cómputo, pero esto no es particularmente interesante, lo único que se obtiene es un gráfico creciente. Por este motivo decidimos solo mostrar las curvas generadas por instancias aleatorias. \\
 
-\todo[inline]{Uhh.... Se me acabó la imaginación, pero hay que dar un verso para la hipótesis}
+Para cada uno de los nodos, se le asigna un grado de salida al azar entre $1$ y $n-1$. Como todos tienen al menos una arista de salida se garantiza entonces la existencia de ciclos, haciendo que sean grafos válidos para nuestro problema. Luego, para cada nodo se generan la cantidad de aristas correspondientes a su \textit{out-degree}, conectándolas al azar con otros nodos. \\
 
-\todo[inline]{Faltan datos puros y duros de cómo se generó el experimento}
+Los costos ($c$) de cada arista tambien fueron tomados al azar, entre 1 y 100000. El algoritmo tiene una complejidad logarítmica en $c$, por lo que los valores que toma no aportan demasiado al tiempo de ejecución. \\
+
+El grafico fue realizado en función de la cantidad de vértices, $n$, y para cada tamaño se corrió el programa 50 veces,
+guardando el tiempo de ejecución. El valor graficado es el promedio por cada tamaño. \\
+
+\todo[inline]{Hablar de lo que es esperable obtener}
 
 {\centering
   \includegraphics[width=0.8\textwidth]{imagenes/problema2/n_aristas.pdf} \\
 }
 
-\todo[inline]{Wait, ¿qué pasa con el $c$ acá? ¿Se fija?}
-
-\todo[inline]{Cuánto a que nos piden escala logarítmica}
+% @jonno: Lo grafique en escala logaritmica para probar pero honestamente no aporta nada de nada,
+%  		  seria util si existieran diferencias muy pequeñas pero no es el caso
+% \todo[inline]{Cuánto a que nos piden escala logarítmica}
 
 Observemos que si las aristas son máximas, entonces $m = \frac{n*(n-1)}{2}$, con lo cual $O(n*m) = O(n^3)$. Además, la esperanza de la cantidad de aristas tomadas al azar sería $\frac{n*(n-1)}{4}$, con lo cual seguiría siendo de orden cúbico. Estos hechos parecerían corresponderse con lo que vemos en el gráfico. \\
 
