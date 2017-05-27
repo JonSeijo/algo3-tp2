@@ -162,7 +162,7 @@ Si no hay aristas premium, solo se recorrerá un unico \textit{nivel} de cada no
 En caso de existir alguna premium, se recorren tambien diferentes \textit{niveles} de un mismo nodo. Es decir, si \textit{v} es un nodo, se recorre \textit{v}, \textit{v pasando por 1 premium}, \textit{v pasando por 2 premiums}, etc, por lo que es esperable que los tiempos de ejecucion sean muchos mayores en estos casos. \\
 
 {\centering
-  \includegraphics[width=0.8\textwidth]{imagenes/problema1/todo_random.png} \\
+  \includegraphics[width=0.9\textwidth]{imagenes/problema1/todo_random_bis.pdf} \\
 }
 
 Dado que hay varias variables que son dejadas al azar y las curvas no son muy regulares, veamos que pasa cuando tomamos un $K$ fijo (con respecto a $N$). Tomamos $K$ tal que sea siempre la mitad de la cantidad de nodos, es decir $K = N/2$. \\
@@ -170,7 +170,7 @@ Dado que hay varias variables que son dejadas al azar y las curvas no son muy re
 Observamos que en lineas generales sucede lo mismo en el caso anterior, con la diferencia en que en este caso las curvas son suaves. Cuando no hay premiums siempre es mas eficiente calcular la respuesta. \\
 
 {\centering
-  \includegraphics[width=0.8\textwidth]{imagenes/problema1/kfijo.png} \\
+  \includegraphics[width=0.9\textwidth]{imagenes/problema1/kfijo.pdf} \\
 }
 
 Veamos que sucede cuando dejamos el $N$ fijo y vamos variando el $K$. Si no hay rutas premium sigue siendo lo mas eficiente por las mismas razones que antes. \\
@@ -179,7 +179,7 @@ Cosa interesante: si el 100\% de las aristas son premiums, puede verse una \text
 
 
 {\centering
-  \includegraphics[width=0.8\textwidth]{imagenes/problema1/nfijo.png} \\
+  \includegraphics[width=0.9\textwidth]{imagenes/problema1/nfijo.pdf} \\
 }
 
 \todo{conclusion}
