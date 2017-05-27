@@ -6,7 +6,7 @@
 
 Tenemos ciudades conectadas por rutas bidireccionales, donde algunas rutas tienen la particularidad de ser $premium$. El problema es calcular el camino minimo desde ciudad $origen$ hacia una $destino$, pasando por a lo sumo $k$ rutas premium (devolviendo -1 de no existir solución). \\
 
-La particularidad de este problema es que un algoritmo greedy como el de Dijkstra no parecería funcionar. El motivo es que, dado un camino premium, no puedo saber si el hecho de tomarlo resulta en un callejón sin salida. Esto implica que la distancia de un nodo puede quedar actualizada con el valor de un camino que no puede llegar al destino. Esto nos imposibilita considerar caminos hacie ese nodo pesos mayores, pero que por tener menos caminos premium terminan siendo mejor opción. \\
+La particularidad de este problema es que un algoritmo greedy como el de Dijkstra no parecería funcionar. El motivo es que, dado un camino premium, no puedo saber si el hecho de tomarlo resulta en un callejón sin salida. Esto implica que la distancia de un nodo puede quedar actualizada con el valor de un camino que no puede llegar al destino. Esto nos imposibilita considerar caminos hacia ese nodo pesos mayores, pero que por tener menos caminos premium terminan siendo mejor opción. \\
 
 La estrategia general va a ser plantearse $k$ versiones para cada nodo, donde cada uno representa un \textit{estado} distinto. Habiendo hecho esta separación, simplificamos los roles de los ejes premium, y nos permite aplicar el algoritmo de Dijkstra, con algunas leves variaciones.
 
@@ -27,7 +27,7 @@ Además, al tratarse de un simple digrafo con aristas positivas, se puede calcul
 
 \subsection{Pseudocodigo}
 
-(Ver debajo del psudocódigo las referencia de significados de las variables)
+(Ver notas debajo del pseudocodigo las referencia de significados de las variables)
 % Vamos a utilizar como entrada en nuestro algoritmo las siguientes variables:
 
 \begin{algorithm}[H]
@@ -157,9 +157,9 @@ En el primer experimento, vemos como se comporta el programa a medida que aument
 
 Las aristas son generadas aleatoriamente, y el K (\textit{máxima cantidad de premiums que pueden usarse}) tambien es aleatorio, entre 0 y la cantiad de aristas totales. \\
 
-Si no hay aristas premium, solo se recorrerá una única \textit{versión} de los nodos, por lo que se ejecuta es el algoritmo de Dijkstra clásico.
+Si no hay aristas premium, solo se recorrerá un unico \textit{nivel} de cada nodo, por lo que se ejecuta es el algoritmo de Dijkstra clásico.
 
-En caso de existir alguna premium, se recorren tambien diferentes \textit{versiones} de un mismo nodo. Es decir, si \textit{v} es un nodo, se recorre \textit{v}, \textit{v pasando por 1 premium}, \textit{v pasando por 2 premiums}, etc, por lo que es esperable que los tiempos de ejecucion sean muchos mayores en estos casos. \\
+En caso de existir alguna premium, se recorren tambien diferentes \textit{niveles} de un mismo nodo. Es decir, si \textit{v} es un nodo, se recorre \textit{v}, \textit{v pasando por 1 premium}, \textit{v pasando por 2 premiums}, etc, por lo que es esperable que los tiempos de ejecucion sean muchos mayores en estos casos. \\
 
 {\centering
   \includegraphics[width=0.8\textwidth]{imagenes/problema1/todo_random.png} \\
