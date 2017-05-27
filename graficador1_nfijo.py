@@ -33,8 +33,8 @@ plot_premium_maximas.set_title('\n Problema 1 \n Aristas random; N = 70 \n Tiemp
 plot_premium_maximas.set_ylabel("Segundos", size=14)
 
 #tiempos_random_todo.plot(ax=plot_premium_maximas, color='#4C72B0') # Color azul
-tiempos_premium_25.plot(ax=plot_premium_maximas, color='#4C72B0') # Color violeta
-tiempos_premium_10.plot(ax=plot_premium_maximas, color='#C4C422') # Color amarillo
+tiempos_premium_25.plot(ax=plot_premium_maximas, color='#C4C422') # Color amarillo
+tiempos_premium_10.plot(ax=plot_premium_maximas, color='#4C72B0') # Color azul
 #tiempos_premium_3.plot(ax=plot_premium_maximas, color='#C422C4') # Color celeste
 #tiempos_premium_0_5.plot(ax=plot_premium_maximas, color='#000000') # Color negro
 tiempos_premium_minimas[:70].plot(ax=plot_premium_maximas, color='#55A868') # Color verde
