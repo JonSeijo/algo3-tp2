@@ -149,7 +149,7 @@ $$Total:  O(n^2) + O(n^2) + O(n^2) + O(n) = O(n^2) $$
 
 \subsection{Experimentos}
 
-Lo curioso que ocurre en este problema es que la única variable que representa tamaño en nuestra entrada es la cantidad de ciudades $n$. Esto ocurre porque la cantidad de aristas está siempre determinada: sólo trabajamos con árboles completos. La pregunta es si hay algo más aparte de $n$ que podría llegar a utilizar recursos de manera significativa. Suponemos que no, pues lo único que puede cambiar además del tamaño del grafo es qué rutas están construidas y cuanto pesan. Mirando el algoritmo, a priori estos datos no parecería afectar demasiado. \\
+Lo curioso que ocurre en este problema es que la única variable que representa tamaño en nuestra entrada es la cantidad de ciudades $n$. Esto ocurre porque la cantidad de aristas está siempre determinada: sólo trabajamos con grafos completos. La pregunta es si hay algo más aparte de $n$ que podría llegar a utilizar recursos de manera significativa. Suponemos que no, pues lo único que puede cambiar además del tamaño del grafo es qué rutas están construidas y cuanto pesan. Mirando el algoritmo, a priori estos datos no parecería afectar demasiado. \\
 
 Para comprobarlo empíricamente vamos a correr nuestro algoritmo generando de distintas formas los grafos de entrada, que en nuestro caso están caracterizadas por las matrices de existencia y de costo. Contrastaremos el hecho de tomar matrices aleatorias, con tomar instancias particulares de matrices, tratando de encontrar si hay diferencias o no en como evolucionan los tiempos al aumentar $n$. \\
 
@@ -157,7 +157,7 @@ Para comprobarlo empíricamente vamos a correr nuestro algoritmo generando de di
 
 {\centering
   \includegraphics[width=0.9\textwidth]{imagenes/problema3/todos.png} \\
-} 
+}
 
 Con estos resultados estamos bastante convencidos de lo que que sospechabamos: lo único que cambia el tiempo de cómputo del algoritmo es $n$. Para dar un cierre, hablemos un poco de cuando es que varía Prim, y veamos un poco que la pregunta inicial que teniamos tenía algún sentido. \\
 
