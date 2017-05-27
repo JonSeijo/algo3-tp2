@@ -22,12 +22,12 @@ tiempos_ci_en = data_costo_i_existe_n.groupby('n')['tiempo'].mean() / 1000000000
 # plot_cr_er.set_ylabel("Segundos", size = 14)
 # plt.show()
 
-fig, axes = plt.subplots(nrows=2, ncols=2)
-fig.subplots_adjust(hspace=.7, wspace=.7)
-tiempos_cr_er.plot(ax=axes[0,0]); axes[0,0].set_title('\nCosto Random - Existe Random');
-tiempos_ci_er.plot(ax=axes[0,1]); axes[0,1].set_title('\nCosto Igual - Existe Random');
-tiempos_ci_es.plot(ax=axes[1,0]); axes[1,0].set_title('\nCosto Igual - Existe Si');
-tiempos_ci_en.plot(ax=axes[1,1]); axes[1,1].set_title('\nCosto Igual - Existe No');
+fig, axes = plt.subplots(nrows=2, figsize=(13,10), ncols=2)
+fig.subplots_adjust(hspace=.3, wspace=.3)
+tiempos_cr_er.plot(ax=axes[0,0]); axes[0,0].set_title('\nCostos: Random - Existencia: Random');
+tiempos_ci_er.plot(ax=axes[0,1]); axes[0,1].set_title('\nCostos: Igual - Existencia: Random');
+tiempos_ci_es.plot(ax=axes[1,0]); axes[1,0].set_title('\nCostos: Igual - Existencia: Todas');
+tiempos_ci_en.plot(ax=axes[1,1]); axes[1,1].set_title('\nCostos: Igual - Existencia: Ninguna');
 
 for i in range(0, 2):
     for j in range(0, 2):
