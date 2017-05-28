@@ -126,6 +126,6 @@ guardando el tiempo de ejecución. El valor graficado es el promedio por cada ta
   \includegraphics[width=0.8\textwidth]{imagenes/problema2/n_aristas.pdf} \\
 }
 
-Observemos que si las aristas son máximas, entonces $m = \frac{n*(n-1)}{2}$, con lo cual $O(n*m) = O(n^3)$. Además, la esperanza de la cantidad de aristas tomadas al azar sería $\frac{n*(n-1)}{4}$, con lo cual seguiría siendo de orden cúbico. Estos hechos parecerían corresponderse con lo que vemos en el gráfico. \\
+Observemos que si las aristas son máximas, entonces $m = \frac{n*(n-1)}{2}$, con lo cual $O(n*m) = O(n^3)$. Además, la esperanza de la cantidad de aristas tomadas al azar sería $m = \frac{n*(n-1)}{4}$, con lo cual seguiría siendo de orden cúbico. Estos hechos parecerían corresponderse con lo que vemos en el gráfico. \\
 
 Algo interesante que también podemos notar es el hecho de que las funciones sean tan suaves como lo son. Recordar que en un algoritmo de Ford común tiene condiciones de corte (podría detenerse si en una iteración no hay cambios). Esto no ocurre en este caso porque lo estamos utilizando para detectar ciclos negativos, con lo cual siempre iteramos $n+1$ veces. Además, a Ford no le interesa mucho la topologia de nuestros grafos, porque en cada iteración termina visitando todas las aristas, independientemente  de qué es lo que estén conectando. Como resultado, no hay nada más que pueda afectar el recorrido del algoritmo que las variables presentes en la fórmula planteada en la sección de Complejidad.
