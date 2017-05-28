@@ -8,19 +8,22 @@ Tenemos ciudades conectadas por rutas bidireccionales, donde algunas rutas tiene
 
 La particularidad de este problema es que un algoritmo greedy como el de Dijkstra no parecería funcionar. El motivo es que, dado un camino premium, no puedo saber si el hecho de tomarlo resulta en un callejón sin salida. Esto implica que la distancia de un nodo puede quedar actualizada con el valor de un camino que no puede llegar al destino. Esto nos imposibilita considerar caminos hacia ese nodo pesos mayores, pero que por tener menos caminos premium terminan siendo mejor opción. \\
 
-{\centering
-	\includegraphics[width=0.5\textwidth]{imagenes/problema1/problema1-c2.png} \\
-}
+Veamos un ejemplo donde $k = 1$. Tenemos que encontrar el caminimo mínimo entre el nodo $Inicio$ y nodo $Fin$, pero podemos usar como máximo una única ruta premium.
 
 {\centering
-	\includegraphics[width=0.5\textwidth]{imagenes/problema1/problema1-c2-solved.png} \\
+	\includegraphics[width=0.6\textwidth]{imagenes/problema1/problema1-c2.png} \\
+	% \captionof{figure}{Problema inicial}
+}
+
+Si no existiese el concepto de premium, el camino mínimo se consigue pasando por las rutas que valen 10. Pero como solamente podemos pasar por \textbf{una} premium, ese no sería un camino posible, por lo que lo mejor que podemos hacer es tomar la ruta que vale $50$.
+
+{\centering
+	\includegraphics[width=0.6\textwidth]{imagenes/problema1/problema1-c2-solved.png} \\
 	\captionof{figure}{Solución óptima con K = 1}
 }
 
-\todo[inline]{Agregar explicacion del ejemplo}
-
 $ $ \newline
-La estrategia general va a ser plantearse $k$ versiones para cada nodo, donde cada uno representa un \textit{estado} distinto. Habiendo hecho esta separación, simplificamos los roles de los ejes premium, y nos permite aplicar el algoritmo de Dijkstra, con algunas leves variaciones.
+La estrategia general va a ser plantearse $k$ versiones para cada nodo, donde cada uno representa un \textit{estado} distinto: el nodo $v$ en el estado $j$, es el nodo $v$ habiendo pasado por $j$ rutas premiums previamente. Habiendo hecho esta separación, simplificamos los roles de los ejes premium, y nos permite aplicar el algoritmo de Dijkstra, con algunas leves variaciones.
 
 \subsection{Correctitud}
 Queremos representar cada ciudad como un vértice y cada ruta como una arista con el objetivo de calcular el camino mínimo entre el origen y el destino mediante algún algoritmo conocido y probado para este propósito. Llamaremos a este grafo $G_0$\\
@@ -39,7 +42,19 @@ Además, al tratarse de un simple digrafo con aristas positivas, se puede calcul
 
 \subsection{Pseudocodigo}
 
-(Ver notas debajo del pseudocodigo las referencia de significados de las variables)
+% (Ver notas debajo del pseudocodigo las referencia de significados de las variables)
+Referencias de variables para el pseudocódigo:
+
+\begin{itemize}
+	\item $n$: La cantidad de ciudades
+	\item $m$: La cantidad de aristas
+	\item $k$: La máxima cantidad de rutas premium posibles de recorrer
+	\item $origen$: La ciudad origen
+	\item $destino$: La ciudad destino
+	\item $matrizAdy$: El grafo de entrada representado con matriz de adyacencia.
+	\item $esPremium$: La matriz de booleanos que indica si una ruta es premium o no
+\end{itemize}
+
 % Vamos a utilizar como entrada en nuestro algoritmo las siguientes variables:
 
 \begin{algorithm}[H]
@@ -136,18 +151,6 @@ Además, al tratarse de un simple digrafo con aristas positivas, se puede calcul
 \end{algorithmic}
 \end{algorithm}
 % \todo[inline]{En el último for hago el 'step = n' de una forma rara, ideas bienvenidas}
-
-Referencias de variables parra el pseudocódigo:
-
-\begin{itemize}
-	\item $n$: La cantidad de ciudades
-	\item $m$: La cantidad de aristas
-	\item $k$: La máxima cantidad de rutas premium posibles de recorrer
-	\item $origen$: La ciudad origen
-	\item $destino$: La ciudad destino
-	\item $matrizAdy$: El grafo de entrada representado con matriz de adyacencia.
-	\item $esPremium$: La matriz de booleanos que indica si una ruta es premium o no
-\end{itemize}
 
 \subsection{Complejidad}
 
