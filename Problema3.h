@@ -1,7 +1,7 @@
 #ifndef H_PROBLEMA_3
 #define H_PROBLEMA_3
 
-// El main esta en ej3.cpp
+// El main esta en Solucion3.cpp
 
 #include <iostream>
 #include <vector>
