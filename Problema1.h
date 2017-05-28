@@ -1,9 +1,7 @@
 #ifndef H_PROBLEMA_3
 #define H_PROBLEMA_3
 
-// El main no está en el problema3,
-// sino que habrá un main en solucion.cpp (que llama al problema3)
-// y otro main en tiempos.cpp (que llama al problema3)
+// El main esta en ej1.cpp
 
 #include <iostream>
 #include <vector>
@@ -34,7 +32,7 @@ class Problema1 {
 		std::vector<std::vector<int> > matrizAdy;
 		std::vector<std::vector<bool> > esPremium;
 
-		int dijkstraMutante();
+		int dijkstraCustom();
 
 		void debug();
 };

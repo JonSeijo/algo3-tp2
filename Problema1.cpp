@@ -54,20 +54,17 @@ bool Problema1::leerInput() {
 }
 
 void Problema1::resolver(bool imprimirOutput) {
-	int resultado = dijkstraMutante();
+	int resultado = dijkstraCustom();
 
 	if (imprimirOutput) {
 		std::cout << resultado << std::endl;
 	}
-
-	//debug();
 }
 
 
-// Devuelvo un entero que representa la distancia del camino minimo entre origen y destino con a lo sumo k premiums (-1 si no existe)
-int Problema1::dijkstraMutante() {
-	// Implementacion de DIJKSTRA
-	// ----------------------------------------------------
+// Devuelvo un entero que representa la distancia del camino minimo
+// entre origen y destino con a lo sumo k premiums (-1 si no existe)
+int Problema1::dijkstraCustom() {
 
 	std::vector<bool> visitado(n*(k+1)+1, false);	//Es k+1 porque k = # de clones y  +1 = el original
 	std::vector<int> dist(n*(k+1)+1, INFINITO);		//Idem
@@ -79,7 +76,7 @@ int Problema1::dijkstraMutante() {
 				if (k > 0){	//Puedo utilizar un camino premium en el primer paso si al menos k > 0!
 					dist[w+n] = matrizAdy[s][w];
 				}
-			}else{
+			} else {
 				dist[w] = matrizAdy[s][w];
 			}
 		}
@@ -87,20 +84,6 @@ int Problema1::dijkstraMutante() {
 
 	dist[s] = 0;
 	visitado[s] = true;
-
-	/*
-	std::cerr << "DIST: ";
-	for (int i = 1; i <= n*(k+1); i++) {
-		std::cerr << "|" <<  (dist[i] == INFINITO?-1:dist[i]);
-	}
-	std::cerr << std::endl;
-
-	std::cerr << "VISIT: ";
-	for (int i = 1; i <= n*(k+1); i++) {
-		std::cerr << "|" <<  visitado[i];
-	}
-	std::cerr << std::endl;
-	*/
 
 	bool finalizado = false;
 
@@ -117,19 +100,14 @@ int Problema1::dijkstraMutante() {
 			}
 		}
 
-
 		if (minDist == INFINITO){
 			finalizado = true;
 			continue;
 		}
 
-		//std::cerr << "AGARRO: " << v << " CON DIST: " << minDist << std::endl;
-
 		visitado[v] = true;
-		int nivel = (v-1)/n;			//OJO: Es división entera!
-		int vOriginal = v - n*nivel;	//El v de nivel 0 (para utilizar la matriz de adyacencia)
-
-		//std::cerr << "NIVEL: " << nivel << " V ORIGINAL: " << vOriginal << std::endl;
+		int nivel = (v-1)/n;			// División entera
+		int vOriginal = v - n*nivel;	// El v de nivel 0 (para utilizar la matriz de adyacencia)
 
 		// Para cada vecino de v (pero en nivel 0 para utilizar la matriz de adyacencia)
 		for (int w = 1; w <= n; w++) {
@@ -153,24 +131,14 @@ int Problema1::dijkstraMutante() {
 		}
 	}
 
-	/*
-	std::cerr << "RESULTADO DIJKSTRA: ";
-	for (int i = 1; i <= n*(k+1); i++) {
-		std::cerr << "|" <<  (dist[i]==INFINITO?-1:dist[i]);
-	}
-	std::cerr << "|" << std::endl;
-	*/
-
 	int distanciaMinima = INFINITO;
 	for (int i = destino; i <= n*(k+1); i+= n) {
 		if (dist[i] < distanciaMinima){
 			distanciaMinima = dist[i];
 		}
 	}
-	//std::cerr << "RESULTADO" << distanciaMinima << std::endl;
-	return ((distanciaMinima == INFINITO)?-1:distanciaMinima);
+	return ((distanciaMinima == INFINITO) ? -1 : distanciaMinima);
 }
-
 
 void Problema1::debug() {
 	std::cerr << "n: " << n << "\n\n";
@@ -182,7 +150,6 @@ void Problema1::debug() {
 		}
 		std::cerr << "\n";
 	}
-
 
 	std::cerr << "\n\nesPremium: \n";
 	for (int i = 1; i <= n; i++) {
