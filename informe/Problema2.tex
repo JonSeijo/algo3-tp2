@@ -8,6 +8,26 @@ El contexto del problema es el siguiente: tenemos un conjunto de ciudades conect
 
 Notemos que podemos considerar a las ciudades como nodos, a las rutas como aristas, y a los peajes como el peso de las mismas; modelando el contexto como un grafo \todo{rotulado?}. Visto esto, el problema se reduce a encontrar el máximo $k$ tal que en el grafo en el que todos los pesos decrementan en $k$, no hay circuito simples negativos. \\
 
+Veamos un ejemplo:
+
+{\centering
+  \includegraphics[width=0.50\textwidth]{imagenes/problema2/prob2_caso3.png} \\
+}
+$ $\newline
+
+\begin{figure}[H]
+	\centering
+	\begin{minipage}[b]{0.45\textwidth}
+		\includegraphics[width=\textwidth]{imagenes/problema2/prob2_caso3_c1.png} \\
+	\end{minipage}
+	\hfill
+	\begin{minipage}[b]{0.45\textwidth}
+		\includegraphics[width=\textwidth]{imagenes/problema2/prob2_caso3_c2.png} \\
+	\end{minipage}
+\end{figure}
+
+\todo[inline] {Explicar el ejemplo}
+
 \subsection{Correctitud}
 
 La noción de abuso en un grafo se corresponde con la existencia de ciclos negativos. Por esta razón, para resolver el problema querremos ser capaces de responder si un grafo tiene ciclos negativos o no. \\
