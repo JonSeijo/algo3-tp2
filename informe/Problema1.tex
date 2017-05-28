@@ -6,7 +6,7 @@
 
 Tenemos ciudades conectadas por rutas bidireccionales, donde algunas rutas tienen la particularidad de ser $premium$. El problema es calcular el camino minimo desde ciudad $origen$ hacia una $destino$, pasando por a lo sumo $k$ rutas premium (devolviendo -1 de no existir solución). \\
 
-La particularidad de este problema es que un algoritmo greedy como el de Dijkstra no parecería funcionar. El motivo es que, dado un camino premium, no puedo saber si el hecho de tomarlo resulta en un callejón sin salida. Esto implica que la distancia de un nodo puede quedar actualizada con el valor de un camino que no puede llegar al destino. Esto nos imposibilita considerar caminos hacia ese nodo pesos mayores, pero que por tener menos caminos premium terminan siendo mejor opción. \\
+La particularidad de este problema es que un algoritmo greedy como el de Dijkstra no parecería funcionar. El motivo es que, dado un camino premium, no puedo saber si el hecho de tomarlo resulta en un callejón sin salida. Esto implica que la distancia de un nodo puede quedar actualizada con el valor de un camino que no puede llegar al destino. Esto nos imposibilita considerar caminos hacia ese nodo que a pesar de ser mas largos, por tener menos caminos premium terminan siendo mejor opción. \\
 
 Veamos un ejemplo donde $k = 1$. Tenemos que encontrar el caminimo mínimo entre el nodo $Inicio$ y nodo $Fin$, pero podemos usar como máximo una única ruta premium.
 
@@ -23,7 +23,7 @@ Si no existiese el concepto de premium, el camino mínimo se consigue pasando po
 }
 
 $ $ \newline
-La estrategia general va a ser plantearse $k$ versiones para cada nodo, donde cada uno representa un \textit{estado} distinto: el nodo $v$ en el estado $j$, es el nodo $v$ habiendo pasado por $j$ rutas premiums previamente. Habiendo hecho esta separación, simplificamos los roles de los ejes premium, y nos permite aplicar el algoritmo de Dijkstra, con algunas leves variaciones.
+La estrategia general va a ser plantearse $k$ versiones para cada nodo, donde cada una represente un \textit{estado} distinto. Cada nodo $v$ representará una ciudad $c$ en el estado $j$. Pasar por $v$ representará haber cruzado $c$ habiendo pasado por $j$ rutas premiums. Esta simplificación de los roles de los ejes premium nos va a permitir aplicar el algoritmo de Dijkstra, con algunas leves variaciones.
 
 \subsection{Correctitud}
 Queremos representar cada ciudad como un vértice y cada ruta como una arista con el objetivo de calcular el camino mínimo entre el origen y el destino mediante algún algoritmo conocido y probado para este propósito. Llamaremos a este grafo $G_0$\\
@@ -184,9 +184,9 @@ Observamos que en lineas generales sucede lo mismo en el caso anterior, con la d
 
 Lo que más llama la atención es que hay una diferencia abismal entre $0\%$ premium y $3\%$, en comparación con las diferencias entre las curvas con $3\%$ premium en adelante. Intentemos interpretar los resultados. \\
 
-En principio, recordemos que para cada ciudad tenemos $k$ nodos, donde cada uno tiene nivel/estado asociado, que representa para nosotros cuantas rutas premium atravesé para llegar a la ciudad. Si no hay aristas premium, a pesar de tener $K*N$ nodos en la cola de prioridad sobre la que itera el algoritmo de Dijkstra, no hay ninguna forma de pasar de un nivel al otro. Entonces, partiendo de un nodo del primer nivel, lo que se termina ejecutando es el algoritmo de Dijkstra clásico. \\
+En principio, recordemos que para cada ciudad tenemos $k$ nodos, donde cada uno tiene nivel/estado asociado, que representa para nosotros cuantas rutas premium tuvimos que atravesar para llegar a la ciudad. Si no hay aristas premium, a pesar de tener $K*N$ nodos en la cola de prioridad sobre la que itera el algoritmo de Dijkstra, no hay ninguna forma de pasar de un nivel al otro. Entonces, partiendo de un nodo del primer nivel, lo que se termina ejecutando es el algoritmo de Dijkstra clásico. \\
 
-En caso de existir alguna premium, tenemos acceso a los $K$ \textit{niveles} completos. Es decir, si \textit{v} es un nodo, se puede recorrer \textit{v}, \textit{v pasando por 1 premium}, \textit{v pasando por 2 premiums}, etc, por lo que es esperable que los tiempos de ejecucion sean muchos mayores en estos casos. Y cuando ya tenemos una ruta premium, agregar una más no parece ser mucho más significativo que agregar una ruta normal. \\
+En caso de existir al menos una premium, tenemos acceso a los $K$ \textit{niveles} completos. Es decir, si \textit{v} es un nodo, se puede recorrer \textit{v}, \textit{v pasando por 1 premium}, \textit{v pasando por 2 premiums}, etc, por lo que es esperable que los tiempos de ejecucion sean muchos mayores en estos casos. Y cuando ya tenemos una ruta premium, agregar una más no parece ser mucho más significativo que agregar una ruta normal. \\
 
 Un detalle a notar es que si el 100\% de las aristas son premiums, puede verse una \textit{pequeña} mejora con respecto a los otros porcentajes. Esto puede ser porque como todas son premiums, al llegar a $K$ aristas recorridas el algoritmo corta, mientras que si existen aristas normales pueden llegar a recorrerse mas de $K$. \\
 
