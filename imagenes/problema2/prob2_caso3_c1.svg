@@ -14,7 +14,7 @@
    inkscape:version="0.48.4 r9939"
    width="599"
    height="443"
-   sodipodi:docname="prob2_caso3.svg"
+   sodipodi:docname="prob2_caso3_c1.svg"
    inkscape:export-filename="/home/jonno/exactas/algo3/tp2/imagenes/problema2/prob2_caso3.png"
    inkscape:export-xdpi="71.291779"
    inkscape:export-ydpi="71.291779">
@@ -26,7 +26,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -282,5 +282,5 @@
        id="tspan4152"
        x="81.624786"
        y="62.331657"
-       style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Serif;-inkscape-font-specification:Serif">C = 1</tspan></text>
+       style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Serif;-inkscape-font-specification:Serif">K = 1</tspan></text>
 </svg>

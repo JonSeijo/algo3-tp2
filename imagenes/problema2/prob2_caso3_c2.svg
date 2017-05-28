@@ -14,10 +14,10 @@
    inkscape:version="0.48.4 r9939"
    width="599"
    height="443"
-   sodipodi:docname="prob2_caso3_c1.svg"
-   inkscape:export-filename="/home/jonno/exactas/algo3/tp2/imagenes/problema2/prob2_caso3_c1.png"
-   inkscape:export-xdpi="70.98175"
-   inkscape:export-ydpi="70.98175">
+   sodipodi:docname="prob2_caso3_c2.svg"
+   inkscape:export-filename="/home/jonno/exactas/algo3/tp2/imagenes/problema2/prob2_caso3_c2.png"
+   inkscape:export-xdpi="71"
+   inkscape:export-ydpi="71">
   <metadata
      id="metadata2991">
     <rdf:RDF>
@@ -47,7 +47,7 @@
      showgrid="false"
      inkscape:zoom="1.3476298"
      inkscape:cx="310.95984"
-     inkscape:cy="269.94924"
+     inkscape:cy="358.99447"
      inkscape:window-x="0"
      inkscape:window-y="24"
      inkscape:window-maximized="1"
@@ -282,5 +282,5 @@
        id="tspan4152"
        x="81.624786"
        y="62.331657"
-       style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Serif;-inkscape-font-specification:Serif">C = 2</tspan></text>
+       style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Serif;-inkscape-font-specification:Serif">K = 2</tspan></text>
 </svg>
