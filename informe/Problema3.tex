@@ -153,7 +153,10 @@ Lo curioso que ocurre en este problema es que la única variable que representa 
 
 Para comprobarlo empíricamente vamos a correr nuestro algoritmo generando de distintas formas los grafos de entrada, que en nuestro caso están caracterizadas por las matrices de existencia y de costo. Contrastaremos el hecho de tomar matrices aleatorias, con tomar instancias particulares de matrices, tratando de encontrar si hay diferencias o no en como evolucionan los tiempos al aumentar $n$. \\
 
-\todo[inline]{Faltan datos puros y duros de cómo se generó el experimento}
+En las matrices random, la existencia de cada arista fue tomada entre Sí y No al azar, mientras que los costos fueron obtenidos entre 1 y 2000, también al azar. \\ 
+
+El grafico fue realizado en función de la cantidad de vértices, $n$, y para cada tamaño se corrió el programa 30 veces,
+guardando el tiempo de ejecución. El valor graficado es el promedio por cada tamaño. \\
 
 {\centering
   \includegraphics[width=1\textwidth]{imagenes/problema3/todos.pdf} \\

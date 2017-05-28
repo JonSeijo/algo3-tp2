@@ -113,7 +113,7 @@ $$Total:  O(m) + O(log \, c) * O(n*m) = O(log \, c *n*m) $$
 
 \subsection{Experimentos}
 
-En principio, podríamos ir fijando algunas de las variables y variando otras para ver cómo afecta cada variable a los tiempos de cómputo, pero esto no es particularmente interesante, lo único que se obtiene es un gráfico creciente. Por este motivo decidimos solo mostrar las curvas generadas por instancias aleatorias. \\
+En principio, podríamos ir fijando algunas de las variables y variando otras para ver cómo afecta cada variable a los tiempos de cómputo, pero esto no es particularmente interesante, lo único que se obtiene es un gráfico creciente. Por este motivo el cso interesante son las curvas generadas por instancias aleatorias.\\
 
 Para cada uno de los nodos, se le asigna un grado de salida al azar entre $1$ y $n-1$. Como todos tienen al menos una arista de salida se garantiza entonces la existencia de ciclos, haciendo que sean grafos válidos para nuestro problema. Luego, para cada nodo se generan la cantidad de aristas correspondientes a su \textit{out-degree}, conectándolas al azar con otros nodos. \\
 
@@ -122,18 +122,12 @@ Los costos ($c$) de cada arista tambien fueron tomados al azar, entre 1 y 100000
 El grafico fue realizado en función de la cantidad de vértices, $n$, y para cada tamaño se corrió el programa 50 veces,
 guardando el tiempo de ejecución. El valor graficado es el promedio por cada tamaño. \\
 
-\todo[inline]{Hablar de lo que es esperable obtener}
-
 {\centering
   \includegraphics[width=0.8\textwidth]{imagenes/problema2/n_aristas.pdf} \\
 }
 
-% @jonno: Lo grafique en escala logaritmica para probar pero honestamente no aporta nada de nada,
-%  		  seria util si existieran diferencias muy pequeñas pero no es el caso
-% \todo[inline]{Cuánto a que nos piden escala logarítmica}
-
 Observemos que si las aristas son máximas, entonces $m = \frac{n*(n-1)}{2}$, con lo cual $O(n*m) = O(n^3)$. Además, la esperanza de la cantidad de aristas tomadas al azar sería $\frac{n*(n-1)}{4}$, con lo cual seguiría siendo de orden cúbico. Estos hechos parecerían corresponderse con lo que vemos en el gráfico. \\
 
-\todo[inline]{Relacionado con la hipótesis, una conclusión general de como se corresponde el experimento con la misma}
+\todo[inline]{Una conclusión general del experimento falta. O una `hipótesis' y una mención acá a la misma, o algo que sea como importante del experimento, por que los dos parrafos que hice son más comentarios que otra cosa}
 
 Algo interesante que también podemos notar es el hecho de que las funciones sean tan suaves como lo son. Recordar que en un algoritmo de Ford común tiene condiciones de corte (podría detenerse si en una iteración no hay cambios). Esto no ocurre en este caso porque lo estamos utilizando para detectar ciclos negativos, con lo cual siempre iteramos $n+1$ veces.

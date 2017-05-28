@@ -151,35 +151,34 @@ $$Total:  O(n^2) + O(n*k) + O(n*k) * (O(n*k) + O(n)) = O(n^2*k^2) $$
 
 \subsection{Experimentos}
 
-En todos lo experimentos, para cada tamaño se corrió el programa 50 veces, guardando el tiempo de cada ejecución. Para elegir un valor representativo de la muestra se tomó el promedio del tiempo para cada tamaño. \\
+En todos los experimentos, para cada tamaño se corrió el programa 50 veces, guardando el tiempo de cada ejecución. Para elegir un valor representativo de la muestra se tomó el promedio del tiempo para cada tamaño. \\
 
-En el primer experimento, vemos como se comporta el programa a medida que aumentamos la cantidad de nodos, para diferentes porcentajes de aristas premiums.
-
-Las aristas son generadas aleatoriamente, y el K (\textit{máxima cantidad de premiums que pueden usarse}) tambien es aleatorio, entre 0 y la cantiad de aristas totales. \\
-
-Si no hay aristas premium, solo se recorrerá un unico \textit{nivel} de cada nodo, por lo que se ejecuta es el algoritmo de Dijkstra clásico.
-
-En caso de existir alguna premium, se recorren tambien diferentes \textit{niveles} de un mismo nodo. Es decir, si \textit{v} es un nodo, se recorre \textit{v}, \textit{v pasando por 1 premium}, \textit{v pasando por 2 premiums}, etc, por lo que es esperable que los tiempos de ejecucion sean muchos mayores en estos casos. \\
+En el primer experimento, vemos como se comporta el programa a medida que aumentamos la cantidad de nodos para diferentes porcentajes de aristas premiums. Las aristas son generadas aleatoriamente, y el K (máxima cantidad de premiums que pueden usarse) tambien es aleatorio, entre 0 y la cantidad de aristas totales. \\
 
 {\centering
   \includegraphics[width=0.9\textwidth]{imagenes/problema1/todo_random_bis.pdf} \\
 }
 
-Dado que hay varias variables que son dejadas al azar y las curvas no son muy regulares, veamos que pasa cuando tomamos un $K$ fijo (con respecto a $N$). Tomamos $K$ tal que sea siempre la mitad de la cantidad de nodos, es decir $K = N/2$. \\
-
-Observamos que en lineas generales sucede lo mismo en el caso anterior, con la diferencia en que en este caso las curvas son suaves. Cuando no hay premiums siempre es mas eficiente calcular la respuesta. \\
+Dado que hay muchas variables que son dejadas al azar y las curvas no son muy regulares, veamos que pasa cuando tomamos un $K$ fijo (con respecto a $N$). En particular, vamos a tomar $K$ tal que sea siempre la mitad de la cantidad de nodos, es decir $K = N/2$. \\
 
 {\centering
   \includegraphics[width=0.9\textwidth]{imagenes/problema1/kfijo.pdf} \\
 }
 
-Veamos que sucede cuando dejamos el $N$ fijo y vamos variando el $K$. Si no hay rutas premium sigue siendo lo mas eficiente por las mismas razones que antes. \\
+Observamos que en lineas generales sucede lo mismo en el caso anterior, con la diferencia en que en este caso las curvas son suaves. \\
 
-Un detalle a notar es que si el 100\% de las aristas son premiums, puede verse una \textit{pequeña} mejora con respecto a los otros porcentajes. Esto puede ser porque como todas son premiums, al llegar a $K$ aristas recorridas el algoritmo corta, mientras que si existen aristas normales pueden llegar a recorrerse mas de $K$.
+Lo que más llama la atención es que hay una diferencia abismal entre $0\%$ premium y $3\%$, en comparación con las diferencias entre las curvas con $3\%$ premium en adelante. Intentemos interpretar los resultados. \\
+
+En principio, recordemos que para cada ciudad tenemos $k$ nodos, donde cada uno tiene nivel/estado asociado, que representa para nosotros cuantas rutas premium atravesé para llegar a la ciudad. Si no hay aristas premium, a pesar de tener $K*N$ nodos en la cola de prioridad sobre la que itera el algoritmo de Dijkstra, no hay ninguna forma de pasar de un nivel al otro. Entonces, partiendo de un nodo del primer nivel, lo que se termina ejecutando es el algoritmo de Dijkstra clásico. \\
+
+En caso de existir alguna premium, tenemos acceso a los $K$ \textit{niveles} completos. Es decir, si \textit{v} es un nodo, se puede recorrer \textit{v}, \textit{v pasando por 1 premium}, \textit{v pasando por 2 premiums}, etc, por lo que es esperable que los tiempos de ejecucion sean muchos mayores en estos casos. Y cuando ya tenemos una ruta premium, agregar una más no parece ser mucho más significativo que agregar una ruta normal. \\
+
+Un detalle a notar es que si el 100\% de las aristas son premiums, puede verse una \textit{pequeña} mejora con respecto a los otros porcentajes. Esto puede ser porque como todas son premiums, al llegar a $K$ aristas recorridas el algoritmo corta, mientras que si existen aristas normales pueden llegar a recorrerse mas de $K$. \\
+
+Ahora veamos qué sucede cuando dejamos el $N$ fijo y vamos variando el $K$.
 
 {\centering
   \includegraphics[width=0.9\textwidth]{imagenes/problema1/nfijo.pdf} \\
 }
 
-En todos los casos pudimos observar que no tener aristas premium hace que el programa sea \textit{mucho} mas eficiente.
-\todo[inline]{mas sarasa plz not tengo imaginacion}
+Los gráficos generados son parecidos a los que surgieron de variar $N$. Mirando la complejidad calculada, tiene sentido, pero es interesante pensar qué es lo que significa en nuestro contexto. En general, solemos aumentar la cantidad de vértices de los grafos de entrada de nuestros algoritmos porque nos dan idea de cómo es que el mismo escala. Lo que estamos viendo es que la complejidad de resolver nuestro problema para una `ciudad' fija puede variar mucho por la otra variable involucrada $K$. Quizás no es aparente que como $K$ es para nosotros la cantidad de estados que puede tener cada ciudad, incrementar el $K$ en uno implica tener que `replicar' todas las ciudades originales para contemplar el nuevo estado que pueden tener (el haber cruzado $K-1$ rutas premium). Por esto mismo, intuitivamente tiene sentido que el $K$ tenga tanta injerencia como el $N$ en el tiempo de cómputo, porque en el fondo tambien forma parte de la `escala' del grafo sobre el que estamos operando.
