@@ -8,6 +8,23 @@ En una provincia, hay ciudades conectadas por rutas bidireccionales. No todas es
 
 Para resolver el problema podemos pensarlo como un problema de grafos. La provincia es un \textit{grafo}, donde cada ciudad es un \textit{nodo} y las rutas son \textit{aristas}.  \\
 
+Veamos un ejemplo del problema:
+
+En este gráfico las lineas continuas representan rutas existentes, y las lineas punteadas representan rutas que no existen. El valor asociado a la linea es el costo de destrucción o construcción respectivamente. \\
+
+{\centering
+  \includegraphics[width=0.5\textwidth]{imagenes/problema3/problema3_test10.png} \\
+}
+
+Podemos observar que se forma un ciclo entre las rutas existentes, por lo que hay que destruir una ruta. Destruir la ruta 1-2 o la ruta 1-3 cuesta $100$, pero destruir la ruta 2-3 cuesta $99$, por lo que elegimos destruirla. Quedaría construir alguna ruta que pase por la ciudad 4 pero que no forme ciclo con las que ya existen. Vemos que la mas barata de construir es la 2-4, con un costo de $1$. Nuestro costo total es entonces $99 + 1 = 100$. \\
+
+El resultado final es el siguiente:
+
+{\centering
+  \includegraphics[width=0.5\textwidth]{imagenes/problema3/problema3_test10_solved.png} \\
+}
+
+$ $\newline
 Si consideramos al grafo como el completo de \textit{n} nodos (donde \textit{n} es la cantidad de ciudades). Que exista una y solo una ruta para llegar de una ciudad a cualquier otra, significa que tenemos que lograr que las rutas existentes formen un árbol (que incluya a todos los nodos).  \\
 
 Como podemos construir rutas nuevas y destruit las existentes, podríamos en principio quedarnos con cualquier árbol generador del grafo completo de \textit{n} nodos. Esto hace que las rutas elegidas cumplan la condición de conexiones. Restaría considerar que las rutas elegidas tienen además que tener el mínimo costo posible. \\
@@ -135,7 +152,7 @@ Vamos a utilizar como entrada en nuestro algoritmo las siguientes variables:
 \end{algorithmic}
 \end{algorithm}
 
-% \newpage
+\newpage
 \subsection{Complejidad}
 
 \begin{itemize}
@@ -153,7 +170,7 @@ Lo curioso que ocurre en este problema es que la única variable que representa 
 
 Para comprobarlo empíricamente vamos a correr nuestro algoritmo generando de distintas formas los grafos de entrada, que en nuestro caso están caracterizadas por las matrices de existencia y de costo. Contrastaremos el hecho de tomar matrices aleatorias, con tomar instancias particulares de matrices, tratando de encontrar si hay diferencias o no en como evolucionan los tiempos al aumentar $n$. \\
 
-En las matrices random, la existencia de cada arista fue tomada entre Sí y No al azar, mientras que los costos fueron obtenidos entre 1 y 2000, también al azar. \\ 
+En las matrices random, la existencia de cada arista fue tomada entre Sí y No al azar, mientras que los costos fueron obtenidos entre 1 y 2000, también al azar. \\
 
 El grafico fue realizado en función de la cantidad de vértices, $n$, y para cada tamaño se corrió el programa 30 veces,
 guardando el tiempo de ejecución. El valor graficado es el promedio por cada tamaño. \\
@@ -162,6 +179,8 @@ guardando el tiempo de ejecución. El valor graficado es el promedio por cada ta
   \includegraphics[width=1\textwidth]{imagenes/problema3/todos.pdf} \\
 }
 
-Con estos resultados estamos bastante convencidos de lo que que sospechabamos: lo único que cambia el tiempo de cómputo del algoritmo es $n$. Para dar un cierre, hablemos un poco de cuando es que varía Prim, y veamos un poco que la pregunta inicial que teniamos tenía algún sentido. \\
+Con estos resultados estamos bastante convencidos de lo que que sospechabamos: lo único que cambia el tiempo de cómputo del algoritmo es $n$, sin importar las variaciones entre las diferentes posibilidades de costos o existencias.
+% @jonno: Me parece media forzada esta oracion, la comento
+% Para dar un cierre, hablemos un poco de cuando es que varía Prim, y veamos un poco que la pregunta inicial que teniamos tenía algún sentido. \\
 
 Con otras implementaciones de Prim, en grafos poco densos es posible aprovechar el hecho de que no hayan tantos caminos para reducir el costo computacional. Sin embargo, como ya sabemos que nuestro grafo de entrada es completo, no hay mérito alguno en encarar el problema de esa forma, razón por la cual utilizamos matrices de adyacencias sin ningún otra estructura auxiliar en nuestro algoritmo. Como resultado, observemos que en nuestra implementación de Prim terminamos recorriendo la matriz entera un número constante de veces, en donde lo único que tiene injerencia es el tamaño de la matriz (el $n$).
