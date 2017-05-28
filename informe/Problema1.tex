@@ -8,6 +8,18 @@ Tenemos ciudades conectadas por rutas bidireccionales, donde algunas rutas tiene
 
 La particularidad de este problema es que un algoritmo greedy como el de Dijkstra no parecería funcionar. El motivo es que, dado un camino premium, no puedo saber si el hecho de tomarlo resulta en un callejón sin salida. Esto implica que la distancia de un nodo puede quedar actualizada con el valor de un camino que no puede llegar al destino. Esto nos imposibilita considerar caminos hacia ese nodo pesos mayores, pero que por tener menos caminos premium terminan siendo mejor opción. \\
 
+{\centering
+	\includegraphics[width=0.5\textwidth]{imagenes/problema1/problema1-c2.png} \\
+}
+
+{\centering
+	\includegraphics[width=0.5\textwidth]{imagenes/problema1/problema1-c2-solved.png} \\
+	\captionof{figure}{Solución óptima con K = 1}
+}
+
+\todo[inline]{Agregar explicacion del ejemplo}
+
+$ $ \newline
 La estrategia general va a ser plantearse $k$ versiones para cada nodo, donde cada uno representa un \textit{estado} distinto. Habiendo hecho esta separación, simplificamos los roles de los ejes premium, y nos permite aplicar el algoritmo de Dijkstra, con algunas leves variaciones.
 
 \subsection{Correctitud}
