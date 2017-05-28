@@ -6,7 +6,7 @@
 
 El contexto del problema es el siguiente: tenemos un conjunto de ciudades conectadas por rutas con peajes. El costo de un peaje es cuanto se debe pagar por transitar la ruta, y el mismo puede ser negativo (uno en vez de pagar por pasar, cobra). Decimos que hay un `abuso' si podemos partir de una ciudad $c$ arbitraria y volver, teniendo un saldo positivo de dinero. El problema es encontrar el máximo $c$ que le puedo restar a todos los peajes sin que haya ningún abuso. \\
 
-Notemos que podemos considerar a las ciudades como nodos, a las rutas como aristas, y a los peajes como el peso de las mismas; modelando el contexto como un grafo \todo{rotulado?}. Visto esto, el problema se reduce a encontrar el máximo $k$ tal que en el grafo en el que todos los pesos decrementan en $k$, no hay circuito simples negativos. \\
+Notemos que podemos considerar a las ciudades como nodos, a las rutas como aristas, y a los peajes como el peso de las mismas; modelando el contexto como un grafo \todo{rotulado?}. Visto esto, el problema se reduce a encontrar el máximo $K$ tal que en el grafo en el que todos los pesos decrementan en $K$, no hay circuito simples negativos. \\
 
 Veamos un ejemplo:
 
@@ -31,7 +31,8 @@ $ $\newline
 	\end{minipage}
 \end{figure}
 
-\todo[inline] {Explicar el ejemplo}
+Al modificar $K$, los costos de cada arista disminuyen en $K$ con respecto al grafo inicial. Queremos encontrar el máximo $K$ tal que la suma de los costos de los peajes no sea negativa. En otras palabras, queremos encontrar el máximo $K$ tal que no se formen ciclos negativos. Observamos que con $K = 2$ existe un ciclo negativo si pasamos por los nodos 1-2-4-3-1, pero no existe ningun ciclo negativo con $K = 1$. Por lo tanto, el valor maximo (y respuesta final) en este ejemplo es $1$. \\
+
 
 \subsection{Correctitud}
 
