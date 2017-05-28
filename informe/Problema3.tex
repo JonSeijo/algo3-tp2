@@ -4,51 +4,54 @@
 
 \subsection{Explicación}
 
-En una provincia, hay ciudades conectadas por rutas bidireccionales. No todas estan conectadas. Se quiere que exista una única forma de llegar de una ciudad a cualquier otra. Para logar esto, se pueden \textbf{destruir} rutas existentes o \textbf{construir} nuevas rutas. La construcción y destrucción de cada ruta tiene un costo asociado, por lo que se quiere además minimizar el costo. \\
+En una provincia, hay ciudades conectadas por rutas bidireccionales. No todas estan conectadas. Se quiere que exista una única forma de llegar de una ciudad a cualquier otra. Para lograr esto, se pueden \textbf{destruir} rutas existentes o \textbf{construir} nuevas rutas. La construcción y destrucción de cada ruta tiene un costo asociado, por lo que se quiere además minimizar el costo. \\
 
 Para resolver el problema podemos pensarlo como un problema de grafos. La provincia es un \textit{grafo}, donde cada ciudad es un \textit{nodo} y las rutas son \textit{aristas}.  \\
 
-Veamos un ejemplo del problema:
+Veamos un ejemplo del problema: \\
 
 En este gráfico las lineas continuas representan rutas existentes, y las lineas punteadas representan rutas que no existen. El valor asociado a la linea es el costo de destrucción o construcción respectivamente. \\
+
+\vspace{0.1cm}
 
 {\centering
   \includegraphics[width=0.5\textwidth]{imagenes/problema3/problema3_test10.png} \\
 }
 
+\vspace{0.3cm}
+
 Podemos observar que se forma un ciclo entre las rutas existentes, por lo que hay que destruir una ruta. Destruir la ruta 1-2 o la ruta 1-3 cuesta $100$, pero destruir la ruta 2-3 cuesta $99$, por lo que elegimos destruirla. Quedaría construir alguna ruta que pase por la ciudad 4 pero que no forme ciclo con las que ya existen. Vemos que la mas barata de construir es la 2-4, con un costo de $1$. Nuestro costo total es entonces $99 + 1 = 100$. \\
 
-El resultado final es el siguiente:
+El resultado final es el siguiente: \\
+
+\vspace{0.1cm}
 
 {\centering
   \includegraphics[width=0.5\textwidth]{imagenes/problema3/problema3_test10_solved.png} \\
 }
 
-$ $\newline
+\vspace{0.3cm}
+
 Si consideramos al grafo como el completo de \textit{n} nodos (donde \textit{n} es la cantidad de ciudades). Que exista una y solo una ruta para llegar de una ciudad a cualquier otra, significa que tenemos que lograr que las rutas existentes formen un árbol (que incluya a todos los nodos).  \\
 
-Como podemos construir rutas nuevas y destruit las existentes, podríamos en principio quedarnos con cualquier árbol generador del grafo completo de \textit{n} nodos. Esto hace que las rutas elegidas cumplan la condición de conexiones. Restaría considerar que las rutas elegidas tienen además que tener el mínimo costo posible. \\
+Como podemos construir rutas nuevas y destruir las existentes, podríamos en principio quedarnos con cualquier árbol generador del grafo completo de \textit{n} nodos. Esto hace que las rutas elegidas cumplan la condición de conexiones. Restaría considerar que las rutas elegidas tienen además que tener el mínimo costo posible. \\
 
 Las observaciones claves son las siguientes: \\
 - Si se tiene que elegir entre construir dos rutas que no existen, lo mejor es construir la mas barata. \\
 - Si se tiene que elegir entre destruir dos ya existentes, es mejor quedarse con la mas cara de destruir. \\
 - Si se tiene que elegir entre mantener una ruta existente o destruirla y construir otra, es mas barato manterla. Mantener una ruta cuesta 0, mientras que destruirla y construir otra tiene costo. \\
 
-Teniendo esto en cuenta, podemos armar nuestro grafo de la siguiente manera: \\
-
-Tomamos un grafo completo de \textit{n} nodos. Las rutas que \textbf{no} existian las colocamos con su costo de construcción. Las rutas que \textbf{sí} existían las colocammos con el peso \textbf{negativo} de su destrucción. ¿Por qué el negativo? Al tratar de elegir los menores costos, se prioriza elegir una ya construida a una que no lo está, y entre dos construidas prioriza aquella que cuesta mas destruir. \\
-
-La solución final es el Arbol Generador Mínimo de este grafo. \\
+La solución final que aproveche estos puntos terminará siendo Arbol Generador Mínimo de este grafo, como veremos en la sección de Correctitud. \\
 
 
 \subsection{Correctitud}
-El problema habla de ciudades conectadas por rutas con ciertos costos asociados, lo cual vamos a modelar con grafos y funciones de pesos sobre aristas. Los grafos vendrán a ser subgrafos de un grafo completo de $n$ aristas, donde cada subgrafo representa una configuración distinta de rutas finales. Además, el enunciado nos pide que sean árboles, pues requiere que haya un sólo camino entre todo par de ciudades. Faltaría definir correctamente la función de peso, y minimizarla sobre los árboles candidatos a soluciones. \\
+El problema habla de ciudades conectadas por rutas con ciertos costos asociados, lo cual vamos a modelar con grafos y una función de peso sobre sus aristas. Las soluciones vendrán a ser subgrafos de un grafo completo de $n$ aristas, donde cada uno representará una configuración distinta de rutas finales. El enunciado nos pide que estos subgrafos sean árboles, pues requiere que haya un solo camino entre todo par de ciudades. Faltaría definir correctamente la función de peso, y minimizarla sobre los árboles candidatos a soluciones. \\
 
-Definir la función de peso no es trivial: ejes destruidos aportan al costo de grafos cuando no pertenecen a ellos. La función que vamos a considerar es la siguiente: a las rutas inexistentes les vamos a asignar su costo de construcción, mientras que a las rutas ya construidas tendran como peso el opuesto de su costo de destrucción. El costo real de un posible grafo solución será entonces la suma de todos los costos de destrucción de la \textbf{entrada} menos el peso del grafo. \\
+Definir la función de peso no es trivial: ejes destruidos aportan al costo de grafos cuando no pertenecen a los mismos. La función que vamos a considerar es la siguiente: a las rutas inexistentes les vamos a asignar su costo de construcción, mientras que las rutas ya construidas tendran como peso el opuesto de su costo de destrucción. El costo real de un posible grafo solución será la suma de todos los costos de destrucción de la \textbf{entrada} menos el peso del grafo. Este costo real es el que querremos minimizar. \\
 
 ¿Por qué pesos negativos? Observemos por casos qué ocurre con un eje existente. Si lo destruimos, aporta su costo de destrucción cuando sumamos el de todos las rutas ya construidas. Si por el contrario lo incluimos como solución, su aporte se cancela con el peso negativo del eje, con lo cual termina con costo neto 0. Esto es lo que estabamos buscando modelar. \\
 
-Resta ver cómo minimizar el costo que definimos. Observemos que para una entrada fija, la suma de los costos de destrucción es constante, con lo cual el costo total de un grafo es su peso más una constante, con lo cual nos basta con minimizar la función de peso. Además, estos grafos son árboles subgrafos de nuestro grafo completo de entrada. Por todo esto, el problema termina reduciéndose a encontrar el arbol generador mínimo de dicho grafo completo con nuestra función de peso.
+Resta ver cómo minimizar el costo que definimos. Observemos que para una entrada fija, la suma de los costos de destrucción es constante, con lo cual el costo real de un grafo es su peso más una constante, con lo cual nos basta con minimizar la función de peso. Además, estos grafos son árboles subgrafos de nuestro grafo completo de entrada. Por todo esto, el problema termina reduciéndose a encontrar el arbol generador mínimo de dicho grafo completo con nuestra función de peso.
 
 \subsection{Pseudocódigo}
 
@@ -168,7 +171,7 @@ $$Total:  O(n^2) + O(n^2) + O(n^2) + O(n) = O(n^2) $$
 
 Lo curioso que ocurre en este problema es que la única variable que representa tamaño en nuestra entrada es la cantidad de ciudades $n$. Esto ocurre porque la cantidad de aristas está siempre determinada: sólo trabajamos con grafos completos. La pregunta es si hay algo más aparte de $n$ que podría llegar a utilizar recursos de manera significativa. Suponemos que no, pues lo único que puede cambiar además del tamaño del grafo es qué rutas están construidas y cuanto pesan. Mirando el algoritmo, a priori estos datos no parecería afectar demasiado. \\
 
-Para comprobarlo empíricamente vamos a correr nuestro algoritmo generando de distintas formas los grafos de entrada, que en nuestro caso están caracterizadas por las matrices de existencia y de costo. Contrastaremos el hecho de tomar matrices aleatorias, con tomar instancias particulares de matrices, tratando de encontrar si hay diferencias o no en como evolucionan los tiempos al aumentar $n$. \\
+Para comprobarlo empíricamente vamos a correr nuestro algoritmo generando de distintas formas los grafos de entrada, que en nuestro caso están caracterizadas por las matrices de existencia y de costo. Contrastaremos el tomar matrices aleatorias, con tomar instancias particulares de matrices, tratando de encontrar si hay diferencias o no en como evolucionan los tiempos al aumentar $n$. \\
 
 En las matrices random, la existencia de cada arista fue tomada entre Sí y No al azar, mientras que los costos fueron obtenidos entre 1 y 2000, también al azar. \\
 
@@ -179,8 +182,6 @@ guardando el tiempo de ejecución. El valor graficado es el promedio por cada ta
   \includegraphics[width=1\textwidth]{imagenes/problema3/todos.pdf} \\
 }
 
-Con estos resultados estamos bastante convencidos de lo que que sospechabamos: lo único que cambia el tiempo de cómputo del algoritmo es $n$, sin importar las variaciones entre las diferentes posibilidades de costos o existencias.
-% @jonno: Me parece media forzada esta oracion, la comento
-% Para dar un cierre, hablemos un poco de cuando es que varía Prim, y veamos un poco que la pregunta inicial que teniamos tenía algún sentido. \\
+Con estos resultados estamos bastante convencidos de lo que que sospechabamos en un principio: lo único que cambia el tiempo de cómputo del algoritmo es $n$, sin importar las variaciones entre las diferentes posibilidades de costos o existencias. \\
 
-Con otras implementaciones de Prim, en grafos poco densos es posible aprovechar el hecho de que no hayan tantos caminos para reducir el costo computacional. Sin embargo, como ya sabemos que nuestro grafo de entrada es completo, no hay mérito alguno en encarar el problema de esa forma, razón por la cual utilizamos matrices de adyacencias sin ningún otra estructura auxiliar en nuestro algoritmo. Como resultado, observemos que en nuestra implementación de Prim terminamos recorriendo la matriz entera un número constante de veces, en donde lo único que tiene injerencia es el tamaño de la matriz (el $n$).
+Con otras implementaciones de Prim, en grafos poco densos es posible aprovechar el hecho de que no hayan tantos caminos para reducir el costo computacional. Sin embargo, como ya sabemos que nuestro grafo de entrada es completo, no hay mérito alguno en encarar el problema de esa forma, razón por la cual utilizamos matrices de adyacencias sin ningún otra estructura auxiliar. Como resultado, observemos que en nuestra implementación de Prim terminamos recorriendo la matriz entera un número constante de veces, en donde lo único que tiene injerencia es el tamaño de la matriz (el $n$).
