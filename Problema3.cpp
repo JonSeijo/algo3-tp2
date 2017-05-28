@@ -46,37 +46,7 @@ void Problema3::resolver(bool imprimirOutput) {
     if (imprimirOutput) {
         escribirRta(arbol, costoTotal);
     }
-
-    debug();
 }
-
-void Problema3::escribirRta(std::vector<int> arbol, int costoTotal) {
-    std::cout << costoTotal << " ";
-    std::cout << n-1 << " ";   // Pues es un arbol
-
-    for (int i = 2; i <= n; i++) { // Ignoro el 'eje' (1,-1)
-        int j = arbol[i];
-        std::cout << i << " " << j << " ";
-    }
-
-    std::cout << "\n";
-}
-
-int Problema3::obtenerCostoTotal(std::vector<int> arbol, int costoInicialDestruirTodo) {
-    // costoTotal contiene inicialmente el costo de destruir todas las que ya existen
-    int costoTotal = costoInicialDestruirTodo;
-
-    for (int i = 2; i <= n; i++) { // Ignoro el 'eje' (1, -1)
-        int j = arbol[i];
-        // Arista (i, j) está en el AGM
-        // Si ya existia, como el costo de las que existen estaba sumado entonces lo restao
-        // Si no existia, no lo estaba contando asi que lo sumo (costo de construir es positivo)
-        costoTotal += costo[i][j];
-    }
-
-    return costoTotal;
-}
-
 
 int Problema3::negativizarCostoConstruidas() {
     int costoInicialDestruirTodo = 0;
@@ -143,6 +113,32 @@ std::vector<int> Problema3::primNaive() {
     return padre;
 }
 
+int Problema3::obtenerCostoTotal(std::vector<int> arbol, int costoInicialDestruirTodo) {
+    // costoTotal contiene inicialmente el costo de destruir todas las que ya existen
+    int costoTotal = costoInicialDestruirTodo;
+
+    for (int i = 2; i <= n; i++) { // Ignoro el 'eje' (1, -1)
+        int j = arbol[i];
+        // Arista (i, j) está en el AGM
+        // Si ya existia, como el costo de las que existen estaba sumado entonces lo restao
+        // Si no existia, no lo estaba contando asi que lo sumo (costo de construir es positivo)
+        costoTotal += costo[i][j];
+    }
+
+    return costoTotal;
+}
+
+void Problema3::escribirRta(std::vector<int> arbol, int costoTotal) {
+    std::cout << costoTotal << " ";
+    std::cout << n-1 << " ";   // Pues es un arbol
+
+    for (int i = 2; i <= n; i++) { // Ignoro el 'eje' (1,-1)
+        int j = arbol[i];
+        std::cout << i << " " << j << " ";
+    }
+
+    std::cout << "\n";
+}
 
 void Problema3::debug() {
     std::cerr << "n: " << n << "\n\n";

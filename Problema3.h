@@ -1,9 +1,7 @@
 #ifndef H_PROBLEMA_3
 #define H_PROBLEMA_3
 
-// El main no está en el problema3,
-// sino que habrá un main en solucion.cpp (que llama al problema3)
-// y otro main en tiempos.cpp (que llama al problema3)
+// El main esta en ej3.cpp
 
 #include <iostream>
 #include <vector>
