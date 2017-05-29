@@ -10,7 +10,7 @@ Para resolver el problema podemos pensarlo como un problema de grafos. La provin
 
 Veamos un ejemplo del problema: \\
 
-En este gráfico las lineas continuas representan rutas existentes, y las lineas punteadas representan rutas que no existen. El valor asociado a la linea es el costo de destrucción o construcción respectivamente. \\
+En este gráfico las líneas continuas representan rutas existentes, y las líneas punteadas representan rutas que no existen. El valor asociado a la línea es el costo de destrucción o construcción respectivamente. \\
 
 \vspace{0.1cm}
 
@@ -49,7 +49,7 @@ El problema habla de ciudades conectadas por rutas con ciertos costos asociados,
 
 Definir la función de peso no es trivial: ejes destruidos aportan al costo de grafos cuando no pertenecen a los mismos. La función que vamos a considerar es la siguiente: a las rutas inexistentes les vamos a asignar su costo de construcción, mientras que las rutas ya construidas tendran como peso el opuesto de su costo de destrucción. El costo real de un posible grafo solución será la suma de todos los costos de destrucción de la \textbf{entrada} menos el peso del grafo. Este costo real es el que querremos minimizar. \\
 
-¿Por qué pesos negativos? Observemos por casos qué ocurre con un eje existente. Si lo destruimos, aporta su costo de destrucción cuando sumamos el de todos las rutas ya construidas. Si por el contrario lo incluimos como solución, su aporte se cancela con el peso negativo del eje, con lo cual termina con costo neto 0. Esto es lo que estabamos buscando modelar. \\
+¿Por qué pesos negativos? Observemos por casos qué ocurre con un eje existente. Si lo destruimos, aporta su costo de destrucción cuando sumamos el de todos las rutas ya construidas. Si por el contrario lo incluimos como solución, su aporte se cancela con el peso negativo del eje, con lo cual termina con costo neto 0. Esto es lo que estábamos buscando modelar. \\
 
 Resta ver cómo minimizar el costo que definimos. Observemos que para una entrada fija, la suma de los costos de destrucción es constante, con lo cual el costo real de un grafo es su peso más una constante, con lo cual nos basta con minimizar la función de peso. Además, estos grafos son árboles subgrafos de nuestro grafo completo de entrada. Por todo esto, el problema termina reduciéndose a encontrar el arbol generador mínimo de dicho grafo completo con nuestra función de peso.
 
@@ -57,7 +57,7 @@ Resta ver cómo minimizar el costo que definimos. Observemos que para una entrad
 
 Vamos a utilizar como entrada en nuestro algoritmo las siguientes variables:
 \begin{itemize}
-	\item $n$: La cantidad de ciudades
+	\item $n$: La cantidad de ciudades.
 	\item $existe$: El grafo de entrada representado con matriz de adyacencia.
 	\item $costo$: La matriz con los costos de construcci\'on o destrucci\'on.
 \end{itemize}
@@ -169,7 +169,7 @@ $$Total:  O(n^2) + O(n^2) + O(n^2) + O(n) = O(n^2) $$
 
 \subsection{Experimentos}
 
-Lo curioso que ocurre en este problema es que la única variable que representa tamaño en nuestra entrada es la cantidad de ciudades $n$. Esto ocurre porque la cantidad de aristas está siempre determinada: sólo trabajamos con grafos completos. La pregunta es si hay algo más aparte de $n$ que podría llegar a utilizar recursos de manera significativa. Suponemos que no, pues lo único que puede cambiar además del tamaño del grafo es qué rutas están construidas y cuanto pesan. Mirando el algoritmo, a priori estos datos no parecería afectar demasiado. \\
+Lo curioso que ocurre en este problema es que la única variable que representa tamaño en nuestra entrada es la cantidad de ciudades $n$. Esto ocurre porque la cantidad de aristas está siempre determinada: sólo trabajamos con grafos completos. La pregunta es si hay algo más aparte de $n$ que podría llegar a utilizar recursos de manera significativa. Suponemos que no, pues lo único que puede cambiar además del tamaño del grafo es qué rutas están construidas y cuánto pesan. Mirando el algoritmo, a priori estos datos no parecerían afectar demasiado. \\
 
 Para comprobarlo empíricamente vamos a correr nuestro algoritmo generando de distintas formas los grafos de entrada, que en nuestro caso están caracterizadas por las matrices de existencia y de costo. Contrastaremos el tomar matrices aleatorias, con tomar instancias particulares de matrices, tratando de encontrar si hay diferencias o no en como evolucionan los tiempos al aumentar $n$. \\
 
@@ -182,6 +182,6 @@ guardando el tiempo de ejecución. El valor graficado es el promedio por cada ta
   \includegraphics[width=1\textwidth]{imagenes/problema3/todos.pdf} \\
 }
 
-Con estos resultados estamos bastante convencidos de lo que que sospechabamos en un principio: lo único que cambia el tiempo de cómputo del algoritmo es $n$, sin importar las variaciones entre las diferentes posibilidades de costos o existencias. \\
+Con estos resultados estamos bastante convencidos de lo que que sospechábamos en un principio: lo único que cambia el tiempo de cómputo del algoritmo es $n$, sin importar las variaciones entre las diferentes posibilidades de costos o existencias. \\
 
 Con otras implementaciones de Prim, en grafos poco densos es posible aprovechar el hecho de que no hayan tantos caminos para reducir el costo computacional. Sin embargo, como ya sabemos que nuestro grafo de entrada es completo, no hay mérito alguno en encarar el problema de esa forma, razón por la cual utilizamos matrices de adyacencias sin ningún otra estructura auxiliar. Como resultado, observemos que en nuestra implementación de Prim terminamos recorriendo la matriz entera un número constante de veces, en donde lo único que tiene injerencia es el tamaño de la matriz (el $n$).
