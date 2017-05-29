@@ -4,11 +4,11 @@
 
 \subsection{Explicación}
 
-Tenemos ciudades conectadas por rutas bidireccionales, donde algunas rutas tienen la particularidad de ser $premium$. El problema es calcular el camino minimo desde ciudad $origen$ hacia una $destino$, pasando por a lo sumo $k$ rutas premium (devolviendo -1 de no existir solución). \\
+Tenemos ciudades conectadas por rutas bidireccionales, donde algunas rutas tienen la particularidad de ser $premium$. Para cada ruta conocemos su longitud. El problema es calcular el camino mínimo desde ciudad $origen$ hacia una $destino$, pasando por a lo sumo $k$ rutas premium (devolviendo -1 de no existir solución). \\
 
-La particularidad de este problema es que un algoritmo greedy como el de Dijkstra no parecería funcionar. El motivo es que, dado un camino premium, no puedo saber si el hecho de tomarlo resulta en un callejón sin salida. Esto implica que la distancia de un nodo puede quedar actualizada con el valor de un camino que no puede llegar al destino. Esto nos imposibilita considerar caminos hacia ese nodo que a pesar de ser mas largos, por tener menos caminos premium terminan siendo mejor opción. \\
+La particularidad de éste problema es que un algoritmo greedy como el de Dijkstra parecería no funcionar. El motivo es que, dado un camino premium, no puedo saber si el hecho de tomarlo resulta en un callejón sin salida. Esto implica que la distancia de un nodo puede quedar actualizada con el valor de un camino que no puede llegar al destino. Esto nos imposibilita considerar caminos hacia ese nodo que a pesar de ser mas largos, por tener menos caminos premium terminan siendo mejor opción. \\
 
-Veamos un ejemplo donde $k = 1$. Tenemos que encontrar el caminimo mínimo entre el nodo $Inicio$ y nodo $Fin$, pero podemos usar como máximo una única ruta premium.
+Veamos un ejemplo donde $k = 1$. Tenemos que encontrar el caminimo mínimo entre el nodo $Inicio$ y nodo $Fin$, pero podemos usar como máximo una única ruta premium. Los valores asociados a las rutas representan la distancia.
 
 {\centering
 	\includegraphics[width=0.6\textwidth]{imagenes/problema1/problema1-c2.png} \\
@@ -23,24 +23,24 @@ Si no existiese el concepto de premium, el camino mínimo se consigue pasando po
 }
 
 $ $ \newline
-En principio, cada nodo $v$ representará una ciudad $c$. La estrategia general va a ser plantearse $k$ versiones para cada nodo $v$ donde cada una de estas versiones representa algún \textit{estado} $j$ distinto. Pasar por $v$ en el estado $j$ representará haber cruzado $v$ habiendo pasado por $j$ rutas premiums antes. Esta adaptación de los roles de los ejes premium nos va a permitir aplicar el algoritmo de Dijkstra, con algunas leves variaciones.
+En principio, cada nodo $v$ representará una ciudad $c$. La estrategia general va a ser plantearse $k$ versiones para cada nodo $v$ donde cada una de estas versiones representa algún \textit{estado} $j$ distinto. Pasar por $v$ en el estado $j$ representará haber cruzado $v$ habiendo pasado por $j$ rutas premium antes. Esta adaptación de los roles de los ejes premium nos va a permitir aplicar el algoritmo de Dijkstra, con algunas leves variaciones.
 
 \subsection{Correctitud}
-Queremos representar cada ciudad como un vértice y cada ruta como una arista con el objetivo de calcular el camino mínimo entre el origen y el destino mediante algún algoritmo conocido y probado para este propósito. Llamaremos a este grafo $G_0$\\
+Queremos representar cada ciudad como un vértice y cada ruta como una arista con el objetivo de calcular el camino mínimo entre el origen y el destino mediante algún algoritmo conocido y probado para éste propósito. Llamaremos a éste grafo $G_0$\\
 
-El principal inconveniente de este planteo es el modelado de las rutas premium, las cuales (y según el valor de $k$) pueden restringir las aristas disponibles para el cálculo del camino mínimo a medida que se recorran vértices utilizando estas rutas.\\
+El principal inconveniente de éste planteo es el modelado de las rutas premium, las cuales (y según el valor de $k$) pueden restringir las aristas disponibles para el cálculo del camino mínimo a medida que se recorran vértices utilizando estas rutas.\\
 
-Es importante notar que existen diferentes estados para cada vértice, a modo de ejemplo, para $k=1$ y ningún camino premium recorrido, los vértices pueden utilizar cualquier arista, por lo que si $v_i$ es adyacente a $v_j$ para el input original, entonces seguirá siéndolo. Este no es el caso si se ha recorrido un camino premium, en este caso si la arista $(v_i, v_j)$ fuera premium entonces $v_i$ ahora no es adyacente a $v_j$. En conclusión, los estados de los vértices dependen de la cantidad de aristas premium recorridas.\\
+Es importante notar que existen diferentes estados para cada vértice, a modo de ejemplo, para $k=1$ y ningún camino premium recorrido, los vértices pueden utilizar cualquier arista, por lo que si $v_i$ es adyacente a $v_j$ para el input original, entonces seguirá siéndolo. Éste no es el caso si se ha recorrido un camino premium, en éste caso si la arista $(v_i, v_j)$ fuera premium entonces $v_i$ ahora no es adyacente a $v_j$. En conclusión, los estados de los vértices dependen de la cantidad de aristas premium recorridas.\\
 
 Siendo $K$ la máxima cantidad de caminos premium a recorrer, cada vértice puede tener hasta $K$ estados diferentes. Se resuelve modelar un digrafo $G_1$ y representar a cada estado como un vértice $v_i^k$ en el cual sus aristas responden a las siguientes reglas:
 \begin{itemize}
 	\item Si $(v_i,v_j) \in E_{G_0} \land (v_i,v_j) \notin premium \Rightarrow (v_i^k,v_j^k) \in E_{G_1} \land (v_j^k,v_i^k) \in E_{G_1}$
 	\item Si $(v_i,v_j) \in E_{G_0} \land (v_i,v_j) \in premium \land k < K \Rightarrow (v_i^k,v_j^{k+1}) \in E_{G_1}$
 \end{itemize}
-En este modelo no es posible recorrer más de $K$ aristas premium, dado que cada vez que se recorre cualquier premium se pasa de un vértice $k$ a uno $k+1$ (exceptuando $k=K$ en el cual no existe vértice premium para ningún $v^k$) y sólo existen $K$ estados disponibles.\\\\
-Además, al tratarse de un simple digrafo con aristas positivas, se puede calcular el camino mínimo entre el origen y todos los demás vértices utilizando el algoritmo de Dijkstra, para luego obtener $min(v_{destino}^k \forall k)$, la distancia mínima entre origen y destino pasando por a lo sumo $k$ aristas premium. Siendo el origen en $v_i^0$ para algún $i$ especificado en la entrada, esto es así porque el vértice de origen no recorrió ninguna arista, en particular ninguna arista premium, por lo que pertenece al estado $k=0$, además los vértices $\{v_j^0,v_j^1,...,v_j^k\}$ representan al vértice destino para un $j$ especificado en la entrada, siendo $k$ la cantidad de aristas premium recorridas, por lo que al aplicar dijkstra sobre $G_1$ empezando por el origen, tendremos todas las distancias de este hacia los vértices destino (de distintos $k$), entre los cuales hay que elegir el que tenga una distancia mínima. \\
+En éste modelo no es posible recorrer más de $K$ aristas premium, dado que cada vez que se recorre cualquier premium se pasa de un vértice $k$ a uno $k+1$ (exceptuando $k=K$ en el cual no existe vértice premium para ningún $v^k$) y sólo existen $K$ estados disponibles.\\\\
+Además, al tratarse de un simple digrafo con aristas positivas, se puede calcular el camino mínimo entre el origen y todos los demás vértices utilizando el algoritmo de Dijkstra, para luego obtener $min(v_{destino}^k \forall k)$, la distancia mínima entre origen y destino pasando por a lo sumo $k$ aristas premium. Siendo el origen en $v_i^0$ para algún $i$ especificado en la entrada, esto es así porque el vértice de origen no recorrió ninguna arista, en particular ninguna arista premium, por lo que pertenece al estado $k=0$, además los vértices $\{v_j^0,v_j^1,...,v_j^k\}$ representan al vértice destino para un $j$ especificado en la entrada, siendo $k$ la cantidad de aristas premium recorridas, por lo que al aplicar dijkstra sobre $G_1$ empezando por el origen, tendremos todas las distancias de éste hacia los vértices destino (de distintos $k$), entre los cuales hay que elegir el que tenga una distancia mínima. \\
 
-\subsection{Pseudocodigo}
+\subsection{Pseudocódigo}
 
 % (Ver notas debajo del pseudocodigo las referencia de significados de las variables)
 Referencias de variables para el pseudocódigo:
@@ -156,10 +156,10 @@ Referencias de variables para el pseudocódigo:
 
 \begin{itemize}
 	\item Leer el input es O($n^2$): Construimos dos matrices de O($n^2$) elementos parseando la entrada.
-	\item Inicializar estructuras del algoritmo es O($n*k$): Recorremos las O($n*k$) ciudades actualizando las distancias de los vecinos de $origen$
-	\item Visitar todos los nodos llevando a cabo el algoritmo de Dijkstra es O($n^2*k^2$): En una matriz de adyacencia, Dijkstra es cuadrático en la cantidad de nodos. Tenemos $n*k$ nodos, por lo que la complejidad total es O$((n*k)^2)$ $=$ O$(n^2*k^2)$ (por esta razón vale  \label{whilejust}\hyperref[whileback]{$[1]$} \textit{-referencia en pseudocodigo-})
-	\item Buscar el nodo de menor distancia es O($n*k$):  Buscamos linealmente la mínima distancia entre O($n*k$) nodos
-	\item Actualizar la distancia de los vecinos de una ciudad es O($n$): Podemos reducir los potenciales vecinos a O($n$) porque sabemos que un nodo sólo puede tener un camino hacia nodos de su mismo $nivel$ o de un $nivel$ superior
+	\item Inicializar estructuras del algoritmo es O($n*k$): Recorremos las O($n*k$) ciudades actualizando las distancias de los vecinos de $origen$.
+	\item Visitar todos los nodos llevando a cabo el algoritmo de Dijkstra es O($n^2*k^2$): En una matriz de adyacencia, Dijkstra es cuadrático en la cantidad de nodos. Tenemos $n*k$ nodos, por lo que la complejidad total es O$((n*k)^2)$ $=$ O$(n^2*k^2)$ (por esta razón vale  \label{whilejust}\hyperref[whileback]{$[1]$} \textit{-referencia en pseudocodigo-}).
+	\item Buscar el nodo de menor distancia es O($n*k$):  Buscamos linealmente la mínima distancia entre O($n*k$) nodos.
+	\item Actualizar la distancia de los vecinos de una ciudad es O($n$): Podemos reducir los potenciales vecinos a O($n$) porque sabemos que un nodo sólo puede tener un camino hacia nodos de su mismo $nivel$ o de un $nivel$ superior.
 \end{itemize}
 
 $$Total:  O(n^2) + O(n*k) + O(n*k) * O(n^2*k^2) = O(n^2*k^2) $$
@@ -174,21 +174,21 @@ En el primer experimento, vemos como se comporta el programa a medida que aument
   \includegraphics[width=0.9\textwidth]{imagenes/problema1/todo_random_bis.pdf} \\
 }
 
-Dado que hay muchas variables que son dejadas al azar y las curvas no son muy regulares, veamos que pasa cuando tomamos un $K$ fijo (con respecto a $N$). En particular, vamos a tomar $K$ tal que sea siempre la mitad de la cantidad de nodos, es decir $K = N/2$. \\
+Dado que hay muchas variables que son dejadas al azar y las curvas no son muy regulares, veamos qué pasa cuando tomamos un $K$ fijo (con respecto a $N$). En particular, vamos a tomar $K$ tal que sea siempre la mitad de la cantidad de nodos, es decir $K = N/2$. \\
 
 {\centering
   \includegraphics[width=0.9\textwidth]{imagenes/problema1/kfijo.pdf} \\
 }
 
-Observamos que en lineas generales sucede lo mismo en el caso anterior, con la diferencia en que en este caso las curvas son suaves. \\
+Observamos que en líneas generales sucede lo mismo que en el caso anterior, con la diferencia de que en éste caso las curvas son suaves. \\
 
 Lo que más llama la atención es que hay una diferencia abismal entre $0\%$ premium y $3\%$, en comparación con las diferencias entre las curvas con $3\%$ premium en adelante. Intentemos interpretar los resultados. \\
 
-En principio, recordemos que para cada ciudad tenemos $k$ nodos, donde cada uno tiene nivel/estado asociado, que representa para nosotros cuantas rutas premium tuvimos que atravesar para llegar a la ciudad. Si no hay aristas premium, a pesar de tener $K*N$ nodos en la cola de prioridad sobre la que itera el algoritmo de Dijkstra, no hay ninguna forma de pasar de un nivel al otro. Entonces, partiendo de un nodo del primer nivel, lo que se termina ejecutando es el algoritmo de Dijkstra clásico. \\
+En principio, recordemos que para cada ciudad tenemos $k$ nodos, donde cada uno tiene nivel/estado asociado, que representa para nosotros cuántas rutas premium tuvimos que atravesar para llegar a la ciudad. Si no hay aristas premium, a pesar de tener $K*N$ nodos en la cola de prioridad sobre la que itera el algoritmo de Dijkstra, no hay ninguna forma de pasar de un nivel al otro. Entonces, partiendo de un nodo del primer nivel, lo que se termina ejecutando es el algoritmo de Dijkstra clásico. \\
 
-En caso de existir al menos una premium, tenemos acceso a los $K$ \textit{niveles} completos. Es decir, si \textit{v} es un nodo, se puede recorrer \textit{v}, \textit{v pasando por 1 premium}, \textit{v pasando por 2 premiums}, etc, por lo que es esperable que los tiempos de ejecucion sean muchos mayores en estos casos. Y cuando ya tenemos una ruta premium, agregar una más no parece ser mucho más significativo que agregar una ruta normal. \\
+En caso de existir al menos una premium, tenemos acceso a los $K$ \textit{niveles} completos. Es decir, si \textit{v} es un nodo, se puede recorrer \textit{v}, \textit{v pasando por 1 premium}, \textit{v pasando por 2 premiums}, etc, por lo que es esperable que los tiempos de ejecución sean mucho mayores en estos casos. Y cuando ya tenemos una ruta premium, agregar una más no parece ser mucho más significativo que agregar una ruta normal. \\
 
-Un detalle a notar es que si el 100\% de las aristas son premiums, puede verse una \textit{pequeña} mejora con respecto a los otros porcentajes. Esto puede ser porque como todas son premiums, al llegar a $K$ aristas recorridas el algoritmo corta, mientras que si existen aristas normales pueden llegar a recorrerse mas de $K$. \\
+Un detalle a notar es que si el 100\% de las aristas son premiums, puede verse una \textit{pequeña} mejora con respecto a los otros porcentajes. Esto puede ser porque como todas son premiums, al llegar a $K$ aristas recorridas el algoritmo corta, mientras que si existen aristas normales pueden llegar a recorrerse más de $K$. \\
 
 Ahora veamos qué sucede cuando dejamos el $N$ fijo y vamos variando el $K$.
 
@@ -196,4 +196,4 @@ Ahora veamos qué sucede cuando dejamos el $N$ fijo y vamos variando el $K$.
   \includegraphics[width=0.9\textwidth]{imagenes/problema1/nfijo.pdf} \\
 }
 
-Los gráficos generados son parecidos a los que surgieron de variar $N$. Mirando la complejidad calculada, tiene sentido, pero es interesante pensar qué es lo que significa en nuestro contexto. En general, solemos aumentar la cantidad de vértices de los grafos de entrada de nuestros algoritmos porque nos dan idea de cómo es que el mismo escala. Lo que estamos viendo es que la complejidad de resolver nuestro problema para una `ciudad' fija puede variar mucho por la otra variable involucrada $K$. Quizás no es aparente que como $K$ es para nosotros la cantidad de estados que puede tener cada ciudad, incrementar el $K$ en uno implica tener que `replicar' todas las ciudades originales para contemplar el nuevo estado que pueden tener (el haber cruzado $K-1$ rutas premium). Por esto mismo, intuitivamente tiene sentido que el $K$ tenga tanta injerencia como el $N$ en el tiempo de cómputo, porque en el fondo tambien forma parte de la `escala' del grafo sobre el que estamos operando.
+Los gráficos generados son parecidos a los que surgieron de variar $N$. Mirando la complejidad calculada, tiene sentido, pero es interesante pensar qué es lo que significa en nuestro contexto. En general, solemos aumentar la cantidad de vértices de los grafos de entrada de nuestros algoritmos porque nos dan idea de cómo es que el mismo escala. Lo que estamos viendo es que la complejidad de resolver nuestro problema para una `ciudad' fija puede variar mucho por la otra variable involucrada, $K$. Quizás no es aparente que como $K$ es para nosotros la cantidad de estados que puede tener cada ciudad, incrementar el $K$ en uno implica tener que `replicar' todas las ciudades originales para contemplar el nuevo estado que pueden tener (el haber cruzado $K-1$ rutas premium). Por esto mismo, intuitivamente tiene sentido que el $K$ tenga tanta injerencia como el $N$ en el tiempo de cómputo, porque en el fondo también forma parte de la `escala' del grafo sobre el que estamos operando.
